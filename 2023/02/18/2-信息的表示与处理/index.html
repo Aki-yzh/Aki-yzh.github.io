@@ -16,29 +16,29 @@
   <meta name="author" content="Aki-yzh">
   <meta name="keywords" content="">
   
-    <meta name="description" content="ICS 二、信息的表示与处理1.信息的存储$\quad$ 机器级程序将内存视为一个非常大的字节数组，称为虚拟内存。所有可能地址的集合称为虚拟地址空间。 $\quad$字节：信息存储的基本单元，由8个位组成，每个位为0或1。 $\quad$十六进制数 ：0x开头，数字0～9，字母A～F可大写可小写。 进制间的转换 $\quad$对于一个字长为w的机器来说，虚拟地址的范围为0～$2^w-1$ ,程序最">
+    <meta name="description" content="ICS 二、信息的表示与处理1.信息的存储$\quad$ 机器级程序将内存视为一个非常大的字节数组，称为虚拟内存。所有可能地址的集合称为虚拟地址空间。 $\quad$ 字节：信息存储的基本单元，由8个位组成，每个位为0或1。 $\quad$ 十六进制数 ：0x开头，数字0～9，字母A～F可大写可小写。 进制间的转换 $\quad$ 对于一个字长为w的机器来说，虚拟地址的范围为0～$2^w-1$ ,">
 <meta property="og:type" content="article">
 <meta property="og:title" content="2-信息的表示与处理">
 <meta property="og:url" content="https://aki-yzh.github.io/2023/02/18/2-%E4%BF%A1%E6%81%AF%E7%9A%84%E8%A1%A8%E7%A4%BA%E4%B8%8E%E5%A4%84%E7%90%86/index.html">
 <meta property="og:site_name" content="Aki-yzh">
-<meta property="og:description" content="ICS 二、信息的表示与处理1.信息的存储$\quad$ 机器级程序将内存视为一个非常大的字节数组，称为虚拟内存。所有可能地址的集合称为虚拟地址空间。 $\quad$字节：信息存储的基本单元，由8个位组成，每个位为0或1。 $\quad$十六进制数 ：0x开头，数字0～9，字母A～F可大写可小写。 进制间的转换 $\quad$对于一个字长为w的机器来说，虚拟地址的范围为0～$2^w-1$ ,程序最">
+<meta property="og:description" content="ICS 二、信息的表示与处理1.信息的存储$\quad$ 机器级程序将内存视为一个非常大的字节数组，称为虚拟内存。所有可能地址的集合称为虚拟地址空间。 $\quad$ 字节：信息存储的基本单元，由8个位组成，每个位为0或1。 $\quad$ 十六进制数 ：0x开头，数字0～9，字母A～F可大写可小写。 进制间的转换 $\quad$ 对于一个字长为w的机器来说，虚拟地址的范围为0～$2^w-1$ ,">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://aki-yzh.github.io/img/20221119163733.png">
-<meta property="og:image" content="https://aki-yzh.github.io/img/20221119163748.png">
-<meta property="og:image" content="https://aki-yzh.github.io/img/20221119163707.png">
-<meta property="og:image" content="https://aki-yzh.github.io/img/20221119163815.png">
-<meta property="og:image" content="https://aki-yzh.github.io/img/20221119163843.png">
-<meta property="og:image" content="https://aki-yzh.github.io/img/20221119163857.png">
-<meta property="og:image" content="https://aki-yzh.github.io/img/0221119163911.png">
-<meta property="og:image" content="https://aki-yzh.github.io/img/20221119163935.png">
-<meta property="og:image" content="https://aki-yzh.github.io/img/20221119164129.png">
-<meta property="og:image" content="https://aki-yzh.github.io/img/20221119164142.png">
-<meta property="og:image" content="https://aki-yzh.github.io/img/20221119164220.png">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/20221119163733.png">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/20221119163748.png">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/20221119163707.png">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/20221119163815.png">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/20221119163843.png">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/20221119163857.png">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/0221119163911.png">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/20221119163935.png">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/20221119164129.png">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/20221119164142.png">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/20221119164220.png">
 <meta property="article:published_time" content="2023-02-18T14:48:57.000Z">
-<meta property="article:modified_time" content="2023-02-18T15:26:34.962Z">
+<meta property="article:modified_time" content="2023-02-18T15:30:47.216Z">
 <meta property="article:author" content="Aki-yzh">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://aki-yzh.github.io/img/20221119163733.png">
+<meta name="twitter:image" content="https://aki-yzh.github.io/icsmg/20221119163733.png">
   
   
   
@@ -298,81 +298,81 @@
                 
                 <h1 id="ICS"><a href="#ICS" class="headerlink" title="ICS"></a><a href="https://aki-yzh.github.io/2023/02/18/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8&%E7%9B%AE%E5%BD%95">ICS</a></h1><hr>
 <h3 id="二、信息的表示与处理"><a href="#二、信息的表示与处理" class="headerlink" title="二、信息的表示与处理"></a>二、信息的表示与处理</h3><h4 id="1-信息的存储"><a href="#1-信息的存储" class="headerlink" title="1.信息的存储"></a>1.信息的存储</h4><p>$\quad$ 机器级程序将内存视为一个非常大的字节数组，称为虚拟内存。所有可能地址的集合称为虚拟地址空间。</p>
-<p>$\quad$字节：信息存储的基本单元，由8个位组成，每个位为0或1。</p>
-<p>$\quad$十六进制数 ：0x开头，数字0～9，字母A～F可大写可小写。</p>
+<p>$\quad$ 字节：信息存储的基本单元，由8个位组成，每个位为0或1。</p>
+<p>$\quad$ 十六进制数 ：0x开头，数字0～9，字母A～F可大写可小写。</p>
 <p>进制间的转换</p>
-<p>$\quad$对于一个字长为w的机器来说，虚拟地址的范围为0～$2^w-1$ ,程序最多访问$2^w$个字节</p>
+<p>$\quad$ 对于一个字长为w的机器来说，虚拟地址的范围为0～$2^w-1$ ,程序最多访问$2^w$个字节</p>
 <p>$\quad$ 32位字长限制虚拟地址空间位4GB，扩展到64位有16EB</p>
 <p>$\quad$ 64位机器做了向后兼容，能运行32位机器程序，32位则不能反之。</p>
-<p><img src="/../img/20221119163733.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../icsmg/20221119163733.png" srcset="/img/loading.gif" lazyload></p>
 <p>寻址和字节顺序</p>
-<p><img src="/../img/20221119163748.png" srcset="/img/loading.gif" lazyload><br>$\quad$大端法：顺着读</p>
-<p>$\quad$小端法：以字节为单位倒着读</p>
-<p>$\quad$大多数Intel兼容机、Andriod、IOS都适用小端法，IBM和Oracle按照大端法。</p>
+<p><img src="/../icsmg/20221119163748.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 大端法：顺着读</p>
+<p>$\quad$ 小端法：以字节为单位倒着读</p>
+<p>$\quad$ 大多数Intel兼容机、Andriod、IOS都适用小端法，IBM和Oracle按照大端法。</p>
 <p>位运算（返回一个数）</p>
 <p>$\quad$ ～取反           ｜或          &amp;与      ^异或</p>
 <p>逻辑运算（返回0x01或0x00）</p>
 <p>$\quad$ &amp;&amp; 且     ｜｜或       ！非</p>
 <p>移位运算</p>
 <p>$\quad$ &lt;&lt;左移             &gt;&gt;右移（分为逻辑右移和算数右移，逻辑右移直接移，算数右移高位补k个最高有效位的值。（有符号数算数右移，无符号数逻辑右移））</p>
-<h4 id="2-整数-Integer"><a href="#2-整数-Integer" class="headerlink" title="2. 整数 Integer"></a>2. 整数 Integer</h4><p>$\quad$Java只支持有符号整数</p>
+<h4 id="2-整数-Integer"><a href="#2-整数-Integer" class="headerlink" title="2. 整数 Integer"></a>2. 整数 Integer</h4><p>$\quad$ Java只支持有符号整数</p>
 <p><strong>无符号数的编码</strong></p>
-<p>$\quad$B2U&#x3D;$\sum_{i&#x3D;0}^{w-1}x_i*2^i$</p>
-<p>$\quad$函数B2U是一个双射</p>
+<p>$\quad$ B2U&#x3D;$\sum_{i&#x3D;0}^{w-1}x_i*2^i$</p>
+<p>$\quad$ 函数B2U是一个双射</p>
 <p><strong>补码编码</strong></p>
-<p>$\quad$$B2T_w&#x3D;-x_{w-1}2^{w-1}+\sum_{i&#x3D;0}^{w-2}x_i2^i$</p>
-<p>$\quad$最高位$x^{w-1}$也称为符号位，若符号位为0则和无符号数编码表示差不多</p>
-<p>$\quad$B2$T_w$也是个双射，补码的范围是不对称的<br><img src="/../img/20221119163707.png" srcset="/img/loading.gif" lazyload><br> <strong>有符号数与无符号数之间的转换</strong></p>
-<p> $\quad$强制类型转换的结果保持位值不变，只是改变了这些位的解释方式。</p>
-<p>$\quad$无符号数与补码的转换关系：</p>
-<p>$\quad$U表示无符号数<br><img src="/../img/20221119163815.png" srcset="/img/loading.gif" lazyload><br>对于C语言中： </p>
+<p>$\quad$ $B2T_w&#x3D;-x_{w-1}2^{w-1}+\sum_{i&#x3D;0}^{w-2}x_i2^i$</p>
+<p>$\quad$ 最高位$x^{w-1}$也称为符号位，若符号位为0则和无符号数编码表示差不多</p>
+<p>$\quad$ B2$T_w$也是个双射，补码的范围是不对称的<br><img src="/../icsmg/20221119163707.png" srcset="/img/loading.gif" lazyload><br> <strong>有符号数与无符号数之间的转换</strong></p>
+<p> $\quad$ 强制类型转换的结果保持位值不变，只是改变了这些位的解释方式。</p>
+<p>$\quad$ 无符号数与补码的转换关系：</p>
+<p>$\quad$ U表示无符号数<br><img src="/../icsmg/20221119163815.png" srcset="/img/loading.gif" lazyload><br>对于C语言中： </p>
 <p>$\quad$ 若双方中同时存有无符号数与有符号数，C语言会隐式的将有符号数强制转换成无符号数来执行运算比如&gt;和&lt;运算。若双方都是U或都是T则用原来的处理。</p>
 <p> <strong>数字的扩展</strong></p>
-<p>$\quad$无符号数零扩展：在表示的开头补0</p>
-<p>$\quad$有符号数的符号扩展：扩展的数位补符号位</p>
+<p>$\quad$ 无符号数零扩展：在表示的开头补0</p>
+<p>$\quad$ 有符号数的符号扩展：扩展的数位补符号位</p>
 <p><strong>截断数字</strong></p>
-<p>$\quad$直接把前k位舍弃</p>
+<p>$\quad$ 直接把前k位舍弃</p>
 <p>数值上：</p>
-<p>$\quad$截断无符号数：（相当于取模$2^k$)</p>
-<p>$\quad$截断有符号数：相当于视为无符号数处理后再转换为无符号数。</p>
+<p>$\quad$ 截断无符号数：（相当于取模$2^k$)</p>
+<p>$\quad$ 截断有符号数：相当于视为无符号数处理后再转换为无符号数。</p>
 <p><strong>整数的运算</strong></p>
-<p>$\quad$无符号数加法<br><img src="/../img/20221119163843.png" srcset="/img/loading.gif" lazyload><br>$\quad$正常：直接相加                        溢出：减去$2^w$（即为扔去溢出位）</p>
-<p>$\quad$判断无符号加法溢出：return sum&gt;&#x3D;x;(true 表示未溢出)</p>
-<p>求反：<br><img src="/../img/20221119163857.png" srcset="/img/loading.gif" lazyload></p>
-<p>$\quad$有符号数的加法</p>
-<p>$\quad$分为正溢出和负溢出<br><img src="/../img/0221119163911.png" srcset="/img/loading.gif" lazyload><br>$\quad$补码加法和无符号加法有完全相同的位级表示</p>
-<p>取反：<br><img src="/../img/20221119163935.png" srcset="/img/loading.gif" lazyload><br>$\quad$Tmin&#x3D;0x8000000</p>
+<p>$\quad$ 无符号数加法<br><img src="/../icsmg/20221119163843.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 正常：直接相加                        溢出：减去$2^w$（即为扔去溢出位）</p>
+<p>$\quad$ 判断无符号加法溢出：return sum&gt;&#x3D;x;(true 表示未溢出)</p>
+<p>求反：<br><img src="/../icsmg/20221119163857.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 有符号数的加法</p>
+<p>$\quad$ 分为正溢出和负溢出<br><img src="/../icsmg/0221119163911.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 补码加法和无符号加法有完全相同的位级表示</p>
+<p>取反：<br><img src="/../icsmg/20221119163935.png" srcset="/img/loading.gif" lazyload><br>$\quad$ Tmin&#x3D;0x8000000</p>
 <p>无符号乘法：</p>
-<p>$\quad$截取运行结果的低w位$(x·y)mod2^w$</p>
+<p>$\quad$ 截取运行结果的低w位$(x·y)mod2^w$</p>
 <p>补码乘法：</p>
-<p>$\quad$与无符号乘法位级表示一样，数值上多一步转换成无符号数</p>
-<p>$\quad$乘2的幂相当于左移操作，乘常数就可以分解成移位和加法</p>
+<p>$\quad$ 与无符号乘法位级表示一样，数值上多一步转换成无符号数</p>
+<p>$\quad$ 乘2的幂相当于左移操作，乘常数就可以分解成移位和加法</p>
 <p>除法</p>
-<p>$\quad$除以2的幂：</p>
-<p>$\quad$采用右移，无符号数逻辑右移，朝着向0的方向进行舍入。有符号数算数右移，也朝0舍入，所以会在移位之前加入一个偏置来修正。偏置的值等于1左移k位减1。&#x2F;&#x2F;只有负数需要用偏置</p>
-<p>$\quad$不能推广到任意常数。</p>
+<p>$\quad$ 除以2的幂：</p>
+<p>$\quad$ 采用右移，无符号数逻辑右移，朝着向0的方向进行舍入。有符号数算数右移，也朝0舍入，所以会在移位之前加入一个偏置来修正。偏置的值等于1左移k位减1。&#x2F;&#x2F;只有负数需要用偏置</p>
+<p>$\quad$ 不能推广到任意常数。</p>
 <h4 id="3-浮点数"><a href="#3-浮点数" class="headerlink" title="3.  浮点数"></a>3.  浮点数</h4><p>$\quad$ 二进制小数：.后为2的负幂如（1&#x2F;8）&#x3D; $（0.001）_2$</p>
 <p>IEEE浮点表示：</p>
 <p>$V&#x3D;(-1)^s<em>M</em>2^E$</p>
-<p>$\quad$s为符号位；M是尾数，是二进制小数；E是阶码<br><img src="/../img/20221119164129.png" srcset="/img/loading.gif" lazyload><br>$\quad$float 1-8-23</p>
-<p>$\quad$double 1-11-52</p>
-<p>$\quad$exp是无符号数</p>
-<p>分类<br><img src="/../img/20221119164142.png" srcset="/img/loading.gif" lazyload></p>
-<p>$\quad$规格化的值：exp不为0或255</p>
-<p>$\quad$非规格化的值：exp为0</p>
-<p>$\quad$无穷大：exp为255（全是1），frac全为0</p>
-<p>$\quad$NaN：exp为255，frac不为0</p>
+<p>$\quad$ s为符号位；M是尾数，是二进制小数；E是阶码<br><img src="/../icsmg/20221119164129.png" srcset="/img/loading.gif" lazyload><br>$\quad$ float 1-8-23</p>
+<p>$\quad$ double 1-11-52</p>
+<p>$\quad$ exp是无符号数</p>
+<p>分类<br><img src="/../icsmg/20221119164142.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 规格化的值：exp不为0或255</p>
+<p>$\quad$ 非规格化的值：exp为0</p>
+<p>$\quad$ 无穷大：exp为255（全是1），frac全为0</p>
+<p>$\quad$ NaN：exp为255，frac不为0</p>
 <p><strong>表示规格化的值时：</strong></p>
-<p>$\quad$阶码字段为以偏置形式表示的有符号整数，E&#x3D;e-Bias</p>
+<p>$\quad$ 阶码字段为以偏置形式表示的有符号整数，E&#x3D;e-Bias</p>
 <p>$\quad$ $e\in[1,254],Bias&#x3D;2^{k-1}-1$(单精度为127，双精度为1023)</p>
-<p> $\quad$$E\in<a href="float">-126,127</a>,E\in<a href="double">-1022,1023</a>$，$M\in[1,2)$<br><img src="/../img/20221119164220.png" srcset="/img/loading.gif" lazyload></p>
+<p> $\quad$ $E\in<a href="float">-126,127</a>,E\in<a href="double">-1022,1023</a>$，$M\in[1,2)$<br><img src="/../icsmg/20221119164220.png" srcset="/img/loading.gif" lazyload></p>
 <p><strong>表示非规格化的值时：</strong></p>
-<p>$\quad$exp，s，frac全为0，表示+0，s&#x3D;1，frac，exp为0，表示-0</p>
-<p>$\quad$此时M&#x3D;f；E&#x3D;1-Bias</p>
+<p>$\quad$ exp，s，frac全为0，表示+0，s&#x3D;1，frac，exp为0，表示-0</p>
+<p>$\quad$ 此时M&#x3D;f；E&#x3D;1-Bias</p>
 <p><strong>特殊值</strong>： 表示无穷大</p>
 <p><strong>浮点数舍入</strong></p>
 <p>$\quad$ 1. 向偶数舍入</p>
-<p>   $\quad$向最近值进行舍入，为0.5则遵循最低有效数位是偶数</p>
+<p>   $\quad$ 向最近值进行舍入，为0.5则遵循最低有效数位是偶数</p>
 <p>$\quad$ 2. 向0舍入</p>
 <p>$\quad$ 3. 向下舍入</p>
 <p>$\quad$ 4. 向上舍入</p>
@@ -449,8 +449,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/18/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8&amp;%E7%9B%AE%E5%BD%95/" title="1-计算机系统漫游&amp;目录">
-                        <span class="hidden-mobile">1-计算机系统漫游&amp;目录</span>
+                      <a href="/2023/02/18/10-%E7%B3%BB%E7%BB%9F%E7%BA%A7IO/" title="10-系统级IO">
+                        <span class="hidden-mobile">10-系统级IO</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
