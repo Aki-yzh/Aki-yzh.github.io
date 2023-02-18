@@ -24,7 +24,7 @@
 <meta property="og:description" content="ICS 二、信息的表示与处理1.信息的存储$\quad$ 机器级程序将内存视为一个非常大的字节数组，称为虚拟内存。所有可能地址的集合称为虚拟地址空间。 $\quad$字节：信息存储的基本单元，由8个位组成，每个位为0或1。 $\quad$十六进制数 ：0x开头，数字0～9，字母A～F可大写可小写。 进制间的转换 $\quad$对于一个字长为w的机器来说，虚拟地址的范围为0～$2^w-1$ ,程序最">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-02-18T14:48:57.000Z">
-<meta property="article:modified_time" content="2023-02-18T14:57:37.297Z">
+<meta property="article:modified_time" content="2023-02-18T15:04:11.992Z">
 <meta property="article:author" content="Aki-yzh">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.5k 字
+          2.6k 字
         
       </span>
     
@@ -291,9 +291,9 @@
 <p>进制间的转换</p>
 <p>$\quad$对于一个字长为w的机器来说，虚拟地址的范围为0～$2^w-1$ ,程序最多访问$2^w$个字节</p>
 <p>$\quad$ 32位字长限制虚拟地址空间位4GB，扩展到64位有16EB</p>
-<p>$\quad$ 64位机器做了向后兼容，能运行32位机器程序，32位则不能反之。<br>![[Pasted image 20221119163733.png]]</p>
+<p>$\quad$ 64位机器做了向后兼容，能运行32位机器程序，32位则不能反之。<br>![](&#x2F;img&#x2F;Pasted image 20221119163733.png])</p>
 <p>寻址和字节顺序</p>
-<p>![[Pasted image 20221119163748.png]]<br>$\quad$大端法：顺着读</p>
+<p>![](..&#x2F;img&#x2F;Pasted image 20221119163748.png)<br>$\quad$大端法：顺着读</p>
 <p>$\quad$小端法：以字节为单位倒着读</p>
 <p>$\quad$大多数Intel兼容机、Andriod、IOS都适用小端法，IBM和Oracle按照大端法。</p>
 <p>位运算（返回一个数）</p>
@@ -309,10 +309,10 @@
 <p><strong>补码编码</strong></p>
 <p>$\quad$$B2T_w&#x3D;-x_{w-1}2^{w-1}+\sum_{i&#x3D;0}^{w-2}x_i2^i$</p>
 <p>$\quad$最高位$x^{w-1}$也称为符号位，若符号位为0则和无符号数编码表示差不多</p>
-<p>$\quad$B2$T_w$也是个双射，补码的范围是不对称的<br>![[Pasted image 20221119163707.png]]<br> <strong>有符号数与无符号数之间的转换</strong></p>
+<p>$\quad$B2$T_w$也是个双射，补码的范围是不对称的<br>![](Pasted image 20221119163707.png)<br> <strong>有符号数与无符号数之间的转换</strong></p>
 <p> $\quad$强制类型转换的结果保持位值不变，只是改变了这些位的解释方式。</p>
 <p>$\quad$无符号数与补码的转换关系：</p>
-<p>$\quad$U表示无符号数<br>![[Pasted image 20221119163815.png]]<br>对于C语言中： </p>
+<p>$\quad$U表示无符号数<br>![](Pasted image 20221119163815.png)<br>对于C语言中： </p>
 <p>$\quad$ 若双方中同时存有无符号数与有符号数，C语言会隐式的将有符号数强制转换成无符号数来执行运算比如&gt;和&lt;运算。若双方都是U或都是T则用原来的处理。</p>
 <p> <strong>数字的扩展</strong></p>
 <p>$\quad$无符号数零扩展：在表示的开头补0</p>
@@ -436,8 +436,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/18/10-%E7%B3%BB%E7%BB%9F%E7%BA%A7IO/" title="10-系统级IO">
-                        <span class="hidden-mobile">10-系统级IO</span>
+                      <a href="/2023/02/18/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8&amp;%E7%9B%AE%E5%BD%95/" title="1-计算机系统漫游&amp;目录">
+                        <span class="hidden-mobile">1-计算机系统漫游&amp;目录</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
