@@ -23,10 +23,14 @@
 <meta property="og:site_name" content="Aki-yzh">
 <meta property="og:description" content="对应 CSAPP 第十章节">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/20230214221030.png">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/20230214222419.png">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/20230214230707.png">
 <meta property="article:published_time" content="2023-02-18T14:47:57.000Z">
-<meta property="article:modified_time" content="2023-02-18T15:44:14.591Z">
+<meta property="article:modified_time" content="2023-02-19T05:37:55.053Z">
 <meta property="article:author" content="Aki-yzh">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aki-yzh.github.io/icsmg/20230214221030.png">
   
   
   
@@ -222,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.2k 字
+          3.1k 字
         
       </span>
     
@@ -233,7 +237,7 @@
         
         
         
-          27 分钟
+          26 分钟
         
       </span>
     
@@ -276,7 +280,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年2月18日 晚上
+                    本文最后更新于：2023年2月19日 下午
                   
                 
               </p>
@@ -288,13 +292,14 @@
 <h2 id="对应-CSAPP-第十章节"><a href="#对应-CSAPP-第十章节" class="headerlink" title="对应 CSAPP 第十章节"></a>对应 CSAPP 第十章节</h2><span id="more"></span>
 
 
-<h1 id="ICS"><a href="#ICS" class="headerlink" title="ICS"></a><a href="./1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8&%E7%9B%AE%E5%BD%95.md">ICS</a></h1><hr>
+
+<h1 id="ICS"><a href="#ICS" class="headerlink" title="ICS"></a><a href="https://aki-yzh.github.io/2023/02/18/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8&%E7%9B%AE%E5%BD%95">ICS</a></h1><hr>
 <h2 id="十、系统级I-x2F-O"><a href="#十、系统级I-x2F-O" class="headerlink" title="十、系统级I&#x2F;O"></a>十、系统级I&#x2F;O</h2><p>$\quad$ 输入&#x2F;输出是在主存和外部设备之间复制数据的过程。</p>
-<h4 id="10-1-Unix-I-x2F-O"><a href="#10-1-Unix-I-x2F-O" class="headerlink" title="10.1 Unix I&#x2F;O"></a>10.1 Unix I&#x2F;O</h4><p>$\quad$ 一个Linux文件就是一个m个字节的序列：$B_0,B_1……B_{m-1}$<br>$\quad$ 所有的I&#x2F;O设备都被模型化为文件，所有的输入输出都被当作对相应文件的读和写来执行。<br>$\qquad$ 打开文件：创建描述符<br>$\qquad$ 每个进程开始时都有三个打开的文件：标准输入(0), 标准输出(1), 标准错误(2)<br>$\qquad$ 改变当前的文件位置：每个打开的文件内核保持一个文件位置k。<br>$\qquad$ 读写文件：读：从文件复制n个字节到内存，将文件位置从k增加到k+n，当文件位置超过文件大小触发EOF，文件结尾没有EOF符号，写类似。<br>$\qquad$ 关闭文件：当应用完成了对文件的访问之后，它就通知内核关闭这个文件</p>
-<h4 id="10-2-文件"><a href="#10-2-文件" class="headerlink" title="10.2 文件"></a>10.2 文件</h4><p>$\quad$ 每个Linux文件都有一个类型来表明它在系统中的角色。<br>$\qquad$ <strong>普通文件</strong>包括任意数据。区分文本文件和二进制文件<br>$\qquad$ <strong>目录</strong>是包含一组连接的文件。其中每个链接都将一个文件名映射到一个文件（mkdir创建，ls查看，rmdir删除）.是到目录自身的链接，..是到父目录的链接。<br>$\qquad$ <strong>套接字</strong>是用来与另一个进程进行跨网络通信的文件<br>Linux内核将所有文件都组合成一个目录层次结构，由名为&#x2F;的根目录确定。系统中的每一个文件都是根目录的直接或间接后代。<br>$\qquad$ <strong>其它类型</strong>诸如命名通道，符号链接，字符，块设备。<br>![[Pasted image 20230214221030.png]]$\quad$ 每一个进程都有一个当前工作目录，可以用cd命令修改<br>$\qquad$ 绝对路径名：以一个斜杠开始，表示从根节点开始的路径<br>$\qquad$ 相对路径名：以文件名开始，表示从当前工作目录开始的路径</p>
+<h4 id="10-1-Unix-I-x2F-O"><a href="#10-1-Unix-I-x2F-O" class="headerlink" title="10.1 Unix I&#x2F;O"></a>10.1 Unix I&#x2F;O</h4><p>$\quad$ 一个Linux文件就是一个m个字节的序列：$ B_0,B_1……B_{m-1} $<br>$\quad$ 所有的I&#x2F;O设备都被模型化为文件，所有的输入输出都被当作对相应文件的读和写来执行。<br>$\qquad$ 打开文件：创建描述符<br>$\qquad$ 每个进程开始时都有三个打开的文件：标准输入(0), 标准输出(1), 标准错误(2)<br>$\qquad$ 改变当前的文件位置：每个打开的文件内核保持一个文件位置k。<br>$\qquad$ 读写文件：读：从文件复制n个字节到内存，将文件位置从k增加到k+n，当文件位置超过文件大小触发EOF，文件结尾没有EOF符号，写类似。<br>$\qquad$ 关闭文件：当应用完成了对文件的访问之后，它就通知内核关闭这个文件</p>
+<h4 id="10-2-文件"><a href="#10-2-文件" class="headerlink" title="10.2 文件"></a>10.2 文件</h4><p>$\quad$ 每个Linux文件都有一个类型来表明它在系统中的角色。<br>$\qquad$ <strong>普通文件</strong>包括任意数据。区分文本文件和二进制文件<br>$\qquad$ <strong>目录</strong>是包含一组连接的文件。其中每个链接都将一个文件名映射到一个文件（mkdir创建，ls查看，rmdir删除）.是到目录自身的链接，..是到父目录的链接。<br>$\qquad$ <strong>套接字</strong>是用来与另一个进程进行跨网络通信的文件<br>Linux内核将所有文件都组合成一个目录层次结构，由名为&#x2F;的根目录确定。系统中的每一个文件都是根目录的直接或间接后代。<br>$\qquad$ <strong>其它类型</strong>诸如命名通道，符号链接，字符，块设备。<br><img src="/../icsmg/20230214221030.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 每一个进程都有一个当前工作目录，可以用cd命令修改<br>$\qquad$ 绝对路径名：以一个斜杠开始，表示从根节点开始的路径<br>$\qquad$ 相对路径名：以文件名开始，表示从当前工作目录开始的路径</p>
 <h4 id="10-3-打开和关闭文件"><a href="#10-3-打开和关闭文件" class="headerlink" title="10.3 打开和关闭文件"></a>10.3 打开和关闭文件</h4><p>$\quad$ 调用open函数来打开一个已经存在的文件或者创建一个新文件</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">open</span><span class="hljs-params">(<span class="hljs-type">char</span> *filename,<span class="hljs-type">int</span> flags,<span class="hljs-type">mode_t</span> mode)</span></span>;<span class="hljs-comment">//成功返回文件描述符，出错返回-1；</span><br></code></pre></td></tr></table></figure>
-<p>$\qquad$ flags:访问模式：O_RDONLY只读；O_WRONLY只写；ORDWR可读可写<br>$\qquad$ $\qquad$ 写｜接上掩码为写提供一些额外的指示：<br>$\qquad$ $\qquad$ $\qquad$ O_CREAT：如果文件不存在，创建截断的文件<br>$\qquad$ $\qquad$ $\qquad$ O_TRUNC：文件已经存在，截断它<br>$\qquad$ $\qquad$ $\qquad$ O_APPEND：设定文件位置在文件的结尾<br>$\qquad$ mode：访问权限<br>![[Pasted image 20230214222419.png]]<br>$\quad$ close函数用于关闭已经打开的文件</p>
+<p>$\qquad$ flags:访问模式：O_RDONLY只读；O_WRONLY只写；ORDWR可读可写<br>$\qquad$ $\qquad$ 写｜接上掩码为写提供一些额外的指示：<br>$\qquad$ $\qquad$ $\qquad$ O_CREAT：如果文件不存在，创建截断的文件<br>$\qquad$ $\qquad$ $\qquad$ O_TRUNC：文件已经存在，截断它<br>$\qquad$ $\qquad$ $\qquad$ O_APPEND：设定文件位置在文件的结尾<br>$\qquad$ mode：访问权限<br><img src="/../icsmg/20230214222419.png" srcset="/img/loading.gif" lazyload><br>$\quad$ close函数用于关闭已经打开的文件</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">close</span><span class="hljs-params">(<span class="hljs-type">int</span> fd)</span></span>;<span class="hljs-comment">//成功返回0，出错-1</span><br></code></pre></td></tr></table></figure>
 
 <h4 id="10-4-读和写文件"><a href="#10-4-读和写文件" class="headerlink" title="10.4 读和写文件"></a>10.4 读和写文件</h4><p>$\quad$ 调用read和write函数来执行输入与输出</p>
@@ -318,7 +323,7 @@
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">dup2</span><span class="hljs-params">(<span class="hljs-type">int</span> oldfd,<span class="hljs-type">int</span> newfd)</span></span>;<span class="hljs-comment">//成功返回非负描述符，错误返回-1</span><br></code></pre></td></tr></table></figure>
 <p>$\quad$ 复制oldfd并覆盖至newfd，若newfd已打开，则会先关闭newfd</p>
 <h4 id="10-10-标准I-x2F-O"><a href="#10-10-标准I-x2F-O" class="headerlink" title="10.10 标准I&#x2F;O"></a>10.10 标准I&#x2F;O</h4><p>$\quad$ C语言库，<br>$\quad$ 流：指向FILE类型结构的指针<br>$\quad$ 标准输入(stdin), 标准输出(stdout), 标准错误(stderr)<br>$\quad$ 高级输入输出函数（fopen和fclose，fread和fwrite，fgets和fputs，scanf和printf）</p>
-<p>$\quad$ 只要有可能就使用标准I&#x2F;O<br>$\quad$ 不要用scanf或rio_readlineb来读二进制文件<br>$\quad$ 对网络套接字I&#x2F;O使用RIO<br>![[Pasted image 20230214230707.png]]</p>
+<p>$\quad$ 只要有可能就使用标准I&#x2F;O<br>$\quad$ 不要用scanf或rio_readlineb来读二进制文件<br>$\quad$ 对网络套接字I&#x2F;O使用RIO<br><img src="/../icsmg/20230214230707.png" srcset="/img/loading.gif" lazyload></p>
 <hr>
 
                 
@@ -356,7 +361,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年2月18日</div>
+          <div>2023年2月19日</div>
         </div>
       
       
@@ -387,9 +392,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/18/12-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" title="12-并发编程">
+                      <a href="/2023/02/18/8-%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/" title="8-异常控制流">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">12-并发编程</span>
+                        <span class="hidden-mobile">8-异常控制流</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -397,8 +402,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/18/3-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/" title="3-程序的机器级表示">
-                        <span class="hidden-mobile">3-程序的机器级表示</span>
+                      <a href="/2023/02/18/9-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" title="9-虚拟内存">
+                        <span class="hidden-mobile">9-虚拟内存</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

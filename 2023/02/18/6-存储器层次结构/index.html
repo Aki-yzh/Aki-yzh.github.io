@@ -23,10 +23,17 @@
 <meta property="og:site_name" content="Aki-yzh">
 <meta property="og:description" content="对应 CSAPP 第六章节">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/20221119152443.png">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/20221119151953.png">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/20221119152158.png">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/20221119152227.png">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/20221119152309.png">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/20221119152333.png">
 <meta property="article:published_time" content="2023-02-18T14:47:57.000Z">
-<meta property="article:modified_time" content="2023-02-18T15:51:44.778Z">
+<meta property="article:modified_time" content="2023-02-19T05:37:35.949Z">
 <meta property="article:author" content="Aki-yzh">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aki-yzh.github.io/icsmg/20221119152443.png">
   
   
   
@@ -222,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.4k 字
+          2.2k 字
         
       </span>
     
@@ -233,7 +240,7 @@
         
         
         
-          21 分钟
+          19 分钟
         
       </span>
     
@@ -276,7 +283,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年2月18日 晚上
+                    本文最后更新于：2023年2月19日 下午
                   
                 
               </p>
@@ -287,72 +294,73 @@
                 <hr>
 <h2 id="对应-CSAPP-第六章节"><a href="#对应-CSAPP-第六章节" class="headerlink" title="对应 CSAPP 第六章节"></a>对应 CSAPP 第六章节</h2><span id="more"></span>
 
-<h1 id="ICS"><a href="#ICS" class="headerlink" title="ICS"></a><a href="./1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8&%E7%9B%AE%E5%BD%95.md">ICS</a></h1><hr>
-<h3 id="六、存储器层次结构"><a href="#六、存储器层次结构" class="headerlink" title="六、存储器层次结构"></a>六、存储器层次结构</h3><h4 id="6-1-存储技术"><a href="#6-1-存储技术" class="headerlink" title="6.1 存储技术"></a>6.1 存储技术</h4><p>$\quad$随机访问存储器（RAM）分为两类：静态的和动态的</p>
-<p>$\quad$静态（SRAM）具有双稳态特性，每位有6个晶体管，价格高，存取快，对光电不敏感，用于高速缓存存储器；动态（DRAM）每位一个晶体管，价格低，功耗更小，对光电敏感，用于主存和帧缓冲区。 </p>
-<p>![[Pasted image 20221119152443.png]]<br>$\quad$非易失性存储器（ROM）的发展：PROM-&gt;EPROM-&gt;EEPROM</p>
-<p>$\quad$RAM有电才能存储数据</p>
+
+<h1 id="ICS"><a href="#ICS" class="headerlink" title="ICS"></a><a href="https://aki-yzh.github.io/2023/02/18/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8&%E7%9B%AE%E5%BD%95">ICS</a></h1><hr>
+<h3 id="六、存储器层次结构"><a href="#六、存储器层次结构" class="headerlink" title="六、存储器层次结构"></a>六、存储器层次结构</h3><h4 id="6-1-存储技术"><a href="#6-1-存储技术" class="headerlink" title="6.1 存储技术"></a>6.1 存储技术</h4><p>$\quad$ 随机访问存储器（RAM）分为两类：静态的和动态的</p>
+<p>$\quad$ 静态（SRAM）具有双稳态特性，每位有6个晶体管，价格高，存取快，对光电不敏感，用于高速缓存存储器；动态（DRAM）每位一个晶体管，价格低，功耗更小，对光电敏感，用于主存和帧缓冲区。 </p>
+<p><img src="/../icsmg/20221119152443.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 非易失性存储器（ROM）的发展：PROM-&gt;EPROM-&gt;EEPROM</p>
+<p>$\quad$ RAM有电才能存储数据</p>
 <p>磁盘存储：</p>
-<p>$\quad$磁盘由盘片构成，每个盘片有2面或者称为表面，表面覆盖磁性记录材料，盘中央有一个可以旋转的主轴，使得盘片以固定的旋转速率旋转。每个表面是由一组称为磁道的同心圆组成的，每个磁道被划分为一组扇区，扇区之间由一组  间隙分隔开。</p>
-<p>$\quad$抽象化成逻辑块序列。</p>
-<p>$\quad$磁盘容量&#x3D;（字节数&#x2F;扇区）x（平均扇区数&#x2F;磁道）x（磁道数&#x2F;表面）x（表面数&#x2F;盘片）x（盘片数&#x2F;磁盘）</p>
-<p>![[Pasted image 20221119151953.png]]<br>$\quad$磁盘访问时间&#x3D;寻道时间+旋转时间+传送时间</p>
-<p>$\quad$旋转时间&#x3D;1&#x2F;RPM x 60s&#x2F;1min x 1&#x2F;2</p>
-<p>$\quad$传送时间 &#x3D; 1&#x2F;RPM x 1&#x2F;（平均扇区数&#x2F;磁道）x 60s&#x2F;1min</p>
-<p>$\quad$磁盘没电也能存储数据</p>
-<p>$\quad$固态硬盘（SSD）：</p>
-<p>$\quad$基于闪存芯片（半导体存储器）的存储技术，读比写快，以页为单位进行读写</p>
-<p>$\quad$速度： SRAM&gt;DRAM&gt;DISK</p>
-<h4 id="6-2-局部性"><a href="#6-2-局部性" class="headerlink" title="6.2 局部性"></a>6.2 局部性</h4><p>$\quad$时间局部性：被引用过的内存位置在不远的将来再次被多次引用</p>
-<p>$\quad$空间局部性：一个内存位置被引用，那么不远的将来引用其附近的内存位置</p>
-<p> $\quad$重复引用相同变量的程序拥有良好的时间局部性</p>
-<p>$\quad$步长为K的引用模式，步长越小，空间局部性越好</p>
-<p>$\quad$取指令循环具有好的时间与空间局部性</p>
-<p>存储器层次结构：<br>![[Pasted image 20221119152158.png]]<br>$\quad$思想：速度快容量小的存储设备作为速度慢容量大的存储设备的缓存</p>
-<h4 id="6-3-高速缓存（cache）"><a href="#6-3-高速缓存（cache）" class="headerlink" title="6.3 高速缓存（cache）"></a>6.3 高速缓存（cache）</h4><p>$\quad$第k+1层的存储器被划分成连续的数据对象组块，称为块 数据以块为单位来回复制 </p>
-<p>![[Pasted image 20221119152227.png]]</p>
+<p>$\quad$ 磁盘由盘片构成，每个盘片有2面或者称为表面，表面覆盖磁性记录材料，盘中央有一个可以旋转的主轴，使得盘片以固定的旋转速率旋转。每个表面是由一组称为磁道的同心圆组成的，每个磁道被划分为一组扇区，扇区之间由一组  间隙分隔开。</p>
+<p>$\quad$ 抽象化成逻辑块序列。</p>
+<p>$\quad$ 磁盘容量&#x3D;（字节数&#x2F;扇区）x（平均扇区数&#x2F;磁道）x（磁道数&#x2F;表面）x（表面数&#x2F;盘片）x（盘片数&#x2F;磁盘）</p>
+<p><img src="/../icsmg/20221119151953.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 磁盘访问时间&#x3D;寻道时间+旋转时间+传送时间</p>
+<p>$\quad$ 旋转时间&#x3D;1&#x2F;RPM x 60s&#x2F;1min x 1&#x2F;2</p>
+<p>$\quad$ 传送时间 &#x3D; 1&#x2F;RPM x 1&#x2F;（平均扇区数&#x2F;磁道）x 60s&#x2F;1min</p>
+<p>$\quad$ 磁盘没电也能存储数据</p>
+<p>$\quad$ 固态硬盘（SSD）：</p>
+<p>$\quad$ 基于闪存芯片（半导体存储器）的存储技术，读比写快，以页为单位进行读写</p>
+<p>$\quad$ 速度： SRAM&gt;DRAM&gt;DISK</p>
+<h4 id="6-2-局部性"><a href="#6-2-局部性" class="headerlink" title="6.2 局部性"></a>6.2 局部性</h4><p>$\quad$ 时间局部性：被引用过的内存位置在不远的将来再次被多次引用</p>
+<p>$\quad$ 空间局部性：一个内存位置被引用，那么不远的将来引用其附近的内存位置</p>
+<p> $\quad$ 重复引用相同变量的程序拥有良好的时间局部性</p>
+<p>$\quad$ 步长为K的引用模式，步长越小，空间局部性越好</p>
+<p>$\quad$ 取指令循环具有好的时间与空间局部性</p>
+<p>存储器层次结构：<br><img src="/../icsmg/20221119152158.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 思想：速度快容量小的存储设备作为速度慢容量大的存储设备的缓存</p>
+<h4 id="6-3-高速缓存（cache）"><a href="#6-3-高速缓存（cache）" class="headerlink" title="6.3 高速缓存（cache）"></a>6.3 高速缓存（cache）</h4><p>$\quad$ 第k+1层的存储器被划分成连续的数据对象组块，称为块 数据以块为单位来回复制 </p>
+<p><img src="/../icsmg/20221119152227.png" srcset="/img/loading.gif" lazyload></p>
 <p><strong>缓存命中</strong></p>
-<p>$\quad$当程序需要读取第k+1层的某个数据对象d时，首先在当前存储在k层的一个块中查找d，若d刚好存储在第k层中，那就是缓存命中。程序直接从第k层读取d。</p>
+<p>$\quad$ 当程序需要读取第k+1层的某个数据对象d时，首先在当前存储在k层的一个块中查找d，若d刚好存储在第k层中，那就是缓存命中。程序直接从第k层读取d。</p>
 <p><strong>缓存不命中</strong></p>
-<p>$\quad$第k层的缓存就从k+1层去除包含d的那个块，若k层已满，覆盖现存的一个块。这个过程叫做替换或者驱逐这个块。被驱逐的称为牺牲块，决定替换哪个由替换策略控制。</p>
+<p>$\quad$ 第k层的缓存就从k+1层去除包含d的那个块，若k层已满，覆盖现存的一个块。这个过程叫做替换或者驱逐这个块。被驱逐的称为牺牲块，决定替换哪个由替换策略控制。</p>
 <p>分类：</p>
-<p>$\quad$冷不命中（强制性不命中）：第k层为空（称为冷缓存）</p>
-<p>$\quad$冲突不命中：限制性的防治策略社对象映射到同一个缓存块</p>
-<p>$\quad$容量不命中：缓存太小了</p>
+<p>$\quad$ 冷不命中（强制性不命中）：第k层为空（称为冷缓存）</p>
+<p>$\quad$ 冲突不命中：限制性的防治策略社对象映射到同一个缓存块</p>
+<p>$\quad$ 容量不命中：缓存太小了</p>
 <p><strong>高速缓存存储器</strong></p>
-<p>$\quad$早期计算机系统的存储器层次结构只有三层：CPU寄存器，DRAM主存储器和磁盘。后插入了小的SRAM高速缓存，称为L1高速缓存</p>
-<p>$\quad$对于下列只讨论仅有L1高速缓存</p>
-<p>$\quad$考虑一个计算机系统，每个存储器地址有m位，形成M&#x3D;$2^m$个不同的地址。被组织成$S&#x3D;2^s$个高速缓存组的数组。每个组包含E个高速缓存行。每个行由$B&#x3D;2^b$个字节的数据块构成</p>
-<p>$\quad$将m个地址分为t位的标记位，s位的组索引，b位的块偏移</p>
-<p>$\quad$标记为表示取自哪个块群，有效位可以理解为是否缓存了东西<br>![[Pasted image 20221119152309.png]]<br>![[Pasted image 20221119152333.png]]<br>$\quad$cache容量 （所有块的大小 ）：     C&#x3D;SxExB</p>
+<p>$\quad$ 早期计算机系统的存储器层次结构只有三层：CPU寄存器，DRAM主存储器和磁盘。后插入了小的SRAM高速缓存，称为L1高速缓存</p>
+<p>$\quad$ 对于下列只讨论仅有L1高速缓存</p>
+<p>$\quad$ 考虑一个计算机系统，每个存储器地址有m位，形成M&#x3D;$2^m$个不同的地址。被组织成$S&#x3D;2^s$个高速缓存组的数组。每个组包含E个高速缓存行。每个行由$B&#x3D;2^b$个字节的数据块构成</p>
+<p>$\quad$ 将m个地址分为t位的标记位，s位的组索引，b位的块偏移</p>
+<p>$\quad$ 标记为表示取自哪个块群，有效位可以理解为是否缓存了东西<br><img src="/../icsmg/20221119152309.png" srcset="/img/loading.gif" lazyload><br><img src="/../icsmg/20221119152333.png" srcset="/img/loading.gif" lazyload><br>$\quad$ cache容量 （所有块的大小 ）：     C&#x3D;SxExB</p>
 <p><strong>直接映射高速缓存</strong></p>
-<p>$\quad$每个组只有一行（E&#x3D;1），称为直接映射高速缓存</p>
-<p>$\quad$高速缓存确定一个请求是否命中，然后抽取出被请求的字的过程，分为三步：</p>
+<p>$\quad$ 每个组只有一行（E&#x3D;1），称为直接映射高速缓存</p>
+<p>$\quad$ 高速缓存确定一个请求是否命中，然后抽取出被请求的字的过程，分为三步：</p>
 <p>1.组选择</p>
-<p>$\quad$从w的地址中取出s个组索引</p>
+<p>$\quad$ 从w的地址中取出s个组索引</p>
 <p>2.行匹配</p>
-<p>$\quad$只有一行，直接比对标记是否一致</p>
-<p>$\quad$最终结果：命中&#x2F;不命中</p>
+<p>$\quad$ 只有一行，直接比对标记是否一致</p>
+<p>$\quad$ 最终结果：命中&#x2F;不命中</p>
 <p>3.字抽取（缓存命中）</p>
-<p>  $\quad$把块看成一个字节的数组，字节偏移是到这个数组的一个索引</p>
-<p> $\quad$$\quad$行替换（缓存不命中）</p>
-<p>  $\quad$$\quad$从下一层取出被请求的块放入高速缓存行中，代替当前行</p>
+<p>  $\quad$ 把块看成一个字节的数组，字节偏移是到这个数组的一个索引</p>
+<p>$\quad$ $\quad$ 行替换（缓存不命中）</p>
+<p>$\quad$ $\quad$ 从下一层取出被请求的块放入高速缓存行中，代替当前行</p>
 <p><strong>组相连高速缓存</strong></p>
 <p>$\quad$ 1&lt;EC&#x2F;B</p>
 <p>$\quad$ 组选择：和上述一样</p>
-<p>$\quad$行匹配和字选择：检查多个行的标记位与有效位</p>
-<p>$\quad$行替换：空行优先，否则用策略替换LRU，FIFO（先进先出）LFU，随机替换</p>
+<p>$\quad$ 行匹配和字选择：检查多个行的标记位与有效位</p>
+<p>$\quad$ 行替换：空行优先，否则用策略替换LRU，FIFO（先进先出）LFU，随机替换</p>
 <p><strong>全相连高速缓存</strong></p>
-<p>$\quad$E&#x3D;C&#x2F;B</p>
-<p>$\quad$一个组包含所有的行</p>
-<p>$\quad$组选择：只有一个组</p>
-<p>$\quad$行匹配和字选择：同上</p>
-<p><strong>写</strong>:<br>$\quad$只写：立即将高速缓存块协会到低一层中；写回：推迟更新</p>
-<p>$\quad$写分配：加载入高速缓存。非写分配：避开高速缓存</p>
-<p>$\quad$不命中率&#x3D;不命中数量&#x2F;引用数量</p>
+<p>$\quad$ E&#x3D;C&#x2F;B</p>
+<p>$\quad$ 一个组包含所有的行</p>
+<p>$\quad$ 组选择：只有一个组</p>
+<p>$\quad$ 行匹配和字选择：同上</p>
+<p><strong>写</strong>:<br>$\quad$ 只写：立即将高速缓存块协会到低一层中；写回：推迟更新</p>
+<p>$\quad$ 写分配：加载入高速缓存。非写分配：避开高速缓存</p>
+<p>$\quad$ 不命中率&#x3D;不命中数量&#x2F;引用数量</p>
 <h5 id="6-5-编写高速缓存友好的代码"><a href="#6-5-编写高速缓存友好的代码" class="headerlink" title="6.5 编写高速缓存友好的代码"></a>6.5 编写高速缓存友好的代码</h5><p>$\quad$ 1.让最常见的情况运行最快</p>
 <p>$\quad$ 2.尽量减小每个循环内部的缓存不命中数量</p>
-<h5 id="6-6-高速缓存对程序性能的影响"><a href="#6-6-高速缓存对程序性能的影响" class="headerlink" title="6.6 高速缓存对程序性能的影响"></a>6.6 高速缓存对程序性能的影响</h5><p>$\quad$读吞吐量：从存储系统中读数据的速率  v&#x3D;n&#x2F;s</p>
+<h5 id="6-6-高速缓存对程序性能的影响"><a href="#6-6-高速缓存对程序性能的影响" class="headerlink" title="6.6 高速缓存对程序性能的影响"></a>6.6 高速缓存对程序性能的影响</h5><p>$\quad$ 读吞吐量：从存储系统中读数据的速率  v&#x3D;n&#x2F;s</p>
 <p>$\quad$ 重排列循环以提高空间局部性</p>
 <hr>
 
@@ -391,7 +399,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年2月18日</div>
+          <div>2023年2月19日</div>
         </div>
       
       
@@ -422,9 +430,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/18/9-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/" title="9-虚拟内存">
+                      <a href="/2023/02/18/3-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/" title="3-程序的机器级表示">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">9-虚拟内存</span>
+                        <span class="hidden-mobile">3-程序的机器级表示</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -432,8 +440,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/01/22/anime/" title="Anime">
-                        <span class="hidden-mobile">Anime</span>
+                      <a href="/2023/02/18/4-%E5%A4%84%E7%90%86%E5%99%A8%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/" title="4-处理器体系结构">
+                        <span class="hidden-mobile">4-处理器体系结构</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

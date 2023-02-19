@@ -23,10 +23,14 @@
 <meta property="og:site_name" content="Aki-yzh">
 <meta property="og:description" content="对应 CSAPP 第十二章节">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/20230216212506.png">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/20230216215854.png">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/20230216205835.png">
 <meta property="article:published_time" content="2023-02-18T14:47:57.000Z">
-<meta property="article:modified_time" content="2023-02-18T15:44:30.347Z">
+<meta property="article:modified_time" content="2023-02-19T05:38:04.979Z">
 <meta property="article:author" content="Aki-yzh">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aki-yzh.github.io/icsmg/20230216212506.png">
   
   
   
@@ -233,7 +237,7 @@
         
         
         
-          111 分钟
+          110 分钟
         
       </span>
     
@@ -276,7 +280,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年2月18日 晚上
+                    本文最后更新于：2023年2月19日 下午
                   
                 
               </p>
@@ -287,9 +291,9 @@
                 <hr>
 <h2 id="对应-CSAPP-第十二章节"><a href="#对应-CSAPP-第十二章节" class="headerlink" title="对应 CSAPP 第十二章节"></a>对应 CSAPP 第十二章节</h2><span id="more"></span>
 
-<h1 id="ICS"><a href="#ICS" class="headerlink" title="ICS"></a><a href="./1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8&%E7%9B%AE%E5%BD%95.md">ICS</a></h1><hr>
+<h1 id="ICS"><a href="#ICS" class="headerlink" title="ICS"></a><a href="https://aki-yzh.github.io/2023/02/18/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8&%E7%9B%AE%E5%BD%95">ICS</a></h1><hr>
 <h2 id="十二、并发编程"><a href="#十二、并发编程" class="headerlink" title="十二、并发编程"></a>十二、并发编程</h2><p>$\quad$ 使用应用级并发的应用程序称为并发程序，现代操作系统提供三种基本的构造并发程序的方法：<br>$\qquad$ 1. 进程<br>$\qquad$ 2.I&#x2F;O多路复用<br>$\qquad$ 3.线程</p>
-<h4 id="12-1-基于进程的并发编程"><a href="#12-1-基于进程的并发编程" class="headerlink" title="12.1 基于进程的并发编程"></a>12.1 基于进程的并发编程</h4><p>$\quad$在父进程中接受客户端连接请求，然后创建一个新的子进程来为每个新客户端提供服务。<br>服务器接收客户端的连接请求后，服务器<code>fork</code>出一个子进程-&gt;子进程关闭<code>listenfd</code>，父进程关闭<code>connfd</code>，避免内存泄漏-&gt;子进程执行完后自动关闭连接，父进程继续监听<br>$\quad$ 优点：简单，地址空间独立，共享状态信息<br>$\quad$ 缺点：难共享信息，进程间通信开销高</p>
+<h4 id="12-1-基于进程的并发编程"><a href="#12-1-基于进程的并发编程" class="headerlink" title="12.1 基于进程的并发编程"></a>12.1 基于进程的并发编程</h4><p>$\quad$ 在父进程中接受客户端连接请求，然后创建一个新的子进程来为每个新客户端提供服务。<br>服务器接收客户端的连接请求后，服务器<code>fork</code>出一个子进程-&gt;子进程关闭<code>listenfd</code>，父进程关闭<code>connfd</code>，避免内存泄漏-&gt;子进程执行完后自动关闭连接，父进程继续监听<br>$\quad$ 优点：简单，地址空间独立，共享状态信息<br>$\quad$ 缺点：难共享信息，进程间通信开销高</p>
 <p><strong>基于进程的并发echo服务器</strong>：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&quot;csapp.h&quot;</span></span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">echo</span><span class="hljs-params">(<span class="hljs-type">int</span> connfd)</span></span>;<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">sigchld_handler</span><span class="hljs-params">(<span class="hljs-type">int</span> sig)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">while</span>(<span class="hljs-built_in">waitpid</span>(<span class="hljs-number">-1</span>,<span class="hljs-number">0</span>,WNOHANG)&gt;<span class="hljs-number">0</span>)<br>        ;<br>    <span class="hljs-keyword">return</span>;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc,<span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> listenfd,connfd;<br>    <span class="hljs-type">socklen_t</span> clientlen;<br>    <span class="hljs-keyword">struct</span> <span class="hljs-title class_">sockaddr_storage</span> clientaddr;<br>    <span class="hljs-keyword">if</span>(argc != <span class="hljs-number">2</span>)<br>    &#123;<br>        <span class="hljs-built_in">fprintf</span>(stderr,<span class="hljs-string">&quot;usage: %s &lt;port&gt;\n&quot;</span>,argv[<span class="hljs-number">0</span>]);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>    &#125;<br>    <span class="hljs-built_in">Signal</span>(SIGCHLD,sigchld_handler);<br>    listenfd = <span class="hljs-built_in">Open_listenfd</span>(argv[<span class="hljs-number">1</span>]);<br>    <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>)<br>    &#123;<br>        clientfdlen = <span class="hljs-built_in">sizeof</span>(<span class="hljs-keyword">struct</span> sockaddr_storage);<br>        connfd = <span class="hljs-built_in">Accept</span>(listenfd,(SA *) &amp;clientaddr,&amp;clientlen);<br>        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">Fork</span>() == <span class="hljs-number">0</span>)<br>        &#123;<br>            <span class="hljs-built_in">Closr</span>(listenfd);<br>            <span class="hljs-built_in">echo</span>(connfd);<br>            <span class="hljs-built_in">Close</span>(connfd);<br>            <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>        &#125;<br>        <span class="hljs-built_in">Close</span>(connfd);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
@@ -310,9 +314,9 @@
 <p><strong>基于线程的并发echo服务器</strong>:</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&quot;csapp.h&quot;</span></span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">echo</span><span class="hljs-params">(<span class="hljs-type">int</span> connfd)</span></span>;<br><span class="hljs-function"><span class="hljs-type">void</span> *<span class="hljs-title">thread</span><span class="hljs-params">(<span class="hljs-type">void</span> vargp)</span></span>;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">(<span class="hljs-type">int</span> argc,<span class="hljs-type">char</span> **argv)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> listenfd,*connfdp;<br>    <span class="hljs-type">socklen_t</span> clientlen;<br>    <span class="hljs-keyword">struct</span> <span class="hljs-title class_">sockaddr_storage</span> clientaddr;<br>    <span class="hljs-type">pthread_t</span> tid;<br>    <span class="hljs-keyword">if</span>(argc != <span class="hljs-number">2</span>)<br>    &#123;<br>        <span class="hljs-built_in">fprintf</span>(stderr,<span class="hljs-string">&quot;usage: %s &lt;port&gt;\n&quot;</span>,argv[<span class="hljs-number">0</span>]);<br>        <span class="hljs-built_in">exit</span>(<span class="hljs-number">0</span>);<br>    &#125;<br>    listenfd = <span class="hljs-built_in">Open_listenfd</span>(argc[<span class="hljs-number">1</span>]);<br>    <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>)<br>    &#123;<br>        clientlen = <span class="hljs-built_in">sizeof</span>(<span class="hljs-keyword">struct</span> sockaddr_storage);<br>        connfdp = <span class="hljs-built_in">Malloc</span>(<span class="hljs-built_in">sizeof</span>(<span class="hljs-type">int</span>));<br>        *connfdp = <span class="hljs-built_in">Accept</span>(listenfd ,(SA *) &amp;clientaddr,&amp;clientlen);<br>        <span class="hljs-built_in">Pthread_creat</span>(&amp;tid,<span class="hljs-literal">NULL</span>,thread,connfdp);<br>    &#125;<br>&#125;<br><span class="hljs-comment">/* Thread routine */</span><br><span class="hljs-function"><span class="hljs-type">void</span> *<span class="hljs-title">thread</span><span class="hljs-params">(<span class="hljs-type">void</span> *vargp)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> connfd = *((<span class="hljs-type">int</span> *)vargp);<br>    <span class="hljs-built_in">Pthread_detach</span>(<span class="hljs-built_in">pthread_self</span>());<br>    <span class="hljs-built_in">Free</span>(vargp);<br>    <span class="hljs-built_in">echo</span>(connfd);<br>    <span class="hljs-built_in">Close</span>(connfd);<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">NULL</span>;<br>&#125;<br><br></code></pre></td></tr></table></figure>
 
-<h4 id="12-4-多线程程序中的共享变量"><a href="#12-4-多线程程序中的共享变量" class="headerlink" title="12.4 多线程程序中的共享变量"></a>12.4 多线程程序中的共享变量</h4><p>多线程的C程序中变量根据他们的存储类型倍映射到虚拟内存：<br>$\quad$<strong>全局变量</strong>：虚拟内存的读 &#x2F; 写区域只包含每个全局变量的一个实例<br>$\quad$<strong>本地自动变量</strong>：定义在函数内部但不<code>static</code>，每个线程的栈都包含它自己的所有本地自动变量的实例<br>$\quad$<strong>本地静态变量</strong>：只有一个实例，每个对等线程都读 &#x2F; 写这个实例</p>
+<h4 id="12-4-多线程程序中的共享变量"><a href="#12-4-多线程程序中的共享变量" class="headerlink" title="12.4 多线程程序中的共享变量"></a>12.4 多线程程序中的共享变量</h4><p>多线程的C程序中变量根据他们的存储类型倍映射到虚拟内存：<br>$\quad$ <strong>全局变量</strong>：虚拟内存的读 &#x2F; 写区域只包含每个全局变量的一个实例<br>$\quad$ <strong>本地自动变量</strong>：定义在函数内部但不<code>static</code>，每个线程的栈都包含它自己的所有本地自动变量的实例<br>$\quad$ <strong>本地静态变量</strong>：只有一个实例，每个对等线程都读 &#x2F; 写这个实例</p>
 <p><strong>共享变量</strong><br>变量是共享的 ⇔ 它的一个实例被一个以上的线程引用<br>本地自动变量也能被共享</p>
-<h4 id="12-5-用信号量同步线程"><a href="#12-5-用信号量同步线程" class="headerlink" title="12.5 用信号量同步线程"></a>12.5 用信号量同步线程</h4><p><strong>进程图</strong><br>$\quad$ 将n个并发线程的执行模型化为一条n维笛卡尔空间中的轨迹线，每条轴k对应于线程k的进度。<br>$\qquad$ 对$H_1,L_1,U_1,H_2,L_2,S_1,T_1,U_2,S_2,T_2$ 的轨迹线：<br>![[Pasted image 20230216212506.png]]<br><strong>信号量</strong><br>![[Pasted image 20230216215854.png]]<br>$\quad$ 具有非负整数值的全局变量<code>s</code>，两种操作：<br>$\quad$ <code>P(s)</code>：如果<code>s</code>非零，则将<code>s</code>减1，返回；<code>s</code>为0，就挂起线程，直到<code>s</code>变为非0，<code>V</code>会重启这个线程，重启后<code>P</code>将<code>s</code>减1，返回<br>$\quad$ <code>V(s)</code>：将<code>s</code>加1，如果有线程阻塞在<code>P</code>且等着<code>s</code>变为非零，则<code>V</code>会重启这些线程中的一个<br>$\quad$ 同一时间，只有一个<code>P</code>或一个<code>V</code>能改变<code>s</code>变量；<br>$\quad$ 多个线程在等待同一个信号量时，无法预测<code>V</code>要重启哪个线程<br>$\quad$ 信号量不变性_：信号量不会为负<br>P和V的包装函数：</p>
+<h4 id="12-5-用信号量同步线程"><a href="#12-5-用信号量同步线程" class="headerlink" title="12.5 用信号量同步线程"></a>12.5 用信号量同步线程</h4><p><strong>进程图</strong><br>$\quad$ 将n个并发线程的执行模型化为一条n维笛卡尔空间中的轨迹线，每条轴k对应于线程k的进度。<br>$\qquad$ 对$H_1,L_1,U_1,H_2,L_2,S_1,T_1,U_2,S_2,T_2$ 的轨迹线：<br><img src="/../icsmg/20230216212506.png" srcset="/img/loading.gif" lazyload><br><strong>信号量</strong><br><img src="/../icsmg/20230216215854.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 具有非负整数值的全局变量<code>s</code>，两种操作：<br>$\quad$ <code>P(s)</code>：如果<code>s</code>非零，则将<code>s</code>减1，返回；<code>s</code>为0，就挂起线程，直到<code>s</code>变为非0，<code>V</code>会重启这个线程，重启后<code>P</code>将<code>s</code>减1，返回<br>$\quad$ <code>V(s)</code>：将<code>s</code>加1，如果有线程阻塞在<code>P</code>且等着<code>s</code>变为非零，则<code>V</code>会重启这些线程中的一个<br>$\quad$ 同一时间，只有一个<code>P</code>或一个<code>V</code>能改变<code>s</code>变量；<br>$\quad$ 多个线程在等待同一个信号量时，无法预测<code>V</code>要重启哪个线程<br>$\quad$ 信号量不变性_：信号量不会为负<br>P和V的包装函数：</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">P</span><span class="hljs-params">(<span class="hljs-type">sem_t</span> *s)</span></span>;<span class="hljs-comment">/* Wrapper function for sem_wait */</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">V</span><span class="hljs-params">(<span class="hljs-type">sem_t</span> *s)</span></span>;<span class="hljs-comment">/* Wrapper function for sem_post */</span><br></code></pre></td></tr></table></figure>
 <p><strong>调度共享资源</strong></p>
 <ol>
@@ -330,15 +334,15 @@ $\qquad$ <strong>第二类</strong>：写者优先，写者后到达的读者也
 <p>如：不要用互斥锁保护同一个全局变量，在每个对等线程中用私有变量计算部分和（每个对等线程把部分和累计到一个私有数组元素中）</p>
 <p>再优化：累积到一个局部变量中，最后再移动到数组中</p>
 <p><strong>刻画并行程序的性能</strong></p>
-<p>$\quad$线程数 &lt; 核数：时间降低：线程数增加一倍，时间下降一半<br>$\quad$线程数 &gt; 核数：时间增加（一点）：上下文切换开销</p>
-<p>公式：<br>$\quad$<strong>加速比</strong>：$S_p &#x3D; \frac{T_1}{T_p}$，$p$ 为处理器核数，$T_K$ 为在 k 个核上的运行时间<br>$\qquad$T1 为程序顺序执行版本的执行时间：$S_p$ 为 <em>绝对加速比</em><br>$\qquad$T1 为程序并行版本在一个核上的执行时间：$S_p$ 为 <em>相对加速比</em><br>$\quad$<strong>效率</strong>：$E_p &#x3D; \frac{S_p}{p}&#x3D;\frac{T_1}{p{T_p}}$：百分比，对由于并行化造成的开销的衡量<br>$\quad$<strong>弱扩展</strong>：增加处理器数量的同时，增加问题的规模，使得每个处理器执行的工作量保持不变：更加真实</p>
-<h4 id="12-7-其他并发问题"><a href="#12-7-其他并发问题" class="headerlink" title="12.7 其他并发问题"></a>12.7 其他并发问题</h4><h3 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h3><p>$\quad$<strong>线程安全的函数</strong>：当且仅当它被多个并发线程反复调用时，能够一直产生正确的结果<br>$\quad$线程不安全函数类：<br>$\quad$ 1.  不保护共享变量的函数<br>$\quad$ 2.  保持跨越多个调用的状态的函数（如：<code>rand</code>，<code>srand</code>，当前调用的结果取决于前一次调用的结果，多线程中无法获得相同的序列）<br>$\quad$ 3.  返回指向静态变量指针的函数：<code>ctime, gethostbyname</code>：正在被一个线程使用的结果可能被另一个线程覆盖<br>$\quad$ 解决方法：<br>$\quad$$\quad$ 1.  重写函数<br>$\quad$$\quad$ 2.  将线程不安全函数与互斥锁联系起来：每次调用时用互斥锁加锁，将返回的结果复制到一个私有的内存位置，再解锁（包装函数）<br>$\quad$ 4.  调用线程不安全函数的函数（不一定：如果是1，3类函数，加了互斥锁就是安全的，2只有重写函数）</p>
+<p>$\quad$ 线程数 &lt; 核数：时间降低：线程数增加一倍，时间下降一半<br>$\quad$ 线程数 &gt; 核数：时间增加（一点）：上下文切换开销</p>
+<p>公式：<br>$\quad$<strong>加速比</strong>：$S_p &#x3D; \frac{T_1}{T_p}$，$p$ 为处理器核数，$T_K$ 为在 k 个核上的运行时间<br>$\qquad$ T1 为程序顺序执行版本的执行时间：$S_p$ 为 <em>绝对加速比</em><br>$\qquad$ T1 为程序并行版本在一个核上的执行时间：$S_p$ 为 <em>相对加速比</em><br>$\quad$<strong>效率</strong>：$E_p &#x3D; \frac{S_p}{p}&#x3D;\frac{T_1}{p{T_p}}$：百分比，对由于并行化造成的开销的衡量<br>$\quad$<strong>弱扩展</strong>：增加处理器数量的同时，增加问题的规模，使得每个处理器执行的工作量保持不变：更加真实</p>
+<h4 id="12-7-其他并发问题"><a href="#12-7-其他并发问题" class="headerlink" title="12.7 其他并发问题"></a>12.7 其他并发问题</h4><h3 id="线程安全"><a href="#线程安全" class="headerlink" title="线程安全"></a>线程安全</h3><p>$\quad$<strong>线程安全的函数</strong>：当且仅当它被多个并发线程反复调用时，能够一直产生正确的结果<br>$\quad$ 线程不安全函数类：<br>$\quad$ 1.  不保护共享变量的函数<br>$\quad$ 2.  保持跨越多个调用的状态的函数（如：<code>rand</code>，<code>srand</code>，当前调用的结果取决于前一次调用的结果，多线程中无法获得相同的序列）<br>$\quad$ 3.  返回指向静态变量指针的函数：<code>ctime, gethostbyname</code>：正在被一个线程使用的结果可能被另一个线程覆盖<br>$\quad$ 解决方法：<br>$\quad$ $\quad$ 1.  重写函数<br>$\quad$ $\quad$ 2.  将线程不安全函数与互斥锁联系起来：每次调用时用互斥锁加锁，将返回的结果复制到一个私有的内存位置，再解锁（包装函数）<br>$\quad$ 4.  调用线程不安全函数的函数（不一定：如果是1，3类函数，加了互斥锁就是安全的，2只有重写函数）</p>
 <p><strong>可重入性</strong></p>
-<p>$\quad$被多个线程调用时，不会引用_任何_共享数据<br>$\quad$线程安全包含可重入<br>$\quad$<strong>显式可重入</strong>：所有的函数参数都是传值传递，所有的数据引用都是本地的自动栈变量<br>$\quad$隐式可重入：参数有传指针：小心使用就是可重入的</p>
-<p>$\quad$ <strong>竞争</strong><br>$\quad$一个程序的正确性依赖于一个线程要在另一个线程到达 y 点之前到达它的控制流中的 x 点：程序员假定线程将通过某种特殊的轨迹线穿过执行状态空间<br>$\quad$消除竞争：通过<code>Malloc - Free</code>传参等</p>
+<p>$\quad$ 被多个线程调用时，不会引用_任何_共享数据<br>$\quad$ 线程安全包含可重入<br>$\quad$ <strong>显式可重入</strong>：所有的函数参数都是传值传递，所有的数据引用都是本地的自动栈变量<br>$\quad$ 隐式可重入：参数有传指针：小心使用就是可重入的</p>
+<p>$\quad$ <strong>竞争</strong><br>$\quad$ 一个程序的正确性依赖于一个线程要在另一个线程到达 y 点之前到达它的控制流中的 x 点：程序员假定线程将通过某种特殊的轨迹线穿过执行状态空间<br>$\quad$ 消除竞争：通过<code>Malloc - Free</code>传参等</p>
 <p>$\quad$<strong>死锁</strong></p>
 <p>$\quad$ 一组线程被阻塞，等待一个永远不会为真的条件</p>
-<p>![[Pasted image 20230216205835.png]]<br>$\quad$ 出现：程序员使用P和V信号不当，导致两个信号量的禁止区域重叠<br>$\quad$   避免死锁：<strong>互斥锁加锁顺序规则</strong>：给定所有互斥操作的一个全序，如果每个线程都是以一种顺序获得互斥锁并以相反的顺序释放，那么这个程序就是无死锁的</p>
+<p><img src="/../icsmg/20230216205835.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 出现：程序员使用P和V信号不当，导致两个信号量的禁止区域重叠<br>$\quad$   避免死锁：<strong>互斥锁加锁顺序规则</strong>：给定所有互斥操作的一个全序，如果每个线程都是以一种顺序获得互斥锁并以相反的顺序释放，那么这个程序就是无死锁的</p>
 <h2 id="活锁：冲突碰撞-饥饿：如高优先度进程阻塞低优先度进程"><a href="#活锁：冲突碰撞-饥饿：如高优先度进程阻塞低优先度进程" class="headerlink" title=" 活锁：冲突碰撞 饥饿：如高优先度进程阻塞低优先度进程
  "></a> <strong>活锁</strong>：冲突碰撞<br> <strong>饥饿</strong>：如高优先度进程阻塞低优先度进程
  </h2>
@@ -377,7 +381,7 @@ $\qquad$ <strong>第二类</strong>：写者优先，写者后到达的读者也
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年2月18日</div>
+          <div>2023年2月19日</div>
         </div>
       
       
@@ -408,9 +412,9 @@ $\qquad$ <strong>第二类</strong>：写者优先，写者后到达的读者也
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/18/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8&amp;%E7%9B%AE%E5%BD%95/" title="1-计算机系统漫游&amp;目录">
+                      <a href="/2023/02/18/11-%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/" title="11-网络编程">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">1-计算机系统漫游&amp;目录</span>
+                        <span class="hidden-mobile">11-网络编程</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -418,8 +422,8 @@ $\qquad$ <strong>第二类</strong>：写者优先，写者后到达的读者也
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/18/10-%E7%B3%BB%E7%BB%9F%E7%BA%A7IO/" title="10-系统级IO">
-                        <span class="hidden-mobile">10-系统级IO</span>
+                      <a href="/2023/02/18/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8&amp;%E7%9B%AE%E5%BD%95/" title="1-计算机系统漫游&amp;目录">
+                        <span class="hidden-mobile">1-计算机系统漫游&amp;目录</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
