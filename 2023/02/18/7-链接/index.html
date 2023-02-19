@@ -25,7 +25,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://aki-yzh.github.io/icsmg/7.png">
 <meta property="article:published_time" content="2023-02-18T14:47:57.000Z">
-<meta property="article:modified_time" content="2023-02-19T06:36:26.081Z">
+<meta property="article:modified_time" content="2023-02-19T07:06:01.380Z">
 <meta property="article:author" content="Aki-yzh">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://aki-yzh.github.io/icsmg/7.png">
@@ -300,7 +300,7 @@
 <p>$\quad$ 目标文件有三种形式：<br>$\quad$ $\quad$ 1.可重定位目标文件：包含二进制代码和数据，可以在编译时和其他可重定位文件合并。<br>$\quad$  $\quad$ $\quad$ .text:已编译程序的机器代码<br>$\quad$ $\quad$ $\quad$.rodata：只读数据，比如printf语句中的格式串“%d……”和开关语句的跳转表<br>$\quad$ $\quad$ $\quad$.data：已经初始化的全局和静态C变量<br>$\quad$ $\quad$ $\quad$.bss: 未初始化的全局和静态C变量<br>$\quad$ $\quad$ $\quad$.symtab：符号表<br>$\quad$ $\quad$ $\quad$.debug：调试符号表<br>$\quad$ $\quad$ $\quad$ 其余不重要</p>
 <p><img src="/../icsmg/20221119221349.png" srcset="/img/loading.gif" lazyload><br>$\quad$ $\quad$ $\quad$ $\quad$ <strong>符号表</strong><br>$\quad$ $\quad$ $\quad$ $\quad$ $\quad$ 对于一个模块m<br>$\quad$ $\quad$ $\quad$ $\quad$ $\quad$ 非静态的局部变量不在符号表里，由栈进行管理。<br>$\quad$ $\quad$ $\quad$ $\quad$ $\quad$ $\quad$ 有以下3种不同符号：<br>$\quad$ $\quad$ $\quad$ $\quad$ $\quad$ $\quad$ 1.由模块m定义并能被其他模块引用的全局符号（GLOBAL），对应于非静态的C函数和全局变量<br>$\quad$ $\quad$ $\quad$ $\quad$ $\quad$ $\quad$ 2.有其他模块定义并能被模块m引用的全局符号，成为外部符号，对应于在其他模块定义的非静态C函数和全局变量<br>$\quad$ $\quad$ $\quad$ $\quad$ $\quad$  $\quad$ 3.只被m定义和引用的局部符号（LOCAL），对应于带static属性的C函数和全局变量<br>$\quad$ $\quad$ $\quad$ $\quad$ $\quad$ 伪节：<br>$\quad$ $\quad$ $\quad$ $\quad$ $\quad$ $\quad$ ABS：不该被重定位的表<br>$\quad$ $\quad$ $\quad$ $\quad$ $\quad$ $\quad$ UNDEF:未被定义的符号，代表在本目标模块中被引用，却在其他地方定义的符号<br>$\quad$ $\quad$ $\quad$ $\quad$ $\quad$ $\quad$ COMMON 未初始化的全局变量<br>$\quad$ $\quad$ bind表示符号是全局还是局部（GLOBAL or LOCAL），type表示类型（FUNC or OBJECT）ndx表示所在的表（由节头部表中代表的整数索引或者UND表示）</p>
 <p>$\quad$ $\quad$ 2.可执行目标文件：可以直接被复制到内存并执行，不在需要.rel节<br>$\quad$ $\quad$ 3.共享目标文件：特殊的可重定位目标文件，可以在加载或者运行时被动态地加载进内存并链接。</p>
-<p>$\quad$ 符号解析：<br>$\quad$ $\quad$ 编译器向汇编器输出每个全局符号，或者是强或者是弱，而汇编器隐含地把这个信息编码在可重定位目标文件的符号表里。函数和已初始化的全局变量是强符号，未初始化的全局变量时弱符号。<br>$\quad$ $\quad$ 规则：不允许有多个同名的强符号，优先选择强符号，不然任意选择。<br>$\quad$ 与静态库链接：<br>$\quad$ $\quad$ 所有的编译系统都提供一种机制，把所有相关的目标文件打包成一个单独的文件，称为静态库。可以用作链接器的输入。当链接器构造一个输出的可执行文件时，它只复制静态库里被应用程序引用的目标模块。<br>$\quad$ $\quad$ 利用静态库减少了可执行文件在磁盘和内存中的大小<br><img src="/../icsmg/0230215235042.png" srcset="/img/loading.gif" lazyload><br>  $\quad$ 重定位：<br>$\quad$ 重定位由两步组成<br>$\quad$ $\quad$ $\quad$ 1.重定位节和符号定义：链接器把所有相同类型的节合并为同一类型的新的聚合节，内存地址赋给新的聚合节，此时程序中的每条指令和全局变量都有唯一的运行时的内存地址了。<br>$\quad$ $\quad$ $\quad$ 2.重定位节中的符号引用：修改符号引用使其指向正确的运行地址。<br>$\quad$ $\quad$ $\quad$ 重定位类型：<br>$\quad$ $\quad$ $\quad$ $\quad$ 1.R_X86_64_PC32：PC相对引用，距离PC当前运行值的偏移量<br>$\quad$ $\quad$ $\quad$ $\quad$ 2.R_X86_64_32:绝对引用，不需要进一步修改<br>$\quad$ $\quad$ $\quad$ $\quad$ 汇编器会在后一行上告知进行何种引用<br>$\quad$ $\quad$ $\quad$ $\quad$ 重定位的计算参考书P481，分为重定位相对引用的计算和绝对引用的计算。<br>$\quad$ $\quad$ $\quad$ 相对引用：<br>$\quad$ $\quad$ $\quad$ $\quad$ ADDR（s)&#x3D;ADDR(.text)<br>$\quad$ $\quad$ $\quad$ $\quad$ ADDR(r.symbol)&#x3D;ADDR(函数\变量名)<br>$\quad$ $\quad$ $\quad$ $\quad$ 运行时地址refaddr&#x3D;ADDR(s)+r.offset<br>$\quad$ $\quad$ $\quad$ $\quad$ *refptr&#x3D;ADDR(r.symbol)+r.addend-refaddr<br>$\quad$ $\quad$ $\quad$ 绝对引用：<br>$\quad$ $\quad$ $\quad$ $\quad$ ADDR(r.symbol)&#x3D;ADDR(函数\变量名)<br>$\quad$ $\quad$ $\quad$ $\quad$ *refptr&#x3D;ADDR（r.symbol）+r.addend<br>$\quad$ 加载可执行目标文件：<br>$\quad$ $\quad$ 把程序复制到内存并运行的过程叫做加载<br>$\quad$ $\quad$ 在程序头部表的引导下，加载器把可执行文件的片复制到代码段和数据段，接着加载器跳转到程序的入口点，即_start函数的地址。</p>
+<p>$\quad$ 符号解析：<br>$\quad$ $\quad$ 编译器向汇编器输出每个全局符号，或者是强或者是弱，而汇编器隐含地把这个信息编码在可重定位目标文件的符号表里。函数和已初始化的全局变量是强符号，未初始化的全局变量时弱符号。<br>$\quad$ $\quad$ 规则：不允许有多个同名的强符号，优先选择强符号，不然任意选择。<br>$\quad$ 与静态库链接：<br>$\quad$ $\quad$ 所有的编译系统都提供一种机制，把所有相关的目标文件打包成一个单独的文件，称为静态库。可以用作链接器的输入。当链接器构造一个输出的可执行文件时，它只复制静态库里被应用程序引用的目标模块。<br>$\quad$ $\quad$ 利用静态库减少了可执行文件在磁盘和内存中的大小<br><img src="/../icsmg/20230215235042.png" srcset="/img/loading.gif" lazyload><br>  $\quad$ 重定位：<br>$\quad$ 重定位由两步组成<br>$\quad$ $\quad$ $\quad$ 1.重定位节和符号定义：链接器把所有相同类型的节合并为同一类型的新的聚合节，内存地址赋给新的聚合节，此时程序中的每条指令和全局变量都有唯一的运行时的内存地址了。<br>$\quad$ $\quad$ $\quad$ 2.重定位节中的符号引用：修改符号引用使其指向正确的运行地址。<br>$\quad$ $\quad$ $\quad$ 重定位类型：<br>$\quad$ $\quad$ $\quad$ $\quad$ 1.R_X86_64_PC32：PC相对引用，距离PC当前运行值的偏移量<br>$\quad$ $\quad$ $\quad$ $\quad$ 2.R_X86_64_32:绝对引用，不需要进一步修改<br>$\quad$ $\quad$ $\quad$ $\quad$ 汇编器会在后一行上告知进行何种引用<br>$\quad$ $\quad$ $\quad$ $\quad$ 重定位的计算参考书P481，分为重定位相对引用的计算和绝对引用的计算。<br>$\quad$ $\quad$ $\quad$ 相对引用：<br>$\quad$ $\quad$ $\quad$ $\quad$ ADDR（s)&#x3D;ADDR(.text)<br>$\quad$ $\quad$ $\quad$ $\quad$ ADDR(r.symbol)&#x3D;ADDR(函数\变量名)<br>$\quad$ $\quad$ $\quad$ $\quad$ 运行时地址refaddr&#x3D;ADDR(s)+r.offset<br>$\quad$ $\quad$ $\quad$ $\quad$ *refptr&#x3D;ADDR(r.symbol)+r.addend-refaddr<br>$\quad$ $\quad$ $\quad$ 绝对引用：<br>$\quad$ $\quad$ $\quad$ $\quad$ ADDR(r.symbol)&#x3D;ADDR(函数\变量名)<br>$\quad$ $\quad$ $\quad$ $\quad$ *refptr&#x3D;ADDR（r.symbol）+r.addend<br>$\quad$ 加载可执行目标文件：<br>$\quad$ $\quad$ 把程序复制到内存并运行的过程叫做加载<br>$\quad$ $\quad$ 在程序头部表的引导下，加载器把可执行文件的片复制到代码段和数据段，接着加载器跳转到程序的入口点，即_start函数的地址。</p>
 <h4 id="动态链接"><a href="#动态链接" class="headerlink" title="动态链接"></a>动态链接</h4><p>$\quad$ 共享库是一个目标模块，在运行或加载时，可以加载到任意的内存地址，并和一个在内存中的程序链接起来，这个过程叫做动态链接，是由一个叫做动态链接器的程序来执行的。</p>
 <p>!<img src="/../icsmg/20221119230728.png" srcset="/img/loading.gif" lazyload></p>
 <p>$\quad$ $\quad$ 动态链接器先重定位libc.so文本和数据到某个内存段，在重定位 libvector.so的文本和数据到另一个内存段，最后重定位二者中所有对定义的符号的引用<br>$\quad$ 共享库的一个主要目的就是允许多个正在运行的进程共享内存中相同的库代码，节约宝贵的内存资源。<br>$\quad$ 可以加载无需重定位的代码叫做位置无关代码(PIC)，共享库的编译必须总是使用该选项。<br>$\quad$ 在数据段开始的地方创建全局偏移量表（GOT）。<br>$\quad$ 延迟绑定能够避免动态链接器在加载时进行不必要的重定位。<br>$\quad$ 过程链接表（PLT）PLT[0]特殊，PLT[1]调用系统启动函数，从PLT[2]开始调用用户代码调用的函数
@@ -380,9 +380,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/18/5-%E4%BC%98%E5%8C%96%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD/" title="5-优化程序性能">
+                      <a href="/2023/02/18/3-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/" title="3-程序的机器级表示">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">5-优化程序性能</span>
+                        <span class="hidden-mobile">3-程序的机器级表示</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -390,8 +390,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/01/22/anime/" title="Anime">
-                        <span class="hidden-mobile">Anime</span>
+                      <a href="/2023/02/18/6-%E5%AD%98%E5%82%A8%E5%99%A8%E5%B1%82%E6%AC%A1%E7%BB%93%E6%9E%84/" title="6-存储器层次结构">
+                        <span class="hidden-mobile">6-存储器层次结构</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
