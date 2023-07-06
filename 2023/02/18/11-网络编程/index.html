@@ -1,0 +1,909 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#50d0d0">
+  <meta name="author" content="Aki-yzh">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="对应 CSAPP 第十一章节">
+<meta property="og:type" content="article">
+<meta property="og:title" content="11-网络编程">
+<meta property="og:url" content="https://aki-yzh.github.io/2023/02/18/11-%E7%BD%91%E7%BB%9C%E7%BC%96%E7%A8%8B/index.html">
+<meta property="og:site_name" content="Aki-yzh">
+<meta property="og:description" content="对应 CSAPP 第十一章节">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/11.png">
+<meta property="article:published_time" content="2023-02-18T03:00:00.000Z">
+<meta property="article:modified_time" content="2023-03-19T13:53:36.662Z">
+<meta property="article:author" content="Aki-yzh">
+<meta property="article:tag" content="CSAPP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aki-yzh.github.io/icsmg/11.png">
+  
+  
+  
+  <title>11-网络编程 - Aki-yzh</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/icon_gundam/iconfont.css">
+<link rel="stylesheet" href="/css/touming.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"aki-yzh.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+ 
+
+
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Aki-yzh</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://aki-yzh.github.io/2023/03/12/GUNPLA/">
+                <i class="iconfont icon-gaoda"></i>
+                <span>高达</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://aki-yzh.github.io/2023/03/12/anime/">
+                <i class="iconfont icon-bilibili-fill"></i>
+                <span>番剧</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/../icsmg/top.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="11-网络编程"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-02-18 11:00" pubdate>
+          2023年2月18日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          7.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          65 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">11-网络编程</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年3月19日 晚上
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <hr>
+<h2 id="对应-CSAPP-第十一章节"><a href="#对应-CSAPP-第十一章节" class="headerlink" title="对应 CSAPP 第十一章节"></a>对应 CSAPP 第十一章节</h2><span id="more"></span>
+
+
+
+<h1 id="ICS"><a href="#ICS" class="headerlink" title="ICS"></a><a href="https://aki-yzh.github.io/2023/02/18/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8&%E7%9B%AE%E5%BD%95">ICS</a></h1><hr>
+<h2 id="十一、网络编程"><a href="#十一、网络编程" class="headerlink" title="十一、网络编程"></a>十一、网络编程</h2><h4 id="11-1-客户端-服务器编程模型"><a href="#11-1-客户端-服务器编程模型" class="headerlink" title="11.1 客户端-服务器编程模型"></a>11.1 客户端-服务器编程模型</h4><p> $\quad$ 每个网络应用都是基于客户端-服务器编程模型的。采用这个模型，一个应用是由一个服务器进程和一个或者多个客户端进程组成。服务器管理某种资源，并且通过操作这种资源来为他的客户端提供某种服务。（<strong>客户端和服务器都是进程</strong>）<br> $\quad$ 客户端-服务器变成模型的基本操作是事务：<br>  $\qquad$ 1) 当一个客户端需要服务时，向服务器发送一个请求<br>  $\qquad$ 2) 服务器收到请求，进行解释并以适当方式操作它的资源<br>  $\qquad$ 3) 服务器给客户端发送一个响应，并等待下一个请求<br>  $\qquad$ 4) 客户端收到响应并处理它<br>  <img src="/../icsmg/20230117150926.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="11-2-网络"><a href="#11-2-网络" class="headerlink" title="11.2 网络"></a>11.2 网络</h4><p>$\quad$ 对于主机而言，网络只是又一种I&#x2F;O设备，是数据源和数据的接收方。<br>$\quad$ 物理上来说，网络是一个按照地理位置远近组织的层次系统<br>$\quad$ 最底层是LAN（局域网），最流行的局域网技术是以太网（Ethernet）<br><img src="/../icsmg/20230117152239.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 一个以太网段包括一些电缆和一个集线器。以太网段中每台主机都能看到每个位。</p>
+<p>$\qquad$ 每个以太网适配器都有一个全球唯一的48位地址。一台主机可以发送一段位（称为帧）到这个网段内的任何其他主机。每个帧包括一些固定数量的头部位，用来标识此帧的源和目的地址以及此帧的长度，此后紧随的就是数据位的有效载荷。每个主机适配器都能看到这个帧，但只有目的主机实际读取它。</p>
+<p>$\quad$ 使用电缆和网桥，多个以太网段可以连接成较大的局域网，称为桥接以太网。<br><img src="/../icsmg/20230117152253.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 多个不兼容的局域网通过路由器连接，组成一个互联网络（internet）<br><img src="/../icsmg/20230117152436.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 路由器间点到点高速连接称为广域网（WAN）</p>
+<p>$\quad$ 互联网协议用于消除不同局域网和广域网之间的差异，控制主机和路由器协同工作实现数据传输。<br>$\quad$ 具有两种基本能力：<br>$\qquad$ 命名机制：唯一标识主机<br>$\qquad$ 传送机制：把数据位捆扎成不连续的片（称为包（包头包含包的大小与源主机目的主机的地址））的同一方式。<br>$\quad$ 数据传输的8个基本步骤：<br>$\qquad$ 1)  客户端从虚拟地址空间复制数据到内核缓冲区<br>$\qquad$ 2) 主机A协议软件在数据前附加包头和帧头创建帧<br>$\qquad$ 3) LAN1适配器将帧复制到网络上<br>$\qquad$ 4) 路由器读取帧并传送到协议软件<br>$\qquad$ 5) 路由器从包头提取目的互联网地址，脱落旧帧头，加上新帧头，将帧传送到适配器<br>$\qquad$ 6) LAN2适配器将帧复制到网络上<br>$\qquad$ 7) 主机B的适配器读取此帧并把它传送到协议软件<br>$\qquad$ 8) 主机B读取帧，剥落包头和帧头<br><img src="/../icsmg/20230117152936.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="11-3-全球IP因特网"><a href="#11-3-全球IP因特网" class="headerlink" title="11.3 全球IP因特网"></a>11.3 全球IP因特网</h4><p>$\quad$ 因特网应用程序的基本硬件与软件结构：<br><img src="/../icsmg/20230117153046.png" srcset="/img/loading.gif" lazyload><br>$\quad$ TCP&#x2F;IP协议（传输控制协议&#x2F;互联网络协议）：<br>   $\quad$ 几乎每个现代计算机系统都支持<br>   $\quad$ 实际上是个协议族：<br>$\qquad$ $\quad$ IP：基本命名方法和递送机制<br>$\qquad$ $\qquad$ IP机制是不可靠的，不会试图恢复丢失的数据报<br>$\qquad$ $\quad$ UDP：扩展IP协议（进程间传送）<br>$\qquad$ $\quad$ TCP：可靠的全双工连接<br>$\quad$ 从程序员角度看因特网：<br>$\qquad$ 主机集合，32位IP地址<br>$\qquad$ P地址映射为标识符（因特网域名）<br>$\qquad$ 因特网主机上的进程能通过连接和任何其他因特网主机上的进程通信</p>
+<h6 id="IP地址："><a href="#IP地址：" class="headerlink" title="IP地址："></a>IP地址：</h6><p> $\quad$ 一个IP地址就是个32位无符号整数，因特网客户端和服务器相互通信时使用的就是IP地址。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">/* IP address structure */</span><br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">in_addr</span>&#123;<br>    <span class="hljs-type">uint32_t</span> s_addr;<span class="hljs-comment">/* Address in network byte order(big - endian)*/</span><br>&#125;;<span class="hljs-comment">//in后缀表示internet</span><br></code></pre></td></tr></table></figure>
+<p>$\quad$ 网络字节顺序：大端字节顺序-&gt;主机字节顺序可能和网络字节顺序不一样<br>$\quad$ 通过如下函数实现网络与主机字节顺序转换<br><img src="/../icsmg/20230117153705.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 表示：点分十进制（每个字节用它的十进制表示）<br>$\quad$ 如 128.2.194.242就是地址0x8002c2f2的点分十进制表示。<br>$\quad$ 通过如下函数进行转换<br><img src="/../icsmg/20230117153847.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="因特网域名："><a href="#因特网域名：" class="headerlink" title="因特网域名："></a>因特网域名：</h6><p>$\quad$ 用句点风格的单词，域名集合形成了一个层次结构，每个域名编码了它在这个层次结构中的位置。<br><img src="/../icsmg/20230117154126.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 域名系统DNS<br>$\quad$ 从概念上讲，程序员可以把DNS数据库视为数百万条主机条目的集合<br>$\quad$ 每个主机条目定义了域名和IP地址之间的映射<br>$\quad$ 在数字意义上，主机条目是域名和IP地址的等价类</p>
+<h6 id="因特网连接："><a href="#因特网连接：" class="headerlink" title="因特网连接："></a>因特网连接：</h6><p>$\quad$ 点对点的：连接一对进程<br>$\quad$ 全双工的：数据可以同时双向流动<br>$\quad$ 可靠的：由源进程发出的字节流最后被目的进程以它发出的顺序收到它<br>$\quad$ 套接字：一个套接字是连接的一个端点，每个套接字都有相应的套接字地址<br>$\quad$ 套接字由一个因特网地址和一个16位的整数端口组成<br>$\quad$ 客户端套接字地址中的端口由内核自动分配，称为临时端口<br>$\quad$ 服务器套接字地址端口通常是某个知名端口<br>$\qquad$ echo servers: echo 7<br>$\qquad$  ftp servers: ftp 21<br>$\qquad$ ssh servers: ssh 22<br>$\qquad$  email servers: smtp 25<br>$\qquad$ Web servers: http 80<br>$\quad$ 套接字对唯一确定一个连接<br>$\quad$(cliaddr:cliport, servaddr:servport)<br>$\qquad$ cliaddr:客户端IP地址，cliport：客户端端口，servaddr：服务器Ip地址，servport： 服务器端口</p>
+<h4 id="11-4-套接字接口"><a href="#11-4-套接字接口" class="headerlink" title="11.4 套接字接口"></a>11.4 套接字接口</h4><p>$\quad$ 套接字接口是与UnixI&#x2F;O结合使用的一组系统级函数，用于构建网络应用程序，适用于所有现代系统<br><img src="/../icsmg/20230117155314.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 对于内核来说，套接字是与应用程序通信的端点。<br>$\quad$ 对应用来说，套接字是一个文件描述符，允许应用程序从网络读取或写入数据<br>套接字地址结构：<br><img src="/../icsmg/20230117155524.png" srcset="/img/loading.gif" lazyload><br><strong>socket函数</strong>：创建一个套接字描述符</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;sys/types.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;sys/socket.h&gt;</span></span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">socket</span><span class="hljs-params">(<span class="hljs-type">int</span> domain, <span class="hljs-type">int</span> type,<span class="hljs-type">int</span> protocol)</span></span>;<span class="hljs-comment">//若成功则返回非负描述符，否则返回-1；</span><br></code></pre></td></tr></table></figure>
+<p>$\quad$使套接字称为连接的一个端点<br>$\quad$clientfd &#x3D; Socket(AF_INET,SOCK_STREAM,0);<br>$\quad$其中AF_INET表示我们正在使用32位IP地址，SOCK_STREAM表示这个套接字是连接的一个端点。<br><strong>connect函数</strong>：建立和服务器的连接</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;sys/socket.h&gt;</span></span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">connect</span><span class="hljs-params">(<span class="hljs-type">int</span> clientfd,<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> sockaddr* addr,<span class="hljs-type">socklen_t</span> addrlen)</span></span>;<span class="hljs-comment">//成功返回0，否则-1</span><br></code></pre></td></tr></table></figure>
+<p><strong>bind函数</strong>：服务器套接字地址和套接字描述符结合</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;sys/socket.h&gt;</span></span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">bind</span><span class="hljs-params">(<span class="hljs-type">int</span> sockfd, <span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> sockaddr* addr, <span class="hljs-type">socklen_t</span> addrlen)</span></span>;<span class="hljs-comment">//成功返回0，否则-1</span><br></code></pre></td></tr></table></figure>
+<p><strong>listen函数</strong>： socket主动套接字-&gt;监听套接字</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;sys/socket.h&gt;</span></span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">listen</span><span class="hljs-params">(<span class="hljs-type">int</span> sockfd,<span class="hljs-type">int</span> backlog)</span></span>;<span class="hljs-comment">//成功返回0，否则-1</span><br></code></pre></td></tr></table></figure>
+<p><strong>accept函数</strong>：等待客户端连接请求</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;sys/socket.h&gt;</span></span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">accept</span><span class="hljs-params">(<span class="hljs-type">int</span> listenfd,<span class="hljs-keyword">struct</span> sockaddr* addr,<span class="hljs-type">int</span> *addrlen)</span><span class="hljs-comment">//成功返回0，否则-1</span></span><br></code></pre></td></tr></table></figure>
+<p><img src="/../icsmg/20230117161134.png" srcset="/img/loading.gif" lazyload><br><strong>主机与服务器之间的转换</strong><br>  getaddrinfo:将主机名，主机地址，服务名和端口号的字符串表示转化成套接字地址结构<br>$\qquad$ 可重入的、与协议无关的</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;sys/types.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;sys/socket.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;netdb.h&gt;</span></span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">getaddrinfo</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-type">char</span> *host,<span class="hljs-type">const</span> <span class="hljs-type">char</span> *service,cosnt <span class="hljs-keyword">struct</span> addrinfo* hints,<span class="hljs-keyword">struct</span> addrinfo **result)</span></span>;<span class="hljs-comment">//成功返回0，否则返回非0的错误代码</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">freeaddrinfo</span><span class="hljs-params">(<span class="hljs-keyword">struct</span> addrinfo *result)</span></span>;<br><span class="hljs-function"><span class="hljs-type">const</span> <span class="hljs-type">char</span> *<span class="hljs-title">gai_strerror</span><span class="hljs-params">(<span class="hljs-type">int</span> errcode)</span></span>;<span class="hljs-comment">//返回错误消息</span><br></code></pre></td></tr></table></figure>
+<p>$\quad$ result指向一个addrinfo结构的链表，其中每个结构指向一个对应于host和service的套接字地址结构，host可以是域名，也可以是数字地址，service参数可以是服务名，也可以是十进制端口号。hints是个addrinfo结构，提供对getaddrinfo返回的套接字地址列表更好的控制。<br>如果不想把主机名转换成地址，可以把host设置为NULL，对于service来说也是一样，但是必须制定两者中其中一个。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">struct</span> <span class="hljs-title class_">addrinfo</span><br>&#123;<br>    <span class="hljs-type">int</span>   ai_flags;<span class="hljs-comment">//AI_ADDRCONFIG-&gt;使用连接推荐使用，返回地址与主机设置一致；AI_CANONNAME-&gt;ai_canonname指向host的官方名；AI_NUMERICSERV-&gt;强制service为端口号；</span><br>    <span class="hljs-type">int</span>   ai_family;<span class="hljs-comment">//AF_INET-&gt;IPv4,AF_INET6-&gt;IPv6</span><br>    <span class="hljs-type">int</span>   ai_socktype;<br>    <span class="hljs-type">int</span>   ai_protocol;<br>    <span class="hljs-type">char</span>  *ai_canonname;<br>    <span class="hljs-type">size_t</span> ai_addrlen;<br>    <span class="hljs-keyword">struct</span> <span class="hljs-title class_">sockaddr</span> *addr;<br>    <span class="hljs-keyword">struct</span> <span class="hljs-title class_">addrinfo</span> *ai_next;<br>&#125;<span class="hljs-comment">//如果要传递hints参数，只能设置flag，family，socktype和protocol，其他必须设0；</span><br></code></pre></td></tr></table></figure>
+<p><img src="/../icsmg/20230117161728.png" srcset="/img/loading.gif" lazyload><br> $\quad$ 客户端(服务器)调用getaddrinfo后会遍历result指向的列表，依次尝试每个套接字地址直到socket和connect(bind)成功<br> $\quad$ getnameinfo: 将套接字地址结构转换成主机和服务名字符串<br>$\qquad$ $\quad$ 可重入的、与协议无关的</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;sys/socket.h&gt;</span></span><br><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;netdb.h&gt;</span></span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">getnameinfo</span><span class="hljs-params">(<span class="hljs-type">const</span> <span class="hljs-keyword">struct</span> sockaddr *sa ,<span class="hljs-type">socklen_t</span> salen,<span class="hljs-type">char</span> *host,<span class="hljs-type">size_t</span> hostlen,<span class="hljs-type">char</span> *service, <span class="hljs-type">size_t</span> servlen,<span class="hljs-type">int</span> flags)</span></span>;<span class="hljs-comment">//成功返回0，错误返回非0的错误代码</span><br></code></pre></td></tr></table></figure>
+<p>$\quad$ sa指向大小为salen的套接字地址结构，host指向大小为hostlen字节的缓冲区，service指向大小为servlen字节的缓冲区，getnameinfo将套接字地址结构转换成对应的主机和服务名字符串，并把它们复制到host和service缓冲区。flags是一个位掩码，修改默认行为(NI_NUMERICHOST-&gt;使函数返回数字地址字符串；NI_NUMERICSERV-&gt;函数跳过查找简单返回端口号)<br>$\quad$ 如果不想要主机名，可以把host设定为NULL，hostlen设置为0，对服务字段也是一样，不过两者只能设置其中之一。</p>
+<p><strong>套接字接口的辅助函数</strong></p>
+<p>$\quad$ open_clientfd:建立与服务器之间的连接</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;csapp.h&gt;</span></span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">openclientfd</span><span class="hljs-params">(<span class="hljs-type">char</span> *hostname,<span class="hljs-type">char</span> *port)</span></span>;<span class="hljs-comment">//成功返回描述符，出错返回-1；</span><br></code></pre></td></tr></table></figure>
+<p>$\quad$ open_listenfd:服务器创建监听描述符，准备接收连接请求,是可重入，与协议无关的</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">open_listenfd</span><span class="hljs-params">(<span class="hljs-type">char</span> *port)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">struct</span> <span class="hljs-title class_">addrinfo</span> hints,*listp,*p;<br>    <span class="hljs-type">int</span> listenfd,optval=<span class="hljs-number">1</span>;<br>    <span class="hljs-comment">/* get a list of potential server addresses */</span><br>    <span class="hljs-built_in">memset</span> (&amp;hints,<span class="hljs-number">0</span>,<span class="hljs-built_in">sizeof</span>(<span class="hljs-keyword">struct</span> addrinfo));<br>    hints.ai_socktype = SOCK_STREAM;<span class="hljs-comment">/* accept connections */</span><br>    hints.ai_flags = AI_PASSIVE | AI_ADDRCONFIG;<span class="hljs-comment">/* on any IP address */</span><br>    hints.ai_flags = AI_NUMERICSERV;<span class="hljs-comment">/* usng port number */</span><br>    <span class="hljs-built_in">Getaddrinfo</span>(<span class="hljs-literal">NULL</span>,port,&amp;hints,&amp;listp);<br><br>    <span class="hljs-comment">/* walk the list for one that we can bind to */</span><br>    <span class="hljs-keyword">for</span>(p = listp;p;p=p-&gt;ai_next)<br>    &#123;<br>        <span class="hljs-comment">/* creat a socket descriptor */</span><br>        <span class="hljs-keyword">if</span>((listenfd = <span class="hljs-built_in">socket</span>(p-&gt;ai_family,p -&gt; ai_socketype,p-&gt;ai_protocol))&lt;<span class="hljs-number">0</span>)<br>            <span class="hljs-keyword">continue</span>;<span class="hljs-comment">/* socket failed ,try the next */</span><br><br>        <span class="hljs-comment">/* eliminates &quot;address already in use&quot; error from bind */</span><br>        <span class="hljs-built_in">Setsockopt</span>(listenfd,SOL_SOCKET,SO_REUSEADDR,(<span class="hljs-type">const</span> <span class="hljs-type">void</span> *)&amp;optval,<span class="hljs-built_in">sizeof</span>(hint));<br><br>        <span class="hljs-comment">/* bind the descriptor to the address */</span><br>        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">bind</span>(listenfd,p-&gt;ai_addr,p-&gt;ai_addrlen)==<span class="hljs-number">0</span>)<br>            <span class="hljs-keyword">break</span>;<span class="hljs-comment">/* success */</span><br>        <span class="hljs-built_in">Close</span>(listenfd);<span class="hljs-comment">/* bind failed, try the next */</span><br>    &#125;<br>    <span class="hljs-comment">/* clean up */</span><br>    <span class="hljs-built_in">Freeaddrinfo</span>(listp);<br>    <span class="hljs-keyword">if</span>(!p)<span class="hljs-comment">/* no address worked */</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    <span class="hljs-comment">/* make it a listening socket ready to accept connection requests */</span><br>    <span class="hljs-keyword">if</span>(<span class="hljs-built_in">listen</span>(listenfd, LISTENQ)&lt;<span class="hljs-number">0</span>)<br>    &#123;<br>        <span class="hljs-built_in">Close</span>(listenfd);<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> listenfd;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+
+
+<h4 id="11-5-Web服务器"><a href="#11-5-Web服务器" class="headerlink" title="11.5 Web服务器"></a>11.5 Web服务器</h4><p>$\quad$ 迭代服务器：一次一个地在客户端间迭代<br>$\quad$ 并发服务器：能同时处理多个客户端<br><strong>Web基础</strong><br>$\quad$ Web客户端和服务器之间的交互用的是一个基于文本的应用级协议，叫做HTTP协议。<br>$\quad$ HTTP是一个简单的协议。一个Web客户端打开一个到服务器的因特网连接，并且请求某些内容，服务器响应所请求的内容，然后关闭连接，浏览器读取这些内容并把它显示在屏幕上。<br>$\quad$ Web内容采用html语言编写，一个HTML程序包括指令，它们告诉浏览器如何显示这页中的各种文本和图形对象<br><strong>Web内容</strong><br>$\quad$ 内容是与一个MIME类型相关的字节序列。</p>
+<table>
+<thead>
+<tr>
+<th>MIME类型</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>text&#x2F;html</td>
+<td>html界面</td>
+</tr>
+<tr>
+<td>text&#x2F;plain</td>
+<td>无格式文本</td>
+</tr>
+<tr>
+<td>application&#x2F;postscript</td>
+<td>postscript 文档</td>
+</tr>
+<tr>
+<td>image&#x2F;gif</td>
+<td>GIF格式编码的二进制图像</td>
+</tr>
+<tr>
+<td>image&#x2F;png</td>
+<td>PNG格式编码的二进制图像</td>
+</tr>
+<tr>
+<td>image&#x2F;jepg</td>
+<td>JEPG格式编码的二进制图像</td>
+</tr>
+</tbody></table>
+<p>$\quad$ Web服务器用两种不同的方式向客户端提供内容：<br>$\quad$ ·- 取一个磁盘文件，并将它的内容返回给客户端，磁盘文件称为静态内容，此过程称为服务静态内容<br>$\quad$ ·- 运行一个可执行文件，并把它的输出返回到客户端，运行可执行文件时的输出称为动态内容，此过程称为服务动态内容。<br>$\quad$ URL唯一标识服务器管理的文件<br>$\qquad$ 最小的URL后缀:“&#x2F;”所有服务器将其扩展为默认的主页 </p>
+<p><strong>HTTP事务</strong><br>$\quad$ 1.HTTP请求：请求行+多个请求报头+一个空文本行（终止）<br>$\qquad$ GET方法：服务器生成和返回URI（文件名+可选参数<br>$\quad$ $\quad$ 请求行： method URI version（method 方法，一般用GET，URI：URL后缀，包括文件名和可选参数；version：HTTP版本）<br>$\quad$ $\quad$ 请求报头：header-name：header-data<br>$\quad$ 2.HTTP响应：响应行+多个响应报头+终止空行+响应主体<br>$\quad$ $\quad$ 响应行： version status-code status- message（version：http版本；status-code状态码）</p>
+<table>
+<thead>
+<tr>
+<th>状态码</th>
+<th>状态消息</th>
+<th>描述</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>200</td>
+<td>成功</td>
+<td>处理请求无误</td>
+</tr>
+<tr>
+<td>301</td>
+<td>永久移动</td>
+<td>内容已移动到location头中指明的主机上</td>
+</tr>
+<tr>
+<td>400</td>
+<td>错误请求</td>
+<td>服务器不能理解请求</td>
+</tr>
+<tr>
+<td>403</td>
+<td>禁止</td>
+<td>服务器无权访问所请求的文本</td>
+</tr>
+<tr>
+<td>404</td>
+<td>未发现</td>
+<td>服务器不能找到所请求的文件</td>
+</tr>
+<tr>
+<td>501</td>
+<td>未实现</td>
+<td>服务器不支持请求的方法</td>
+</tr>
+<tr>
+<td>505</td>
+<td>HTTP版本不支持</td>
+<td>服务器不支持请求的版本</td>
+</tr>
+</tbody></table>
+<p><strong>服务动态内容</strong></p>
+<p>$\quad$ CGI（通用网关接口）<br>$\quad$（参数）客户端-&gt;服务器（URI）：<br>$\quad$ 用 ？分隔文件名和参数，&amp;分隔各个参数，空格写作%20<br>$\quad$（参数）服务器-&gt;子进程：设置环境变量<br>$\quad$ 子进程输出直接重定向至和客户端相关联的已连接描述符</p>
+<h4 id="11-6-TINY-Web服务器"><a href="#11-6-TINY-Web服务器" class="headerlink" title="11.6 TINY Web服务器"></a>11.6 TINY Web服务器</h4><p>$\quad$ main：打开监听套接字，无限循环，接受请求，执行事务，并关闭连接的它的那一端</p>
+<p>$\quad$ doit：处理一个HTTP事务</p>
+<p>$\quad$ clienterror：检查明显错误并报告给客户端</p>
+<p>$\quad$ read_requesthdrs：读取并忽略报头</p>
+<p>$\quad$ parse_uri：解析URI为一个文件名和一个可选的CGI字符串</p>
+<p>$\quad$ serve_static：提供静态内容</p>
+<p>$\quad$ serve_dynamic：提供动态内容</p>
+<p>$\quad$ 详见<a target="_blank" rel="noopener" href="https://github.com/Aki-yzh/PKU-ICS-2022/tree/main/LABS/8-proxylab">proxylab</a></p>
+<hr>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/" class="category-chain-item">CS学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/ICS/" class="category-chain-item">ICS</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CSAPP/">#CSAPP</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>11-网络编程</div>
+      <div>https://aki-yzh.github.io/2023/02/18/11-网络编程/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Aki-yzh</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年2月18日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2023年3月19日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/02/18/12-%E5%B9%B6%E5%8F%91%E7%BC%96%E7%A8%8B/" title="12-并发编程">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">12-并发编程</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/02/18/10-%E7%B3%BB%E7%BB%9F%E7%BA%A7IO/" title="10-系统级IO">
+                        <span class="hidden-mobile">10-系统级IO</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="music-player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=3&id=2512321469&auto=1&height=66"></iframe>
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Aki</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Yzh</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":145,"height":315},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
+</html>
+<script type="text/javascript" src="/js/ribon.js"></script>
+<script type="text/javascript" src="/js/title.js"></script>
+
+
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+
+<script type="text/javascript" src="/js/showtext.js"></script>
+
+<!-- 雪花特效2 -->
+<script type="text/javascript" src="/js/snow.js"></script>
+

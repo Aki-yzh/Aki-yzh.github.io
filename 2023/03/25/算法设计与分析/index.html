@@ -1,0 +1,1066 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#50d0d0">
+  <meta name="author" content="Aki-yzh">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="北京大学算法设计与分析课程相关算法repo">
+<meta property="og:type" content="article">
+<meta property="og:title" content="算法设计与分析">
+<meta property="og:url" content="https://aki-yzh.github.io/2023/03/25/%E7%AE%97%E6%B3%95%E8%AE%BE%E8%AE%A1%E4%B8%8E%E5%88%86%E6%9E%90/index.html">
+<meta property="og:site_name" content="Aki-yzh">
+<meta property="og:description" content="北京大学算法设计与分析课程相关算法repo">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aki-yzh.github.io/sfmg/banner.png">
+<meta property="article:published_time" content="2023-03-25T15:15:10.000Z">
+<meta property="article:modified_time" content="2023-06-11T08:02:12.276Z">
+<meta property="article:author" content="Aki-yzh">
+<meta property="article:tag" content="算法">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aki-yzh.github.io/sfmg/banner.png">
+  
+  
+  
+  <title>算法设计与分析 - Aki-yzh</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/icon_gundam/iconfont.css">
+<link rel="stylesheet" href="/css/touming.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"aki-yzh.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+ 
+
+
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Aki-yzh</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://aki-yzh.github.io/2023/03/12/GUNPLA/">
+                <i class="iconfont icon-gaoda"></i>
+                <span>高达</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://aki-yzh.github.io/2023/03/12/anime/">
+                <i class="iconfont icon-bilibili-fill"></i>
+                <span>番剧</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="算法设计与分析"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-03-25 23:15" pubdate>
+          2023年3月25日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          10k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          84 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">算法设计与分析</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年6月11日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>   北京大学算法设计与分析课程相关算法repo<br>  <span id="more"></span></p>
+<h1 id="引言部分："><a href="#引言部分：" class="headerlink" title="引言部分："></a>引言部分：</h1><p>   算法是有限条指令的序列，算法的时间复杂度是对算法效率的度量<br>   算法的描述：伪代码<img src="/../sfmg/sf0.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="算法的数学基础"><a href="#算法的数学基础" class="headerlink" title="算法的数学基础"></a>算法的数学基础</h2><p>   函数渐进的界：<br>   <img src="/../sfmg/sf1.png" srcset="/img/loading.gif" lazyload><br>   <img src="/../sfmg/sf2.png" srcset="/img/loading.gif" lazyload><br>   <img src="/../sfmg/sf4.png" srcset="/img/loading.gif" lazyload><br>   <img src="/../sfmg/sf3.png" srcset="/img/loading.gif" lazyload><br>   多项式时间的算法：存在多项式p(n)使得算法的时间复杂度为O(p(n))<br>   对数函数：<br>        $log_b n &#x3D; o(n^\alpha),\alpha &gt; 0$ $a^{log_b n } &#x3D; n^{log_b a}$  $log_k n &#x3D; \Theta (log n)$<br>   阶乘：<br>       Stirling公式： $n!&#x3D; \sqrt{2\pi n }(\frac{n}{e})^n(1+\Theta(1&#x2F;n))$<br>       log(n!) &#x3D; $\Theta(nlogn)$<br> 取整函数：<br> <img src="/../sfmg/sf5.png" srcset="/img/loading.gif" lazyload><br> <img src="/../sfmg/sf6.png" srcset="/img/loading.gif" lazyload><br> 估算和式上界的方法：<br> <img src="/../sfmg/sf8.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="递推方程："><a href="#递推方程：" class="headerlink" title="递推方程："></a>递推方程：</h2><p>$\quad$ 设$序列 a_0,a_1…a_n,…$ 简记为{$a_n$ } ，一个把$a_n与某个a_i$联系起来的等式叫做关于序列的递推方程。<br><img src="/../sfmg/sf9.png" srcset="/img/loading.gif" lazyload><br>递归树：<br>$\quad$ 结点带杈的二叉树，初始的递归树只有一个结点，它的权标记为W(n),然后不断进行迭代，直到树中不再含有权为函数的结点为止。<br><img src="/../sfmg/sf10.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../sfmg/sf11.png" srcset="/img/loading.gif" lazyload></p>
+<h1 id="算法设计"><a href="#算法设计" class="headerlink" title="算法设计:"></a>算法设计:</h1><h2 id="分治"><a href="#分治" class="headerlink" title="分治"></a>分治</h2><p>一般性描述：</p>
+<blockquote>
+<p><strong>Divide-and-Conquer(P)</strong></p>
+<ol>
+<li>if |P| $\leq$ c then S(P)</li>
+<li>divide P into $P_1,P_2···P_k$ </li>
+<li>for i&#x3D;1 to k do </li>
+<li>$\quad$ $y_i$ $\leftarrow$ Divide-and-Conquer( $P_i$ )</li>
+<li>return Merge( $y_1,y_2···y_k$ )</li>
+</ol>
+</blockquote>
+<h3 id="1-二分查找"><a href="#1-二分查找" class="headerlink" title="1.二分查找"></a>1.二分查找</h3><blockquote>
+<p><strong>BinarySearch(T,x)</strong><br>输入：排好序的数组T；数x<br>输出：j</p>
+<ol>
+<li>l  $\leftarrow$  1;r $\leftarrow$ n</li>
+<li>while l $\leq$ r do<br>3.$\quad$ m $\leftarrow$ $\lfloor (l+r)&#x2F;2 \rfloor$<br>4.$\quad$ if T[m]&#x3D;x then return m   &#x2F;&#x2F; x恰好等于中位元素</li>
+<li>$\quad$ else if T[m]&gt; x then r $\leftarrow$ m-1 </li>
+<li>$\quad$ else l $\leftarrow$ m+1</li>
+<li>return 0</li>
+</ol>
+</blockquote>
+<h3 id="2-芯片测试"><a href="#2-芯片测试" class="headerlink" title="2. 芯片测试"></a>2. 芯片测试</h3><blockquote>
+<p><strong>Test(n)</strong><br>输入：n片芯片构成的数组，其中好芯片至少比坏芯片多一片<br>输出：1片好芯片</p>
+<ol>
+<li>k $\leftarrow$ n</li>
+<li>while  k&gt;3  do</li>
+<li>$\quad$ 将芯片分成$\lfloor k&#x2F;2 \rfloor$ 组</li>
+<li>$\quad$ for i&#x3D;1 to $\lfloor k&#x2F;2 \rfloor$ do<br>  $\quad$  $\quad$ if 2片好，任取一片留下<br>$\quad$ $\quad$ else 2片同时丢掉</li>
+<li>$\quad$ k $\leftarrow$ 剩下的芯片数</li>
+<li>if k&#x3D;3<br>then 任取两片芯片测试<br> $\quad$ if  1好1坏，取没测的芯片<br> $\quad$   else  任取一片被测芯片</li>
+<li>if k&#x3D;2 or 1 then 任取一片芯片</li>
+</ol>
+</blockquote>
+<h3 id="3-平面两点最短距离"><a href="#3-平面两点最短距离" class="headerlink" title="3.  平面两点最短距离"></a>3.  平面两点最短距离</h3><blockquote>
+<p><strong>MinDistance（P,X,Y)</strong><br>输入：n个点的集合P，X和Y分别给出P中点的横，纵坐标<br>输出：最近的两个点及距离</p>
+<ol>
+<li>如果P中点数小于等于3，则直接计算其中的最小距离</li>
+<li>排序X，Y</li>
+<li>做垂直线l将P近似划分为大小相等的点集 $P_L和P_R$  , $P_L$  的点在l左边，$P_R$ 的点在l右边</li>
+<li>$MinDistance(P_L,X_L,Y_L);\theta _L&#x3D;P_L中的最小距离$&#x2F;&#x2F;递归计算左半平面最邻近点对</li>
+<li>$MinDistance(P_R,X_R,Y_R);\theta _R&#x3D;P_R中的最小距离$&#x2F;&#x2F;递归计算右半平面最邻近点对</li>
+<li>$\theta \leftarrow min(\theta _L,\theta _R)$ </li>
+<li>对于在线l左边距离$\theta$ 范围内的每一个点，检查l右边是否有点与它的距离小于$\theta$ ,如果存在则将$\theta$ 修改为新值</li>
+</ol>
+</blockquote>
+<h3 id="4-快速排序算法"><a href="#4-快速排序算法" class="headerlink" title="4. 快速排序算法"></a>4. 快速排序算法</h3><blockquote>
+<p><strong>Quicksort(A,p,r)</strong><br>输入：数组A[p..r],1$\leq p \leq r \leq n$<br>输出：从A[p]到A[r]按照递增顺序排好序的数组A</p>
+<ol>
+<li>if p &lt; r</li>
+<li>then q $\leftarrow$ Partition(A,p,r) </li>
+<li>$\quad$ A[p]$\leftrightarrow$ A[q]</li>
+<li>$\quad$ Quicksort(A,p,q-1)</li>
+<li>$\quad$ Quicksort(A,q+1,r)</li>
+</ol>
+</blockquote>
+<p>时间复杂度O（nlogn）</p>
+<h3 id="5-选择问题"><a href="#5-选择问题" class="headerlink" title="5. 选择问题"></a>5. 选择问题</h3><blockquote>
+<p><strong>Select(S,k)</strong><br>输入： n个数的数组S，正整数k<br>输出： S中的第k小元素</p>
+<ol>
+<li>将S划分成5个一组，共$\lceil n&#x2F;5 \rceil$ 个组</li>
+<li>每组找一个中位数，把这些中位数放到集合M中</li>
+<li>$m^* \leftarrow Select(M,\lceil |M|&#x2F;2 \rceil)$ &#x2F;&#x2F;选M的中位数，将S中的数划分为A，B，C，D是个部分</li>
+<li>把A和D中的每个元素与$m^*$ 比较，小的构成$S_1$,大的构成$S_2$ </li>
+<li>$S_1 \leftarrow S_1 \cup C;S_2 \leftarrow S_2 \cup B;$</li>
+<li>if k&#x3D; $|S_1|$ +1 then 输出 $m^*$</li>
+<li>else if k $\leq$ $|S_1|$</li>
+<li>$\quad$ then Select($S_1$,k)</li>
+<li>$\quad$ else Select($S_2,k-|S_1|-1$)</li>
+</ol>
+</blockquote>
+<p>时间复杂度O(n)</p>
+<h2 id="动态规划"><a href="#动态规划" class="headerlink" title="动态规划"></a>动态规划</h2><p>优化原则： 一个最优决策序列的人任何子序列本身一定是相对于子序列的初始和结束状态的最优决策序列<br>设计要素：</p>
+<ol>
+<li>划分子问题，用参数表述子问题的边界，将问题求解转换为多步判断的过程。</li>
+<li>确定优化函数，以函数的极大&#x2F;极小作为判断的依据，确定是否满足优化原则</li>
+<li>列出关于优化函数的递推方程和边界条件</li>
+<li>考虑是否需要设计标记函数，以记录划分位置</li>
+<li>自底向上计算，以表格存储中间结果</li>
+<li>根据表格和标记函数通过追溯给出最优解</li>
+</ol>
+<h3 id="1-背包问题"><a href="#1-背包问题" class="headerlink" title="1. 背包问题"></a>1. 背包问题</h3><p><img src="/../sfmg/sf13.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="2-LCS最长公共子序列"><a href="#2-LCS最长公共子序列" class="headerlink" title="2. LCS最长公共子序列"></a>2. LCS最长公共子序列</h3><blockquote>
+<p>**LCS(X,Y,m,n)<br>输入：序列X、Y，其中X[1..m],Y[1..n]<br>输出：最长公共子序列长度C[i,j],标记B[i,j],$1 \leq i \leq m,1 \leq j \leq n$ </p>
+<ol>
+<li>for i $\leftarrow$ 1 to m do</li>
+<li>$\quad$ C[i,0]$\leftarrow$ 0</li>
+<li>for i $\leftarrow$ 1 to n do </li>
+<li>$\quad$ C[0,i]$\leftarrow$ 0</li>
+<li>for i $\leftarrow$ 1 to m do</li>
+<li>$\quad$ for j $\leftarrow$ 1 to n do</li>
+<li>$\quad$ $\quad$ if X[i]&#x3D;Y[j]$\quad$ &#x2F;&#x2F;X[i]和Y[j]都被选入公共子序列<br>8.$\quad$ $\quad$ then C[i,j]$\leftarrow$ C[i-1,j-1]+1</li>
+<li>$\quad$ $\quad$ $\quad$ $\quad$ B[i,j]$\leftarrow$ “↖️”<br>10.$\quad$ $\quad$ else if C[i-1,j] $\geq$ C[i,j-1]</li>
+<li>$\quad$ $\quad$ $\quad$ then C[i,j]$\leftarrow$ C[i-1,j]</li>
+<li>$\quad$ $\quad$ $\quad$ $\quad$ B[i,j]$\leftarrow$ “⬆️”</li>
+<li>$\quad$ $\quad$ else C[i,j]$\leftarrow$ C[i,j-1]</li>
+<li>$\quad$ $\quad$ $\quad$ $\quad$ B[i,j]$\leftarrow$ “⬅️”</li>
+</ol>
+</blockquote>
+<h3 id="3-整备类问题"><a href="#3-整备类问题" class="headerlink" title="3. 整备类问题"></a>3. 整备类问题</h3><p>F[j]表示1～j天加工任务的最大数目<br>w[i+1,j]表示在第i天进行检修，从第i+1到第j天连续工作的加工量</p>
+<h2 id="贪心"><a href="#贪心" class="headerlink" title="贪心"></a>贪心</h2><p>贪心法必须进行正确性证明<br>证明方法：<br>归纳论证<br>交换论证：用最优解交换得到有限步骤得到贪心法的解</p>
+<h3 id="1-活动选择问题"><a href="#1-活动选择问题" class="headerlink" title="1. 活动选择问题"></a>1. 活动选择问题</h3><p>按截止时间从小到大排序，从前往后挑选，只要相容便加入</p>
+<blockquote>
+<p><strong>Greedy Select</strong><br>输入：活动集S&#x3D;{1,2,···,n},活动i的开始时间$s_i$和截止时间$f_i$<br>输出：A$\subseteq$S,选中的活动子集</p>
+<ol>
+<li>A$\leftarrow$ {1}</li>
+<li>j $\leftarrow$ 1</li>
+<li>for i $\leftarrow$ 2 to n do</li>
+<li>$\quad$ if $s_i \ge f_i$ </li>
+<li>$\quad$ then A $\leftarrow$ A $\cup$ {i}</li>
+<li>$\quad$ $\quad$ j $\leftarrow$ i</li>
+<li>return A</li>
+</ol>
+</blockquote>
+<h3 id="2-集装箱问题"><a href="#2-集装箱问题" class="headerlink" title="2. 集装箱问题"></a>2. 集装箱问题</h3><p>轻者先装</p>
+<blockquote>
+<p><strong>Loading</strong><br>输入：集装箱集合N，集装箱i的重量$w_i$<br>输出：I $\subseteq$ N，准备装入船的集装箱集合</p>
+<ol>
+<li>对集装箱重量按从小到大排序</li>
+<li>I $\leftarrow$ {1}</li>
+<li>W $\leftarrow w_1$</li>
+<li>for j $\leftarrow$ 2 to n do</li>
+<li>$\quad$ if W+$w_i \leq$ C</li>
+<li>$\quad$ then W $\leftarrow$ W+$w_i$</li>
+<li>$\quad$ $\quad$     I $\leftarrow$ I $\cup$ {j}</li>
+<li>$\quad$ else return I,W</li>
+</ol>
+</blockquote>
+<h3 id="3-调度问题"><a href="#3-调度问题" class="headerlink" title="3. 调度问题"></a>3. 调度问题</h3><blockquote>
+<p><strong>Schedule</strong><br>输入：A，T，D &#x2F;&#x2F;A为等待的客户集合，T为预计对客户的服务时间，D为客户希望的完成时间<br>输出：f</p>
+<ol>
+<li>排序A使得$d_1 \leq d_2 \leq ··· d_n$</li>
+<li>f(1) $\leftarrow$ 0</li>
+<li>i $\leftarrow$ 2</li>
+<li>while i $\leq$ n do </li>
+<li>$\quad$ f(i) $\leftarrow$ f(i-1)+$t_{i-1}$</li>
+<li>$\quad$ i $\leftarrow$ i+1</li>
+</ol>
+</blockquote>
+<h3 id="4-哈夫曼树（最优前缀码问题）"><a href="#4-哈夫曼树（最优前缀码问题）" class="headerlink" title="4. 哈夫曼树（最优前缀码问题）"></a>4. 哈夫曼树（最优前缀码问题）</h3><p>可扩展到k叉树</p>
+<blockquote>
+<p><strong>Huffman(C)</strong><br>输入：C&#x3D;{$x_1,x_2···x_n$}是字符集，每个字符频率f($x_i$)<br>输出：Q</p>
+<ol>
+<li>n $\leftarrow$ |C|</li>
+<li>Q $\leftarrow$ C</li>
+<li>for i $\leftarrow$ 1 to n-1 do</li>
+<li>$\quad$ z  $\leftarrow$  Allocate-Node()  &#x2F;&#x2F;生成结点z</li>
+<li>$\quad$ z.left $\leftarrow$ Q中最小元    &#x2F;&#x2F;左儿子</li>
+<li>$\quad$ z.right $\leftarrow$  Q中最小元.  &#x2F;&#x2F;右儿子</li>
+<li>$\quad$ f(z) $\leftarrow$ f(x)+f(y)</li>
+<li>$\quad$ Insert(Q,z)     &#x2F;&#x2F;z插入Q</li>
+<li>return Q</li>
+</ol>
+</blockquote>
+<h3 id="5-最小生成树"><a href="#5-最小生成树" class="headerlink" title="5. 最小生成树"></a>5. 最小生成树</h3><h4 id="Prim算法"><a href="#Prim算法" class="headerlink" title="Prim算法"></a>Prim算法</h4><blockquote>
+<p><strong>Prim</strong><br>输入：连通图G&#x3D;&lt;V,E,W&gt;<br>输出：G的最小生成树T</p>
+<ol>
+<li>S $\leftarrow$ {1};T&#x3D;$\emptyset$ </li>
+<li>while V-S $\ne \emptyset$ do</li>
+<li>从V $\rightarrow$ S中选择j使得j到S中顶点的边e的权最小；T $\leftarrow$ T$\cup$ {e}</li>
+<li>S  $\leftarrow$ S$\cup$ {j}</li>
+</ol>
+</blockquote>
+<h4 id="Krusal算法"><a href="#Krusal算法" class="headerlink" title="Krusal算法"></a>Krusal算法</h4><blockquote>
+<p><strong>Krusal</strong><br>输入：连通图G&#x3D;&lt;V，E，W&gt;<br>输出：G的最小生成树</p>
+<ol>
+<li>按照权从小到大顺序排序G中的边，使得E&#x3D;{$e_1,e_2···e_m$}</li>
+<li>T $\leftarrow \emptyset$</li>
+<li>repeat</li>
+<li>$\quad$ e $\leftarrow$ E中最短边</li>
+<li>$\quad$ if e的两端点不在同一个连通分支</li>
+<li>$\quad$ then T  $\leftarrow$ T$\cup$ {e}</li>
+<li>$\quad$ E $\leftarrow$  E-{e}</li>
+<li>until T 包含了n-1条边</li>
+</ol>
+</blockquote>
+<h3 id="6-单源最短路径"><a href="#6-单源最短路径" class="headerlink" title="6. 单源最短路径"></a>6. 单源最短路径</h3><blockquote>
+<p><strong>Dijkstra</strong><br>输入：带权有向图&lt;V,E,W&gt;，源点s$\in$ V<br>输出：数组L，对所有j$\in$ V-{s},L[j]表示s到j的最短路径上j前一个结点的标号</p>
+<ol>
+<li>S  $\leftarrow$ {s}</li>
+<li>dist[s] $\leftarrow$ 0</li>
+<li>for i $\in$ V-{s} do </li>
+<li>$\quad$ dist[i] $\leftarrow$ w(s,i)   &#x2F;&#x2F;如果没边，w为无限</li>
+<li>while V-S $\ne \emptyset$ do </li>
+<li>$\quad$ 从V-S中取出具有相对S的最短路径的结点j，k是路径上连接j的结点</li>
+<li>$\quad$ S $\leftarrow$  S$\cup$ {j};L[j] $\leftarrow$ k </li>
+<li>$\quad$ for i$\in$ V-S do </li>
+<li>$\quad$ $\quad$ if dist[j]+w(j,i) &lt; dist[j]</li>
+<li>$\quad$ $\quad$ then dist[i] $\leftarrow$ dist[j]+w(j,i)   &#x2F;&#x2F;修改结点i相对S的最短路径长度</li>
+</ol>
+</blockquote>
+<h3 id="耗油问题"><a href="#耗油问题" class="headerlink" title="耗油问题"></a>耗油问题</h3><p>从起点向终点扫描，一遇到没有油的情况取经过加油站能加油的最大值进行加油</p>
+<h2 id="回溯"><a href="#回溯" class="headerlink" title="回溯"></a>回溯</h2><p>解空间：搜索问题的解所在的集合，又称为搜索空间，通常为树形结构，如排列树，子集树<br>搜索策略：深度优先，广度优先<br>多米诺性质：P($x_1,x_2···x_n+1$)为真蕴含P($x_1,x_2···x_n$)为真<br>代价函数小于界立刻剪枝<br>0-1类：O($2^n$);<br>m着色: O($nm^n$);<br>排列类：O(n!);</p>
+<h2 id="线性规划"><a href="#线性规划" class="headerlink" title="线性规划"></a>线性规划</h2><h6 id="一般形式："><a href="#一般形式：" class="headerlink" title="一般形式："></a>一般形式：</h6><blockquote>
+<p>$min(max) z &#x3D; \sum^n_{j &#x3D; 1}c_jx_j$<br>s.t. $\sum^n_{j&#x3D;1}a_{ij}x_j\le(&#x3D;,\ge)b_i$,i&#x3D;1,2···m<br>$x_j\ge 0$ -非负条件<br>$x_j$任意 - 自由变量</p>
+</blockquote>
+<p>$\quad$ 可行解 满足约束条件 和非负条件的变量<br>$\quad$ 可行域 全体可行解<br>$\quad$ 最优解 目标函数值最小(最大)的可行解<br>$\quad$ 最优值 最优解的目标函数值</p>
+<h6 id="图解法"><a href="#图解法" class="headerlink" title="图解法"></a>图解法</h6><p>高中内容</p>
+<h6 id="标准形"><a href="#标准形" class="headerlink" title="标准形"></a>标准形</h6><blockquote>
+<p>min z &#x3D; $\sum^n_{j &#x3D; 1}c_jx_j$<br>s.t. $\sum^n_{j&#x3D;1}a_{ij}x_j&#x3D;b_i$,i&#x3D;1,2···m<br>$x_j \ge 0$</p>
+</blockquote>
+<p>对于不等式引入新的变量构造等式，对于自由变量引入两个新变量</p>
+<h6 id="对偶线性规划："><a href="#对偶线性规划：" class="headerlink" title="对偶线性规划："></a>对偶线性规划：</h6><p><img src="/../sfmg/sf14.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="网络流"><a href="#网络流" class="headerlink" title="网络流:"></a>网络流:</h2><p><strong>FF算法</strong><br>O（mC）<br><strong>Dinic算法</strong><br>O（n^3)</p>
+<h2 id="近似算法"><a href="#近似算法" class="headerlink" title="近似算法:"></a>近似算法:</h2><p> $\quad$ A是一个多项式时间算法且对组合优化问题 Ⅱ 的每一个实例I输出一个可行解$\sigma$ .记A(I)&#x3D;c(σ)， c(σ)是σ的值<br>$\quad$ 性能估计:当II是最小化问题时，记rA(I)&#x3D;A(I)&#x2F;OPT(I)；当II是最大化问题时，记rA(2)&#x3D;OPT(I&#x2F;A(I)<br>$\quad$ 最优化算法:恒有A(I)&#x3D;OPT(I)，即rA(I)&#x3D;1.<br>$\quad$ A的近似比为r（A是r-近似算法）：对每一个实例I，rA（I）$\leq$ r<br>$\quad$ A具有常数近似比：r是一个常数。</p>
+<p>$\quad$ 可近似性分类<br>$\quad$ （1)完全可近似的：对任意小的ε&gt;0，存在(1+ε)-近似：算法背包问题<br>$\quad$   (2)可近似的：存在具有常数比的近似算法：最小顶点覆盖问题、多机调度问题<br>$\quad$   (3)不可近似的：不存在具有常数比的近似算法：货郎问题</p>
+<h2 id="随机算法："><a href="#随机算法：" class="headerlink" title="随机算法："></a>随机算法：</h2><p>$\quad$ <strong>ZPP</strong>：有效的Las Vegas算法<br>$\quad$ <strong>BPP</strong>：有效的Monte Carlo算法<br>$\quad$ <strong>RP</strong>：弃真型单侧错误概率有界算法<br>$\quad$ <strong>coRP</strong>：取伪型单侧错误概率有界算法</p>
+<h4 id="Las-Vegas-型随机算法"><a href="#Las-Vegas-型随机算法" class="headerlink" title="Las Vegas 型随机算法"></a>Las Vegas 型随机算法</h4><p>$\quad$ 通过修改确定性算法得到,一般将算法的某步的确定型选择变成随机选择<br>$\quad$ 一次运行可能得不到解;若得到解,则解一定是正确的<br>$\quad$ 与确定型算法相结合有可能改进确定型算法平均情况下的时间复杂度</p>
+<p><strong>随机快速排序</strong></p>
+<blockquote>
+<p>算法输入：包含 n 个元素的数组<br>输出:经过排序的n个元素的数组<br>1.若数组包含0或1个元素则返回<br>2.从数组中随机选择一个元素作为枢轴元素<br>3.把数组元素分为三个子数组,并且按照A,B,C顺序排列<br>$\quad$ $\quad$ A:包含比枢轴元素小的元素;B:包含与枢轴元素相等的元素;C:包含比枢轴元素大的元素.<br>4.对A和C递归地执行上述步骤</p>
+</blockquote>
+<p><strong>算法RandSelect(A, p,r,k)</strong>  &#x2F;&#x2F;从A[p..r]中选第k小</p>
+<blockquote>
+<ol>
+<li>if p&#x3D; r then return A[p]</li>
+<li>i←Random(p, r)</li>
+<li>3.以A[i]为标准划分A</li>
+<li>j&lt;划分后小于等于A[i]的数构成数组的大小</li>
+<li>if k$\leq$j</li>
+<li>then return RandSelect (A, p, p+j-1, k)</li>
+<li>return RandSelect (A, p+j, r, k-j)</li>
+</ol>
+</blockquote>
+<p><strong>算法BoolQueen(n)</strong></p>
+<blockquote>
+<ol>
+<li>k$\leftarrow$ 1. &#x2F;&#x2F; k 放皇后的行号</li>
+<li>count$\leftarrow$ 0  &#x2F;&#x2F; count 放好的皇后数</li>
+<li>while k$\leq$ n do</li>
+<li>for i←1 to n do &#x2F;&#x2F;i为待选列号</li>
+<li>检查i与前面k-1个皇后的相容性</li>
+<li>如果相容则将i加入S</li>
+<li>ifS$\ne$  $\emptyset$ ，then</li>
+<li><pre><code class="hljs">j←Random(1,S)
+</code></pre>
+</li>
+<li><pre><code class="hljs">$x_k \leftarrow S[j]$ 
+</code></pre>
+</li>
+<li>count $\leftarrow$ count+1</li>
+<li><pre><code class="hljs">k$\leftarrow$ k+1
+</code></pre>
+</li>
+<li>else k←n + 1</li>
+<li>return count<br>**算法QueenLV(n)</li>
+<li>p$\leftarrow$ BoolQueen(n)</li>
+<li>while p&lt;n ,do<br>3 .    p$\leftarrow$ BoolQueen(n)</li>
+</ol>
+</blockquote>
+<h4 id="Monte-Carlo型随机算法"><a href="#Monte-Carlo型随机算法" class="headerlink" title="Monte Carlo型随机算法"></a>Monte Carlo型随机算法</h4><p>$\quad$ 这种算法有时会给出错误的答案<br>$\quad$ 运行时间和出错概率都是随机变量<br>$\quad$ 多项式时间内运行切出错概率不超过1&#x2F;3的随机算法称为有效的蒙特卡罗型算法</p>
+<p>$\quad$ <strong>弃真型单侧错误</strong>：接受一定对，拒绝可能错<br>$\quad$ <strong>取伪型单侧错误</strong>：拒绝一定对，接受可能错<br>$\quad$ <strong>双侧错误</strong>：所有输入上同时出现上述两种</p>
+<p>$\quad$ <strong>素数检测算法</strong></p>
+<blockquote>
+<p>输入：自然数n<br>输出：n是否素数</p>
+<ol>
+<li>若n是偶数且n$\ne$ 2,则宣布n是合数，结束计算</li>
+<li>若n&#x3D;2，则宣布n是素数，结束计算</li>
+<li>若n&#x3D;1，则宣布n&#x3D;1，结束计算</li>
+<li>从{1,……n-1}中随机选择自然数a</li>
+<li>若gcd（n，a）&gt;1（最大公因数）或（a&#x2F;n）$\ne$ a^{n-1&#x2F;2}(mod n),则宣布n是合数</li>
+<li>否则，宣布n是素数</li>
+</ol>
+</blockquote>
+<h1 id="算法分析"><a href="#算法分析" class="headerlink" title="算法分析"></a>算法分析</h1><h2 id="平摊分析"><a href="#平摊分析" class="headerlink" title="平摊分析"></a>平摊分析</h2><p>$\quad$ 求一系列操作在最坏情况下的时间,不涉及概率<br>$\quad$ 三种方法:</p>
+<h6 id="聚集分析"><a href="#聚集分析" class="headerlink" title="聚集分析"></a>聚集分析</h6><p>$\quad$ 暴力得到总运行时间再除以n</p>
+<h6 id="记账法"><a href="#记账法" class="headerlink" title="记账法"></a>记账法</h6><p>$\quad$ 要求：余额大于0<br>$\quad$ 实际上就是猜测平摊代价后进行验证</p>
+<h6 id="势能法"><a href="#势能法" class="headerlink" title="势能法"></a>势能法</h6><p>$\quad$ 要求：最终势能大于0<br>$\quad$ 和记账法类似</p>
+<h2 id="问题的计算复杂度"><a href="#问题的计算复杂度" class="headerlink" title="问题的计算复杂度"></a>问题的计算复杂度</h2><h4 id="平凡下界："><a href="#平凡下界：" class="headerlink" title="平凡下界："></a>平凡下界：</h4><p>$\quad$ 问题的输入或输出规模是它的平凡下界<br>$\quad$ 下界的计算：找最少运算数</p>
+<h4 id="决策树："><a href="#决策树：" class="headerlink" title="决策树："></a>决策树：</h4><p>$\quad$ 以比较作基本运算的算法模型<br>$\quad$ 一个问题确定了一类决策树，具有相同的构造规则，该决策树类决定了求解该问题的一个算法类<br>$\quad$ 结点数(或树叶数)等于输入分类的总数<br>$\quad$ 最坏情况下的时间复杂度对应于决策树的深度<br>$\quad$ 平均情况下的时间复杂度对应于决策树的平均路径长度</p>
+<p><img src="/../sfmg/sf15.png" srcset="/img/loading.gif" lazyload><br><img src="/../sfmg/sf16.png" srcset="/img/loading.gif" lazyload><br><img src="/../sfmg/sf17.png" srcset="/img/loading.gif" lazyload></p>
+<h2 id="NP-完全性"><a href="#NP-完全性" class="headerlink" title="NP 完全性"></a>NP 完全性</h2><p><strong>多项式时间算法</strong>：以多项式为时间复杂度<br><strong>易解的问题</strong>：有多项式时间算法<br><strong>难解的问题</strong>：不存在多项式时间算法</p>
+<p><strong>哈密顿回路（HC）</strong>：任给无向图G，问G有哈密顿回路吗？<br><strong>货郎问题（TSP）</strong>：任给n个城市，城市i与城市j之间的正整数距离d（i，j），i$\ne$j,以及正整数D，问有一条每一个城市恰好经过一次最后回到出发点且长度不超过D的巡回路线吗？</p>
+<h4 id="组合优化问题"><a href="#组合优化问题" class="headerlink" title="组合优化问题"></a>组合优化问题</h4><p>II* 由3部分组成：<br>(1)实例集$D_{II*}$<br>(2) $\forall I \in D_{II*}$ ，有一个有穷非空集S(I)，其元素称作 I的可行解<br>(3) $\forall s \in S(I)$,有一个正整数 c(s)，称作s的值<br>如果s$* \in S(I)$，对所有的 s$\in$ S(I)，当II<em>是最小（大）化问题时，c(s$</em>$) $\leq$ c (s)(c(s*) $\leq$ c(s))则称s $<em>$是I的最优解，c(s</em>)是 I的最优值，记作OPT(I).</p>
+<h4 id="II-对应的判定问题"><a href="#II-对应的判定问题" class="headerlink" title="II$*$ 对应的判定问题"></a>II$*$ 对应的判定问题</h4><p>$D_{II}$&#x3D;{$(I,K)|I \in D_{II*},K \in Z*$}<br>当II$<em>$是最小化问题时，Yn&#x3D;{(I,K)|OPT(I)$\leq$K);当П</em>是最大化问题时，Yn&#x3D;{(I，K)|OPT(I)$\ge$ K).</p>
+<h4 id="P类与NP类"><a href="#P类与NP类" class="headerlink" title="P类与NP类"></a>P类与NP类</h4><p>$\quad$ 所有多项式时间可解的判定问题组成的问题称为P类<br>$\quad$ 设判定问题II&#x3D;&lt;D,Y&gt;,如果存在两个输入变量的多项式时间算法A和多项式p，对每一个实例$I\in D,I \in Y$ 当且仅当存在t，｜t｜$\leq$ p(|I|),且A对输入I和t输出“Yes”，则称II是多项式时间可验证的，A是II的多项式时间验证算法，而当I$\in$ Y时，称t是I$\in$ Y的证据。<br>$\quad$ 由所有多项式时间可验证的判定问题组成的问题称为NP类</p>
+<p>$\quad$ <strong>非确定型多项式时间算法:</strong><br>$\quad$ $\quad$ (1)对给定的实例 I，首先“猜想”一个 t,|t| $\leq$ p(I)<br>$\quad$ $\quad$ (2)然后检查t是否是证明I$\in$ Y的证据<br>$\quad$ $\quad$ (3)猜想和检查可以在多项试时间内完成<br>$\quad$ $\quad$ (4)当且仅当I$\in$ Y时能够正确地猜想到一个证据t<br>$\quad$ $\quad$ *注:非确定型多项式时间算法不是真正的算法</p>
+<p>$\quad$ P$\subseteq$ NP </p>
+<p>$\quad$ <strong>多项式时间变换</strong><br>$\quad$ 定义 设判定问题П1&#x3D;&lt;D1,Y1&gt;,П2&#x3D;&lt;D2,Y2&gt;. 如果函数f:D1→D2满足条件：(1)f是多项式时间可计算的；(2)对所有的$I\in D_1,I \in Y_1 \leftrightarrow f(I) \in Y_2$ ;则称f是П1到П2的多项式时间变换.如果存在П1到П2的多项式时间变换,则称П1可多项式时间变换到П2,记作$П1 \leq_p П2$ </p>
+<h4 id="NP完全性-NPC）"><a href="#NP完全性-NPC）" class="headerlink" title="NP完全性(NPC）"></a>NP完全性(NPC）</h4><p>$\quad$ 定义 :如果对所有的 П’$\in$ NP,П’$\leq_p$ Π,则称 П是NP难的.如果 П 是 NP 难的且 Π$\in$ NP，则称 Π 是 NP完全的.<br>$\quad$ 定理:如果存在NP难的问题 Π$\in$ P，则P&#x3D;NP.<br>$\quad$ 推论 :假设P $\ne$ NP,那么，如果 Π是NP难的，则 Π $\notin$ P.<br>$\quad$ 定理:如果存在NP难的问题 П’ 使得 П’$\leq_p  Π$  则 Π 是NP难的.<br>$\quad$ 推论:如果 П$\in$ NP并且存在 NP完全问题  Π’使得  Π’$\leq_p$ Π,则 Π是NP完全的.</p>
+<p><strong>$\quad$ 证明NP完全性的“捷径”<br>$\quad$ (1)证明Π$\in$ NP;<br>$\quad$ (2)找到一个已知的NP完全问题I’，并证明 Π’$\leq_p$ П.</strong></p>
+<p>$\quad$ 可满足性问题（SAT）：任给一个合取范式F，问F是可满足的吗？<br>$\quad$ SAT是NP完全的（NPC）<br><img src="/../sfmg/sf18.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 设无向图G&#x3D;&lt;V,E&gt;,V’$\subseteq$ V.V’是G的一个<br>$\quad$ $\quad$ 顶点覆盖：G的每一条边都至少有一个顶点在V’中。<br>$\quad$ $\quad$ 团：对任意的u,v$\in$ V’,且u$\ne$ v,都有(u,v)$\in$ E.<br>$\quad$ $\quad$ 独立集：对任意的u,v$\in$ V’，都有(u,v)$\notin$ E.</p>
+<p>$\quad$ 引理 对任意的无向图G&#x3D;&lt;V,E&gt;和子集V’$\subseteq$ V,下述命题是等价的<br>$\quad$ $\quad$ (1) V’是G的顶点覆盖，<br>$\quad$ $\quad$ (2) V-V ‘ 是G的独立集;<br>$\quad$ $\quad$ (3) V-V’是补图 G&#x3D;&lt;V,E&gt;的团.</p>
+<p>$\quad$ 顶点覆盖(VC)： 任给一个无向图G&#x3D;&lt;V,E&gt;和非负整数K$\leq$ ｜V｜，问G有顶点数不超过K的顶点覆盖吗？<br>$\quad$ 团：任给一个无向图G&#x3D;&lt;V,E&gt;和非负整数J$\leq$ ｜V｜，问G有顶点数不小于J的团吗？<br>$\quad$ 独立集：任给一个无向图G&#x3D;&lt;V,E&gt;和非负整数J$\leq$ ｜V｜，问G有顶点数不小于J的独立集吗？<br>$\quad$ 顶点覆盖（VC）是NP完全的</p>
+<hr>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/" class="category-chain-item">CS学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/%E7%AE%97%E6%B3%95/" class="category-chain-item">算法</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/%E7%AE%97%E6%B3%95/">#算法</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>算法设计与分析</div>
+      <div>https://aki-yzh.github.io/2023/03/25/算法设计与分析/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Aki-yzh</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年3月25日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2023年6月11日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/03/30/4-%E6%95%B0%E5%AD%97%E7%94%B5%E8%B7%AF%E8%AE%BE%E8%AE%A1/" title="4-数字电路设计">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">4-数字电路设计</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/03/19/3-CISC,X86,RISC,MIPS%E6%8C%87%E4%BB%A4/" title="3-CISC,X86,RISC,MIPS指令">
+                        <span class="hidden-mobile">3-CISC,X86,RISC,MIPS指令</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="music-player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=3&id=2512321469&auto=1&height=66"></iframe>
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Aki</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Yzh</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":145,"height":315},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
+</html>
+<script type="text/javascript" src="/js/ribon.js"></script>
+<script type="text/javascript" src="/js/title.js"></script>
+
+
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+
+<script type="text/javascript" src="/js/showtext.js"></script>
+
+<!-- 雪花特效2 -->
+<script type="text/javascript" src="/js/snow.js"></script>
+

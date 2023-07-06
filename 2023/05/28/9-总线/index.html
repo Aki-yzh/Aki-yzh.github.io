@@ -1,0 +1,809 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#50d0d0">
+  <meta name="author" content="Aki-yzh">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="对应 北京大学计算机组成与体系结构第九讲 参考教材COD（计算机组成与设计-硬件&#x2F;软件接口）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="9-总线">
+<meta property="og:url" content="https://aki-yzh.github.io/2023/05/28/9-%E6%80%BB%E7%BA%BF/index.html">
+<meta property="og:site_name" content="Aki-yzh">
+<meta property="og:description" content="对应 北京大学计算机组成与体系结构第九讲 参考教材COD（计算机组成与设计-硬件&#x2F;软件接口）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aki-yzh.github.io/txmg/hd09.png">
+<meta property="article:published_time" content="2023-05-28T15:55:10.000Z">
+<meta property="article:modified_time" content="2023-06-10T10:10:17.900Z">
+<meta property="article:author" content="Aki-yzh">
+<meta property="article:tag" content="COD">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aki-yzh.github.io/txmg/hd09.png">
+  
+  
+  
+  <title>9-总线 - Aki-yzh</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/icon_gundam/iconfont.css">
+<link rel="stylesheet" href="/css/touming.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"aki-yzh.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+ 
+
+
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Aki-yzh</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://aki-yzh.github.io/2023/03/12/GUNPLA/">
+                <i class="iconfont icon-gaoda"></i>
+                <span>高达</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://aki-yzh.github.io/2023/03/12/anime/">
+                <i class="iconfont icon-bilibili-fill"></i>
+                <span>番剧</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/../txmg/hd09.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="9-总线"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-28 23:55" pubdate>
+          2023年5月28日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          22 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">9-总线</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年6月10日 晚上
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p> 对应 北京大学计算机组成与体系结构第九讲<br> 参考教材COD（计算机组成与设计-硬件&#x2F;软件接口）</p>
+<span id="more"></span>
+<h1 id="计算机组成与体系结构"><a href="#计算机组成与体系结构" class="headerlink" title="计算机组成与体系结构"></a>计算机组成与体系结构</h1><hr>
+<h2 id="总线"><a href="#总线" class="headerlink" title="总线"></a>总线</h2><p>$\quad$ 在多于两个模块（设备或子系统）间传送信息的公共通路<br>$\quad$ 组成：传输信息的电路和管理信息传输的协议</p>
+<h3 id="总线的分类"><a href="#总线的分类" class="headerlink" title="总线的分类"></a>总线的分类</h3><h4 id="1-片总线"><a href="#1-片总线" class="headerlink" title="1. 片总线"></a>1. 片总线</h4><p>$\quad$ 又称器件级总线——”片上总线“，是中央处理器芯片内部的总线</p>
+<h4 id="2-内总线"><a href="#2-内总线" class="headerlink" title="2. 内总线"></a>2. 内总线</h4><p>$\quad$ 又称系统总线或板级总线，是计算机系统各插件版之间信息传输的通路，通常称为微型计算机总线的即指内总线。</p>
+<h4 id="3-外总线"><a href="#3-外总线" class="headerlink" title="3. 外总线"></a>3. 外总线</h4><p>$\quad$ 又称通信总线，是计算机系统之间，或者计算机系统与其他系统之间信息传输的通路</p>
+<h3 id="总线的基本结构"><a href="#总线的基本结构" class="headerlink" title="总线的基本结构"></a>总线的基本结构</h3><p><img src="/../txmg/tx901.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="总线模块"><a href="#总线模块" class="headerlink" title="总线模块"></a>总线模块</h4><h5 id="总线主模块（Bus-Master"><a href="#总线主模块（Bus-Master" class="headerlink" title="总线主模块（Bus Master)"></a>总线主模块（Bus Master)</h5><p>$\quad$ 具有总线控制能力，在获得总线控制权之后能启动总线传输（读数据或写数据）<br>$\quad$ 示例： CPU，DMA控制器</p>
+<h5 id="总线从模块-（Bus-Slave）"><a href="#总线从模块-（Bus-Slave）" class="headerlink" title="总线从模块 （Bus Slave）"></a>总线从模块 （Bus Slave）</h5><p>$\quad$ 能够对总线传输作出响应（接收写数据、返回读数据、返回“错误”响应等），但本身不具备总线控制能力<br>$\quad$ 示例：存储器</p>
+<h4 id="总线译码器"><a href="#总线译码器" class="headerlink" title="总线译码器"></a>总线译码器</h4><p>$\quad$ 功能：根据当前控制总线的主模块提供的地址，选择作为本次总线传输目标的从模块<br><img src="/../txmg/tx902.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="总线仲裁器"><a href="#总线仲裁器" class="headerlink" title="总线仲裁器"></a>总线仲裁器</h4><p>$\quad$ 功能：在总线上有多个主模块同时请求使用总线时，决定由哪个主模块获得总线控制权<br>$\quad$ 目的：让总线得到合理、高效地使用<br><img src="/../txmg/tx904.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="总线示意图"><a href="#总线示意图" class="headerlink" title="总线示意图"></a>总线示意图</h4><p><img src="/../txmg/tx905.png" srcset="/img/loading.gif" lazyload><br><img src="/../txmg/tx906.png" srcset="/img/loading.gif" lazyload><br><img src="/../txmg/tx907.png" srcset="/img/loading.gif" lazyload><br><img src="/../txmg/tx903.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="总线协议"><a href="#总线协议" class="headerlink" title="总线协议"></a>总线协议</h3><h4 id="总线标准"><a href="#总线标准" class="headerlink" title="总线标准"></a>总线标准</h4><h5 id="产生途径"><a href="#产生途径" class="headerlink" title="产生途径"></a>产生途径</h5><p><strong>事实标准</strong><br>$\quad$ 计算机系统厂家所采用的一种总线，由于其性能优越，逐渐形 成一种被业界广泛支持和承认的事实总线标准<br><strong>国际标准</strong><br>$\quad$ 在国际标准组织或机构主持下开发和制定的总线标准，公布后由厂家和用户使用</p>
+<h5 id="内容"><a href="#内容" class="headerlink" title="内容"></a>内容</h5><p>$\quad$ <strong>1- 机械特性</strong>： 规定模块插件的机械尺寸，总线插头、插座的规格及位置等。<br>$\quad$ <strong>2- 电气特性</strong>： 规定总线信号的逻辑电平、噪声容限以及负载能力等<br>$\quad$ <strong>3-功能特性</strong>：给出各总线信号的名称及功能定义<br>$\quad$ <strong>4-规程特性</strong>：对各总线信号的动作过程及时序关系进行说明</p>
+<h5 id="举例"><a href="#举例" class="headerlink" title="举例"></a>举例</h5><p><img src="/../txmg/tx908.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 2000年前后EISA逐渐退出市场</p>
+<h6 id="PCI-Express"><a href="#PCI-Express" class="headerlink" title="PCI Express"></a>PCI Express</h6><p>$\quad$ ◦ 串行方式传输数据，依靠高频率获得高性能<br>$\quad$ ◦ 全双工运作模式，同时进行数据发送和接收<br>$\quad$ ◦ 点对点连接结构，而非传统的共享结构<br>$\quad$ ◦ 使用“端到端的数据传送方式” ，两端都含有TX(发送逻辑)和RX(接收逻辑)<br>$\quad$ ◦ PCIe总线物理层采用差分信号传输<br>$\quad$ $\quad$ $\quad$ 优点：抗干扰能力强，能有效抑制电磁干扰，时序定位准确<br>$\quad$ $\quad$ $\quad$ 缺点：在电路板上，差分信号一定要走 两根等长、等宽、紧密靠近且在 同一层面的线，布线难度高</p>
+<h4 id="协议实例-AMBA"><a href="#协议实例-AMBA" class="headerlink" title="协议实例-AMBA"></a>协议实例-AMBA</h4><p><img src="/../txmg/tx909.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="基本结构"><a href="#基本结构" class="headerlink" title="基本结构"></a>基本结构</h5><p><img src="/../txmg/tx910.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="场景一：最简单的传输"><a href="#场景一：最简单的传输" class="headerlink" title="场景一：最简单的传输"></a>场景一：最简单的传输</h5><h6 id="主模块读一个数据"><a href="#主模块读一个数据" class="headerlink" title="主模块读一个数据"></a>主模块读一个数据</h6><p><img src="/../txmg/tx911.png" srcset="/img/loading.gif" lazyload><br><img src="/../txmg/tx912.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="主模块写一个数据"><a href="#主模块写一个数据" class="headerlink" title="主模块写一个数据"></a>主模块写一个数据</h6><p><img src="/../txmg/tx913.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="要点"><a href="#要点" class="headerlink" title="要点"></a>要点</h6><p>$\quad$ 1.在第一个时钟上升沿之后，主模块驱动HADDR和 Control信号<br>$\quad$ 2.在第二个时钟上升沿，从模块采样HADDR和Control信 号<br>$\quad$ 3. 在第二个时钟上升沿之后,写传输：主模块驱动HWDATA信号 ;   读传输：从模块驱动HRDATA信号<br>$\quad$ 4. 在第三个时钟上升沿 ,写传输：从模块采样HWDATA信号，完成传输;读传输：主模块采样HRDATA信号，完成传输</p>
+<h5 id="场景二：主模块发起传输时，从模块未准备好"><a href="#场景二：主模块发起传输时，从模块未准备好" class="headerlink" title="场景二：主模块发起传输时，从模块未准备好"></a>场景二：主模块发起传输时，从模块未准备好</h5><p>$\quad$ 从模块无法提供读数据或从模块无法接收写数据<br><img src="/../txmg/tx914.png" srcset="/img/loading.gif" lazyload><br><img src="/../txmg/tx915.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="要点："><a href="#要点：" class="headerlink" title="要点："></a>要点：</h6><p>$\quad$ 从模块可以在传输过程中插入等待周期，以便获得额外的时间 ，如暂存写数据的缓冲已满、读数据未准备好等<br>$\quad$ 在等待周期中，主模块必须保持地址、控制和写数据等信号的稳定。</p>
+<h5 id="场景三：多个连续的传输"><a href="#场景三：多个连续的传输" class="headerlink" title="场景三：多个连续的传输"></a>场景三：多个连续的传输</h5><p>$\quad$ 一个主模块连续发起多个的传输或多个不同的主模块先后发起传输<br><img src="/../txmg/tx916.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="要点-1"><a href="#要点-1" class="headerlink" title="要点"></a>要点</h6><p>$\quad$ 1.时间重叠（overlap）<br>$\quad$ $\quad$ ◦ 不同传输的地址和数据在时间上存在重叠<br>$\quad$ $\quad$ ◦ 充分利用地址总线和数据总线<br>$\quad$ 2.等待周期<br>$\quad$ $\quad$ ◦ 地址A和C的传输中没有等待周期<br>$\quad$ $\quad$ ◦ 地址B的传输中有一个等待周期，该传输的数据阶段扩展了一个周期<br>$\quad$ 3.等待周期的副作用<br>$\quad$ $\quad$ ◦ 因为地址B的传输中的等待周期，所以地址C的传输的地址阶段受其影响 而扩展了一个周期</p>
+<h5 id="场景四：大量连续数据的传输"><a href="#场景四：大量连续数据的传输" class="headerlink" title="场景四：大量连续数据的传输"></a>场景四：大量连续数据的传输</h5><p>$\quad$ 一次传输的数据量超过了数据总线的宽度， 例如，CPU需要从内存中读出连续的16字节（128位）的数据，但数据总线宽度为32位<br><img src="/../txmg/tx919.png" srcset="/img/loading.gif" lazyload><br><img src="/../txmg/tx918.png" srcset="/img/loading.gif" lazyload><br><img src="/../txmg/tx917.png" srcset="/img/loading.gif" lazyload><br> $\quad$ BURST传输用于高速缓存的行填充（读）、行替换，外设和主存之间的大量连续数据传输以及主存中不同区域之间的大量连续数据传输</p>
+<h6 id="要点-2"><a href="#要点-2" class="headerlink" title="要点"></a>要点</h6><p> $\quad$ T1 ：传输开始 ， 主模块发出第一个地址 ， 驱 动 HTRANS&#x3D;NONSEQ，HBURST&#x3D;INCR4<br>  $\quad$ T2 ：传输继续 ， 主模块发出第二个地址 ， 驱 动 HTRANS&#x3D;SEQ，保持HBURST&#x3D;INCR4<br> $\quad$ ……<br>$\quad$T6：主模块发出的第四个地址已被从模块采样，无需再 发出新的地址和控制信号，因此驱动HTRANS&#x3D;IDLE  $\quad$ T7：传输完成</p>
+<h5 id="场景五：希望先得到Burst传输中的某个特定数据"><a href="#场景五：希望先得到Burst传输中的某个特定数据" class="headerlink" title="场景五：希望先得到Burst传输中的某个特定数据"></a>场景五：希望先得到Burst传输中的某个特定数据</h5><p><img src="/../txmg/tx920.png" srcset="/img/loading.gif" lazyload><br><img src="/../txmg/tx921.png" srcset="/img/loading.gif" lazyload><br><img src="/../txmg/tx922.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="要点-3"><a href="#要点-3" class="headerlink" title="要点"></a>要点</h6><p>$\quad$ 地址回卷的边界（假设数据宽度为4字节）<br>$\quad$$\quad$◦ WRAP4：在16的整数倍的地址处回卷（4×4）<br>$\quad$$\quad$◦ WRAP8：在32的整数倍的地址处回卷（4×8）<br>$\quad$$\quad$◦ WRAP16：在64的整数倍的地址处回卷（4×16）<br>$\quad$传输地址变化示例<br>$\quad$$\quad$◦ INCR4： 0x38 0x3C 0x40 0x44<br>$\quad$$\quad$◦ WRAP4：0x38 0x3C 0x30 0x34<br>$\quad$$\quad$◦ INCR4： 0x30 0x34 0x38 0x3C<br>$\quad$$\quad$$\quad$起始地址和访问区域相同</p>
+<h5 id="场景六：在Burst传输的过程中，主模块未准备好"><a href="#场景六：在Burst传输的过程中，主模块未准备好" class="headerlink" title="场景六：在Burst传输的过程中，主模块未准备好"></a>场景六：在Burst传输的过程中，主模块未准备好</h5><p>主模块无法提供写数据 或主模块无法接收读数据<br><img src="/../txmg/tx923.png" srcset="/img/loading.gif" lazyload><br><img src="/../txmg/tx924.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="场景七：需要传输的数据宽度比数据总线的宽度小"><a href="#场景七：需要传输的数据宽度比数据总线的宽度小" class="headerlink" title="场景七：需要传输的数据宽度比数据总线的宽度小"></a>场景七：需要传输的数据宽度比数据总线的宽度小</h5><p>$\quad$ 例如，需要传输1个16位的数据，而数据总线的宽度是32位的<br><img src="/../txmg/tx926.png" srcset="/img/loading.gif" lazyload><br><img src="/../txmg/tx925.png" srcset="/img/loading.gif" lazyload><br><img src="/../txmg/tx927.png" srcset="/img/loading.gif" lazyload></p>
+<hr>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/" class="category-chain-item">CS学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/COD/" class="category-chain-item">COD</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/COD/">#COD</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>9-总线</div>
+      <div>https://aki-yzh.github.io/2023/05/28/9-总线/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Aki-yzh</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月28日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2023年6月10日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/05/30/10-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E5%85%88%E8%BF%9B%E6%8A%80%E6%9C%AF/" title="10-计算机系统先进技术">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">10-计算机系统先进技术</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/05/18/8-%E4%B8%AD%E6%96%AD%E5%92%8C%E5%BC%82%E5%B8%B8/" title="8-中断和异常">
+                        <span class="hidden-mobile">8-中断和异常</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="music-player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=3&id=2512321469&auto=1&height=66"></iframe>
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Aki</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Yzh</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":145,"height":315},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
+</html>
+<script type="text/javascript" src="/js/ribon.js"></script>
+<script type="text/javascript" src="/js/title.js"></script>
+
+
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+
+<script type="text/javascript" src="/js/showtext.js"></script>
+
+<!-- 雪花特效2 -->
+<script type="text/javascript" src="/js/snow.js"></script>
+

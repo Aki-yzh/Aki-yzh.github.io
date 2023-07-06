@@ -1,0 +1,816 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#50d0d0">
+  <meta name="author" content="Aki-yzh">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="对应 CSAPP 第九章节">
+<meta property="og:type" content="article">
+<meta property="og:title" content="9-虚拟内存">
+<meta property="og:url" content="https://aki-yzh.github.io/2023/02/18/9-%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98/index.html">
+<meta property="og:site_name" content="Aki-yzh">
+<meta property="og:description" content="对应 CSAPP 第九章节">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/9.png">
+<meta property="article:published_time" content="2023-02-18T01:00:00.000Z">
+<meta property="article:modified_time" content="2023-02-19T07:22:50.690Z">
+<meta property="article:author" content="Aki-yzh">
+<meta property="article:tag" content="CSAPP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aki-yzh.github.io/icsmg/9.png">
+  
+  
+  
+  <title>9-虚拟内存 - Aki-yzh</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/icon_gundam/iconfont.css">
+<link rel="stylesheet" href="/css/touming.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"aki-yzh.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+ 
+
+
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Aki-yzh</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://aki-yzh.github.io/2023/03/12/GUNPLA/">
+                <i class="iconfont icon-gaoda"></i>
+                <span>高达</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://aki-yzh.github.io/2023/03/12/anime/">
+                <i class="iconfont icon-bilibili-fill"></i>
+                <span>番剧</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/../icsmg/top.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="9-虚拟内存"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-02-18 09:00" pubdate>
+          2023年2月18日 上午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.3k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          36 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">9-虚拟内存</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年2月19日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <hr>
+<h2 id="对应-CSAPP-第九章节"><a href="#对应-CSAPP-第九章节" class="headerlink" title="对应 CSAPP 第九章节"></a>对应 CSAPP 第九章节</h2><span id="more"></span>
+
+
+<h1 id="ICS"><a href="#ICS" class="headerlink" title="ICS"></a><a href="https://aki-yzh.github.io/2023/02/18/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8&%E7%9B%AE%E5%BD%95">ICS</a></h1><hr>
+<h2 id="九、虚拟内存"><a href="#九、虚拟内存" class="headerlink" title="九、虚拟内存"></a>九、虚拟内存</h2><p>$\quad$ 虚拟内存是硬件异常，硬件地址翻译，主存，磁盘文件和内核软件的完美交互，它为每个进程提供了一个大的，一致的和私有的地址空间。<br>$\quad$ 虚拟内存提供了三个重要能力：<br>$\quad$  1. 它将主存看成是一个存储在磁盘上的地址空间的高速缓存，在主存中只保存活动区域，并根据需要在磁盘和主存之间来回传送数据，高效地使用了主存。<br>$\quad$  2. 它为每个进程提供了一致的地址空间，从而简化了内存管理<br>$\quad$  3. 它保护了每个进程的地址空间不被其他进程破坏</p>
+<h4 id="9-1-物理和虚拟寻址"><a href="#9-1-物理和虚拟寻址" class="headerlink" title="9.1 物理和虚拟寻址"></a>9.1 物理和虚拟寻址</h4><p>$\quad$ 主存被组织成一个由M个连续的字节大小的单元组成的数组，每个字节都有一个唯一的物理地址。<br>$\quad$ CPU访问内存的最自然的方式就是使用物理地址，我们把这种方式称为物理寻址。</p>
+<p>$\quad$ 使用虚拟寻址，CPU通过生成一个虚拟地址来访问主存，这个虚拟地址在被传送到内存之前先转换成适当的物理地址。<br>$\quad$ 将一个虚拟地址转换为物理地址的任务叫做地址翻译，CPU上叫做内存管理单元的专用硬件利用存放在主存中的查询表来动态翻译虚拟地址，该表的内容由操作系统管理。</p>
+<h4 id="9-2-地址空间"><a href="#9-2-地址空间" class="headerlink" title="9.2 地址空间"></a>9.2 地址空间</h4><p>$\quad$ 地址空间是一个非负整数地址的有序集合。<br>$\quad$ 线性地址空间：地址空间中整数是连续的<br>$\quad$ 虚拟地址空间(N&#x3D;2^n)（n位地址空间）<br>$\quad$ 物理地址空间(M&#x3D;2^m)</p>
+<h4 id="9-3-虚拟内存作为缓存的工具"><a href="#9-3-虚拟内存作为缓存的工具" class="headerlink" title="9.3 虚拟内存作为缓存的工具"></a>9.3 虚拟内存作为缓存的工具</h4><p>$\quad$ 虚拟内存被组织为一个由存放在磁盘上的N个连续的字节大小的单元组成的数组，每个字节有唯一的虚拟地址，作为到数组的索引。<br>$\quad$ 磁盘上数组的内容被缓存在主页中。<br>$\quad$ VM系统通过将虚拟内存分割为称为虚拟页的大小固定的块来处理这个问题。每个虚拟页的大小为$P&#x3D;2^p$ 个字节。类似的，物理内存被分配为物理页，大小也为P字节。（物理页也被称为页帧）<br>$\quad$ 在任意时刻，虚拟页面的集合都分为三个不相交的子集：<br>$\qquad$ 1. 未分配的：VM还未分配（或者创建）的页。没有任何数据与之相关联，因此也不占用任何磁盘空间<br>$\qquad$ 2. 缓存的：已缓存在物理内存中的已分配页<br>$\qquad$ 3. 未缓存的： 未缓存在物理内存中的已分配页</p>
+<p>$\quad$ DRAM缓存（虚拟内存系统的缓存）：虚拟页往往很大，全相联，总是使用写回</p>
+<p><strong>页表</strong><br>$\quad$ 页表存放在物理内存中，将虚拟页映射到物理页。每次地址翻译硬件将一个虚拟地址转化为物理地址时，都会读取页表。<br>$\quad$ 页表就是个页表条目(PTE)的数组，每个PTE是由一个有效位和一个n位地址字段组成的。<br><img src="/../icsmg/20230215212321.png" srcset="/img/loading.gif" lazyload><br><strong>页命中</strong><br>$\quad$ 虚拟地址-&gt;索引-&gt;有效位1-&gt;物理地址<br><img src="/../icsmg/20230215212633.png" srcset="/img/loading.gif" lazyload><br><strong>缺页</strong><br>$\quad$ DRAM缓存不命中-&gt;调用内核中的异常处理程序-&gt;页面调度（按需页面调度）<br><img src="/../icsmg/20230215213456.png" srcset="/img/loading.gif" lazyload><br><strong>分配页面</strong><br><img src="/../icsmg/20230215212920.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 局部性保证了任意时刻程序趋向于在一个较小的活动页面集合上工作</p>
+<h4 id="9-4-虚拟内存作为内存管理的工具"><a href="#9-4-虚拟内存作为内存管理的工具" class="headerlink" title="9.4 虚拟内存作为内存管理的工具"></a>9.4 虚拟内存作为内存管理的工具</h4><p>$\quad$ 按需页面调度+独立地址空间&#x3D;简化链接、简化加载、简化共享、简化内存分配</p>
+<h4 id="9-5-虚拟内存作为内存保护的工具"><a href="#9-5-虚拟内存作为内存保护的工具" class="headerlink" title="9.5 虚拟内存作为内存保护的工具"></a>9.5 虚拟内存作为内存保护的工具</h4><p>$\quad$ 三个许可位：SUP，READ，WRITE表示权限</p>
+<h4 id="9-6-地址翻译"><a href="#9-6-地址翻译" class="headerlink" title="9.6 地址翻译"></a>9.6 地址翻译</h4><p><img src="/../icsmg/20230215213421.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 形式上来说，地址翻译是一个N元素的虚拟地址空间中的元素（VAS）和一个M元素的物理地址空间（PAS）中元素之间的映射<br>$\qquad \qquad \quad MAP:VAS\rightarrow PAS \cup \emptyset$<br><img src="/../icsmg/20230215214022.png" srcset="/img/loading.gif" lazyload><br>$\quad$ PPO和VPO是相同的<br><img src="/../icsmg/20230215214156.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 页面命中后，CPU硬件：<br>$\qquad$ 1. 处理器生成一个虚拟地址，并把它传给MMU<br>$\qquad$ 2. MMU生成PTE地址，并从高速缓存&#x2F;主存中请求得到它<br>$\qquad$ 3. 高速缓存&#x2F;主存向MMU返回PTE<br>$\qquad$ 4. MMU构造物理地址，并把它传送给高速缓存&#x2F;主存<br>$\qquad$ 5. 高速缓存&#x2F;主存返回所请求的数据字给处理器<br>$\quad$ 缺页时：<br>$\qquad$ 1. 处理器生成一个虚拟地址，并把它传给MMU<br>$\qquad$ 2. MMU生成PTE地址，并从高速缓存&#x2F;主存中请求得到它<br>$\qquad$ 3. 高速缓存&#x2F;主存向MMU返回PTE<br>$\qquad$ 4. PTE的有效位是0，MMU触发了一次异常，传递CPU中的控制到操作系统内核中的缺页异常处理程序<br>$\qquad$ 5. 缺页处理程序确定出物理内存中的牺牲页，如果这个页面已经被修改了，则把它换出到磁盘<br>$\qquad$ 6. 缺页处理程序调入新的页面，并更新内存中的PTE<br>$\qquad$ 7. 缺页处理程序返回到原来的进程，再次执行导致缺页的指令。CPU将引起缺页的虚拟地址重新发送给MMU。因为虚拟页面现在换存在物理内存中，所以就会命中，在MMU执行了页面命中后，主存将所请求字返回给处理器。</p>
+<p><img src="/../icsmg/20230215214326.png" srcset="/img/loading.gif" lazyload><br><strong>结合高速缓存和虚拟内存</strong><br><img src="/../icsmg/20230215215737.png" srcset="/img/loading.gif" lazyload><br><strong>利用TLB加速地址翻译</strong><br>$\quad$ TLB：小的，虚拟寻址的缓存，称为快表，每一行保存着一个由单个PTE组成的块。<br>$\quad$ 若TLB有2^t个组，则VPN最低t位为TLB索引（TLBI）</p>
+<p><img src="/../icsmg/20230215220155.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 1. CPU产生一个虚拟地址<br>$\quad$ 2. MMU从TLB中取出相应的PTE<br>$\quad$ 3. MMU将这个虚拟地址翻译成一个物理地址，并且将它发送到高速缓存&#x2F;主存。<br>$\quad$ 4. 高速缓存&#x2F;主存将所请求的数据字返回给CPU<br><img src="/../icsmg/20230215215804.png" srcset="/img/loading.gif" lazyload><br><strong>多级页表</strong></p>
+<p><img src="/../icsmg/20230215220457.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 每个高级PTE指向一个下一级页表的基址，逐级访问直到最终访问到目标地址，只有一级页表才需要总是保存在主存中。<br>$\quad$ 能减小内存要求<br>$\quad$ 若一级页表中一个PTE是空的，相应的二级页表根本不会存在<br><img src="/../icsmg/20230215220429.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="9-7-Intel-Core-i7-x2F-Linux-内存系统"><a href="#9-7-Intel-Core-i7-x2F-Linux-内存系统" class="headerlink" title="9.7 Intel Core i7&#x2F;Linux 内存系统"></a>9.7 Intel Core i7&#x2F;Linux 内存系统</h4><p><strong>Intel Core i7</strong><br>$\quad$ 四级页表层次结构，64位内存地址，40位PPN，4个许可位，1个标记位，引用位(A)，修改位(D)<br><strong>Linux虚拟内存系统</strong><br>$\quad$ 基本同上述虚拟内存系统</p>
+<h4 id="9-8-内存映射"><a href="#9-8-内存映射" class="headerlink" title="9.8 内存映射"></a>9.8 内存映射</h4><p>$\quad$ 将一个虚拟内存区域与一个磁盘上的对象关联起来，以初始化这个虚拟内存区域的内容<br>$\quad$ 映射对象：普通文件和匿名文件</p>
+<p><strong>共享对象&amp;私有对象</strong><br>$\quad$ 映射了同一个共享对象的各进程对这个对象的写是相互可见的，也会反映到磁盘上的原始对象中<br>$\quad$ 对私有区域的写操作不会反映到磁盘上的对象中<br>$\quad$ 写时复制：试图写时会触发保护故障，创建一个新的副本（写操作仅执行在该副本上，且其他进程不可见）<br><img src="/../icsmg/20230215224447.png" srcset="/img/loading.gif" lazyload><br><strong>再看fork</strong><br>$\quad$ 为新进程创建各种数据结构，PID<br>$\quad$ 两个进程的每个页面都标记为只读<br>$\quad$ 每个区域结构都标记为私有的写时复制<br>$\quad$ 为每个进程维护私有地址空间的抽象概念</p>
+<p><strong>再看execve</strong><br>$\quad$ 删除已存在的用户区域<br>$\quad$ 映射私有区域（都是私有的，写时复制的）<br>$\quad$ 映射共享区域<br>$\quad$ 设置程序计数器(PC)，指向代码区域入口</p>
+<p><strong>mmap与munmap：用户级内存映射</strong><br>$\quad$ mmap：创建新的虚拟内存区域，并将对象映射到这些区域中</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">void</span> *<span class="hljs-title">mmap</span><span class="hljs-params">(<span class="hljs-type">void</span> *start,<span class="hljs-type">size_t</span> length,<span class="hljs-type">int</span> prot,<span class="hljs-type">int</span> flags,<span class="hljs-type">int</span> fd,<span class="hljs-type">off_t</span> offfset)</span></span>;<br><span class="hljs-comment">//成功返回指向映射区域的指针，出错返回MAP——FAILED（-1）</span><br></code></pre></td></tr></table></figure>
+<p>$\quad$ prot：访问权限位：PROT_EXEC（页面可以被CPU执行的指令组成）；PROT_READ（页面可读）；PROT_WRITE（页面可写）；PROT_NONE（页面不能被访问）<br><img src="/../icsmg/20230215224830.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ munmap：删除虚拟内存的start开始由接下来length字节构成的区域</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">munmap</span><span class="hljs-params">(<span class="hljs-type">void</span> *start,<span class="hljs-type">size_t</span> length)</span></span>;<span class="hljs-comment">//成功返回0，出错返回-1</span><br></code></pre></td></tr></table></figure>
+
+<h4 id="9-9-动态内存分配"><a href="#9-9-动态内存分配" class="headerlink" title="9.9 动态内存分配"></a>9.9 动态内存分配</h4><p><img src="/../icsmg/20230215225518.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>显示分配器</strong>：显式地释放已分配的块</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-comment">/* 分配块 */</span><br><span class="hljs-function"><span class="hljs-type">void</span> *<span class="hljs-title">malloc</span><span class="hljs-params">(<span class="hljs-type">size_t</span> size)</span></span>;<span class="hljs-comment">//成功返回已分配块的指针，否则NULL</span><br><span class="hljs-comment">/* 释放块 */</span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">free</span><span class="hljs-params">(<span class="hljs-type">void</span> *ptr)</span></span>;<br><span class="hljs-comment">/* 扩展/收缩堆 */</span><br><span class="hljs-function"><span class="hljs-type">void</span> *<span class="hljs-title">sbrk</span><span class="hljs-params">(<span class="hljs-type">intptr_t</span> incr)</span></span>;<br></code></pre></td></tr></table></figure>
+<p>要求<br>$\quad$ 处理任意请求序列：约束：每个释放必须对应一个已分配的块<br>$\quad$ 立即响应请求：不允许重排或缓冲<br>$\quad$ 只使用堆<br>$\quad$ 对齐块：对齐块使得能保存任何类型的数据对象<br>$\quad$ 不修改已分配的块<br>目标<br>$\quad$ 最大化吞吐率<br>$\quad$ 吞吐率：单位时间完成的请求数<br>$\quad$ 最大化内存利用率<br>$\quad$ 峰值利用率：聚集有效载荷&#x2F;堆大小<br><img src="/../icsmg/20230215225953.png" srcset="/img/loading.gif" lazyload><br><strong>碎片</strong><br>$\quad$ 内部碎片：已分配块比有效载荷大<br>$\quad$ 外部碎片：空闲内存分散</p>
+<p><strong>隐式空闲链表</strong></p>
+<p>$\quad$ 整个链表需要一个特殊标记的结束块<br>$\quad$ 空闲块之间通过头部的块大小隐式地连接<br><img src="/../icsmg/20230215230110.png" srcset="/img/loading.gif" lazyload><br>放置已分配的块<br> $\quad$ 首次适配<br> $\quad$ 下一次适配（内存利用率最低）<br> $\quad$ 最佳适配（内存利用率最高）<br>分割空闲块<br>$\quad$ 获取额外堆内存<br>合并空闲块<br> 立即合并<br> 推迟合并<br> 带边界标记的合并（脚部）<br><img src="/../icsmg/20230215230135.png" srcset="/img/loading.gif" lazyload><br><strong>显式空闲链表</strong><br><img src="/../icsmg/20230215230249.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>分离空闲链表</strong><br>$\quad$ 维护多个空闲链表，每个链表中的块有相似的大小<br>$\quad$ 简单分离存储：一个类中所有块大小都一样，不分割不合并<br>$\quad$ 分离适配：首次适配，分割，释放后合并<br>$\quad$ 伙伴系统：按2的幂进行分配、分割、合并</p>
+<p>详见malloclab</p>
+<h4 id="9-10-垃圾收集"><a href="#9-10-垃圾收集" class="headerlink" title="9.10 垃圾收集"></a>9.10 垃圾收集</h4><p>$\quad$ 垃圾收集器：动态内存分配器<br>$\quad$ 自动释放程序不再需要的已分配块<br>$\quad$ 内存视为有向可达图，不可达节点-&gt;垃圾<br>$\quad$ Mark&amp;Sweep垃圾收集器<br>$\quad$ Mark阶段：标记根节点和所有可达的后继<br>$\quad$ Sweep阶段：释放每个未标记的已分配块</p>
+<h4 id="9-11-C程序中与内存有关的错误"><a href="#9-11-C程序中与内存有关的错误" class="headerlink" title="9.11 C程序中与内存有关的错误"></a>9.11 C程序中与内存有关的错误</h4><p>$\quad$ 间接引用坏指针、读未初始化的内存、允许栈缓冲区溢出、造成错位错误、假设指针和它们指向的对象是相同大小的、引用指针而不是它所指向的对象、误解指针运算、引用不存在的变量、引用空闲堆块中的数据、引起内存泄漏……</p>
+<hr>
+<h3 id="LAB"><a href="#LAB" class="headerlink" title="LAB:"></a>LAB:</h3><p><strong>此章节后完成<a target="_blank" rel="noopener" href="https://github.com/Aki-yzh/PKU-ICS-2022/tree/main/LABS/7-malloclab">malloclab(103.0&#x2F;120.0)</a></strong></p>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/" class="category-chain-item">CS学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/ICS/" class="category-chain-item">ICS</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CSAPP/">#CSAPP</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>9-虚拟内存</div>
+      <div>https://aki-yzh.github.io/2023/02/18/9-虚拟内存/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Aki-yzh</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年2月18日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2023年2月19日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/02/18/10-%E7%B3%BB%E7%BB%9F%E7%BA%A7IO/" title="10-系统级IO">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">10-系统级IO</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/02/18/8-%E5%BC%82%E5%B8%B8%E6%8E%A7%E5%88%B6%E6%B5%81/" title="8-异常控制流">
+                        <span class="hidden-mobile">8-异常控制流</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="music-player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=3&id=2512321469&auto=1&height=66"></iframe>
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Aki</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Yzh</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":145,"height":315},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
+</html>
+<script type="text/javascript" src="/js/ribon.js"></script>
+<script type="text/javascript" src="/js/title.js"></script>
+
+
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+
+<script type="text/javascript" src="/js/showtext.js"></script>
+
+<!-- 雪花特效2 -->
+<script type="text/javascript" src="/js/snow.js"></script>
+

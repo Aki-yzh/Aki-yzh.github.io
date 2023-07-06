@@ -1,0 +1,800 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#50d0d0">
+  <meta name="author" content="Aki-yzh">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="对应 北京大学计算机组成与体系结构第二讲  参考教材COD（计算机组成与设计-硬件&#x2F;软件接口）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="2-计算机基本结构">
+<meta property="og:url" content="https://aki-yzh.github.io/2023/03/19/2-%E8%AE%A1%E7%AE%97%E6%9C%BA%E5%9F%BA%E6%9C%AC%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:site_name" content="Aki-yzh">
+<meta property="og:description" content="对应 北京大学计算机组成与体系结构第二讲  参考教材COD（计算机组成与设计-硬件&#x2F;软件接口）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aki-yzh.github.io/txmg/hd02.png">
+<meta property="article:published_time" content="2023-03-19T15:11:10.000Z">
+<meta property="article:modified_time" content="2023-06-10T10:09:05.083Z">
+<meta property="article:author" content="Aki-yzh">
+<meta property="article:tag" content="COD">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aki-yzh.github.io/txmg/hd02.png">
+  
+  
+  
+  <title>2-计算机基本结构 - Aki-yzh</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/icon_gundam/iconfont.css">
+<link rel="stylesheet" href="/css/touming.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"aki-yzh.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+ 
+
+
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Aki-yzh</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://aki-yzh.github.io/2023/03/12/GUNPLA/">
+                <i class="iconfont icon-gaoda"></i>
+                <span>高达</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://aki-yzh.github.io/2023/03/12/anime/">
+                <i class="iconfont icon-bilibili-fill"></i>
+                <span>番剧</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/../txmg/hd02.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="2-计算机基本结构"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-03-19 23:11" pubdate>
+          2023年3月19日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          4.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          35 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">2-计算机基本结构</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年6月10日 晚上
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p>  对应 北京大学计算机组成与体系结构第二讲<br>  参考教材COD（计算机组成与设计-硬件&#x2F;软件接口）</p>
+<span id="more"></span>
+
+<h1 id="计算机组成与体系结构"><a href="#计算机组成与体系结构" class="headerlink" title="计算机组成与体系结构"></a>计算机组成与体系结构</h1><hr>
+<h2 id="计算机基本结构"><a href="#计算机基本结构" class="headerlink" title="计算机基本结构"></a>计算机基本结构</h2><h4 id="1-冯·诺依曼计算机结构"><a href="#1-冯·诺依曼计算机结构" class="headerlink" title="1. 冯·诺依曼计算机结构"></a>1. 冯·诺依曼计算机结构</h4><p> 要点：<br>$\quad$ 1. 计算机应该由运算器，控制器，存储器，输入设备和输出设备共五个部分组成。<br>$\quad$ 2. 数据和程序均以二进制代码形式不加区别地放在存储器中，存放位置由存储器的地址指定<br>$\quad$ 3. 计算机在工作时能够自动地从存储器中取出指令加以执行<br><img src="/../txmg/tx20.png" srcset="/img/loading.gif" lazyload><br> 冯·诺伊曼计算机的主要构成：<br> $\quad$ 1. 运算器，CA：central arithmetical<br> $\quad$ 2. 控制器，CC：central control<br> $\quad$ 3. 存储器，M：memory<br> $\quad$ 4. 输入设备，I：input<br> $\quad$ 5. 输出设备，O：output<br> $\quad$ 外部记录设备，R：outside recording medium</p>
+<h4 id="2-x86指令系统概览"><a href="#2-x86指令系统概览" class="headerlink" title="2. x86指令系统概览"></a>2. x86指令系统概览</h4><p><img src="/../txmg/tx21.png" srcset="/img/loading.gif" lazyload><br>代表：<br> <strong>字长16位</strong>：<br>$\quad$ <em>Intel 8086</em>(1978年)<br> $\qquad$ 字长16位，内部的通用寄存器为16位，既能处理16位数据，也能处理8位数据。<br>  $\qquad$ 对外有16根数据线和20根地址线，可寻址的内存空间为1MByte($2^{20}$)。<br>   $\qquad$ 物理地址的形成采用“段加偏移”的方式。<br>$\quad$ <em>Intel 80286</em>（1982年）<br>  $\qquad$ 字长16位，地址总线扩展到24位，可寻址16MB的内存空间。<br>   $\qquad$ 引入了“保护模式”，但是机制有缺陷。<br> $\qquad$  为保持兼容，保留了8086的工作模式，被称为实模式（实地址模式)。<br> <strong>字长32位</strong>：<br>  $\quad$ <em>Intel 80386</em>（1985年）<br>$\qquad$ 80x86系列中的第一款32位微处理器。<br>$\qquad$ 地址总线扩展到32位，可寻址4GB的内存空间<br>$\qquad$ 改进了“保护模式”：（80386及以上的微处理器的主要工作模式，支持多任务，支持设置特权级，可以访问4GB的物理存储空间，引入了虚拟存储器的概念）<br>$\qquad$ 增加了“虚拟8086模式”，可以同时模拟多个8086微处理器<br><img src="/../txmg/tx22.png" srcset="/img/loading.gif" lazyload><br> <strong>字长64位</strong>：<br>$\quad$ <em>AMD Opteron</em> （2003年）<br>$\qquad$ x86扩展到64位的第一款处理器<br>$\qquad$ 可以访问高于4GB的存储器<br>$\qquad$ 兼容32位x86程序，且不降低性能<br><img src="/../txmg/tx23.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="3-x86的地址空间"><a href="#3-x86的地址空间" class="headerlink" title="3. x86的地址空间"></a>3. x86的地址空间</h4><p><img src="/../txmg/tx24.png" srcset="/img/loading.gif" lazyload><br> <strong>指令指针寄存器IP（Instruction Pointer）</strong>：<br> $\quad$ 保存一个内存地址，指向当前需要取出的指令。<br> $\quad$ 当CPU从内存中取出一个指令后，IP会自动增加，指向下一指令的地址。<br> $\quad$ 程序员不能直接对IP进行存取操作<br> $\quad$ 转移指令，过程调用与返回等会改变IP的内容。<br> <strong>段寄存器</strong><br> $\quad$ 与处理器中其他寄存器联合生成存储器地址<br> $\quad$ 段寄存器的功能在实模式下和保护模式下是不同的。</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs cpp">DATA SEGMENT ; 数据段<br>    NUM DW <span class="hljs-number">0011101000000111B</span>;<br>    NOTES DB <span class="hljs-string">&#x27;The result is :&#x27;</span>,<span class="hljs-string">&#x27;$&#x27;</span><br>DATA ENDS ; 数据段结束<br><br>STACK SEGMENT ; 堆栈段<br>    STA DB <span class="hljs-number">50</span> <span class="hljs-built_in">DUP</span>(?)<br>    TOP EQU LENGTH STA<br>STACK ENDS ; 堆栈段结束<br><br>CODE SEGMENT ; 代码段<br>    ASSUME CS:CODE,DS:DATA,SS:STACK<br>BEGIN:<br>    MOV AX, DATA<br>    MOV DS, AX   ;为DS赋初值<br>    MOV AX, STACK <br>    MOV SS, AX   ;为SS赋初值<br>    MOV AX, TOP<br>    MOV SP, AX   ;为SP赋初值<br>    ...<br>CODE ENDS       ;  代码段结束<br>    END    BEGIN   ;模块结束<br></code></pre></td></tr></table></figure>
+<p> $\quad$ ( 1 ) 代码段寄存器 CS (Code Segment)<br> $\qquad$ 保存了代码段(一个存储区域，用以保存微处理器使用的代码）的起始地址 。<br>  $\qquad$ 用CS:IP指示下一条要执行的指令地址<br>  <img src="/../txmg/tx25.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ ( 2 ) 数据段寄存器 DS (Data Segment)<br>  $\qquad$ 保存了数据段（一个存储区域，包含程序所使用的大部分数据）的起始地址。<br>  $\qquad$ 实模式数据段的长度限制为64KB，保护模式数据段长度限制为4GB。<br>$\quad$（ 3 ）附加段寄存器 ES (Extra Segment)<br>  $\qquad$ 保存了附加段（附加的数据段，也用于数据的保存，某些串操作指令将附加段作为其目的操作数的存放区域，长度限制与代码段以及数据段相同。）的起始地址。<br>  $\qquad$ 用ES:DI指示串操作的目的操作数的地址<br>  <img src="/../txmg/tx26.png" srcset="/img/loading.gif" lazyload></p>
+<p>  $\qquad$ 如果数据存在放在数据段以外的其他段（例如附加段），则应在指令中给出“段跨越前缀”。<br>  如  MOV  AX，ES:[3000H]   或   ES:MOV AX，[3000H]<br>$\quad$（ 4 ）堆栈段寄存器 SS (Stack Segment)<br>$\qquad$ 用以指示堆栈段的首地址<br>$\qquad$ ESP&#x2F;SP或EBP&#x2F;BP指示堆栈栈顶的偏移地址<br>$\qquad$用SS:SP等组合操作堆栈中的数据<br><img src="/../txmg/tx27.png" srcset="/img/loading.gif" lazyload><br>$\quad$ （ 5 ）新增加的附加段寄存器FS和GS<br>$\qquad$ 80386起新增了这两个附加段寄存器<br>$\qquad$ FS和GS的功能和ES相同<br>$\qquad$ 增加FS和GS可以减轻ES寄存器的负担，以便程序灵活访问相应的两个附加数据段。</p>
+<p> <strong>8086的物理地址生成</strong><br> <img src="/../txmg/tx28.png" srcset="/img/loading.gif" lazyload><br>  $\quad$ 实例：<br>  <img src="/../txmg/tx29.png" srcset="/img/loading.gif" lazyload><br>  <strong>直观的存储器分段方法</strong><br>$\quad$ 实现方法：把20位物理地址分为2部分，高4位为段号，用段号寄存器来保存，低16位为段内地址，也称便宜地址。<br>$\quad$ 不足之处：段号寄存器和其他寄存器不兼容，且每个逻辑段固定占用16K字节，浪费存储空间，相比而言8086的分段技术更灵活。<br> <strong>IA-32的存储器寻址</strong><br>  实模式 CS:IP<br>  保护模式：CS:EIP，保护模式下，段基地不在CS中，而是在内存中。<img src="/../txmg/tx210.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="4-x86汇编语言的格式"><a href="#4-x86汇编语言的格式" class="headerlink" title="4. x86汇编语言的格式"></a>4. x86汇编语言的格式</h4><h6 id="Intel-和AT-amp-T-格式的区别"><a href="#Intel-和AT-amp-T-格式的区别" class="headerlink" title="Intel 和AT&amp;T 格式的区别"></a>Intel 和AT&amp;T 格式的区别</h6><p> <strong>Intel 格式</strong><br>$\quad$ Intel制定，x86相关的文档手册使用该格式<br>$\quad$ 主要应用在MS-DOS和Windows等系统中<br> <strong>AT&amp;T格式</strong><br>$\quad$ AT&amp;T制定，起源于贝尔实验室研发的Unix<br>$\quad$ 最初用在PDP-11&#x2F;VAX等机型，后移植到x86<br>$\quad$ 主要应用于Unix和Linux等系统中</p>
+<ol>
+<li>前缀（后缀）：<br> $\quad$ Intel语法：寄存器和立即数都没有前缀，十六进制、十进制、八进制和二进制立即数后缀分别为h,d，o(q)和b。整数默认为10进制，以字母开头的十六进制数必须加0，字符串常数用单引号括起。实数即为 （）E（）<br>  $\quad$ AT&amp;T语法“寄存器使用前缀”%“，立即数使用前缀”$“，十六进制立即数使用前缀0x<br>  <img src="/../txmg/tx211.png" srcset="/img/loading.gif" lazyload></li>
+<li>操作数方向<br>  $\quad$ Intel语法：第一个操作数是目的操作数，第二个操作数是源操作数<br>  $\quad$ AT&amp;T语法：第一个操作数是源操作数，第二个操作数是目的操作数</li>
+<li>内存单元操作数<br>  $\quad$ Intel语法：基寄存器用[ ]标明<br>  $\quad$ AT&amp;T语法：基寄存器用（ ）标明</li>
+<li>间接寻址方法<br>  $\quad$ Intel语法：segreg:[base+index*scale+disp]<br>  $\quad$ AT&amp;T语法：%segreg:disp(base,index,scale)<br>  <img src="/../txmg/tx212.png" srcset="/img/loading.gif" lazyload></li>
+<li>操作码后缀<br>  $\quad$ AT&amp;T语法： 操作码带后缀，以指出操作数的大小<br>  $\qquad$ I:32位；w: 16位 ；b：8位<br>  $\quad$ Intel语法：内存单元操作数带前缀，以指出操作数的大小<br>  $\qquad$ dword ptr; word ptr ;byte ptr<br>  <img src="/../txmg/tx213.png" srcset="/img/loading.gif" lazyload></li>
+</ol>
+<h6 id="汇编语言程序"><a href="#汇编语言程序" class="headerlink" title="汇编语言程序"></a>汇编语言程序</h6><p> <strong>组成</strong><br>$\quad$ 分段结构：按段进行组织，最多由四个段组成（代码，数据 ，附加，堆栈），每个段以“段名   SEGMENT”开始，以“段名  ENDS”结束。<br>$\quad$ 语句行：段由若干语句行组成，语句行的三种类型：指令、伪指令<br>宏指令。<br> <strong>语句的执行</strong><br>$\quad$ 指令语句的执行：汇编器计算指令语句中表达式的值-&gt;汇编器将指令语句翻译成机器指令代码-&gt;程序运行时，由CPU按机器指令代码的要求完成各种运算与操作。<br>$\quad$ 伪指令语句的执行：汇编器计算伪指令语句中表达式的值，不产生机器代码，汇编器解释伪指令语句的含义并遵照执行。<br>$\qquad$ 数据定义：变量（编程时只能确定其初始值，程序运行期间可修改其值的数据对象称为变量）是存储单元中的数据，可定义在任何段，由伪指令说明符DB、DW、DD等定义<br>$\qquad$ 符号定义：常量（编程时已确定其值，程序运行期间不会改变其值）可由伪指令说明符”EQU”或“&#x3D;”定义，不产生目标代码，不占用存储单元。EQU左边的符号名不可重复定义，但&#x3D;可以。<br>$\qquad$ 段定义：说明符SEGMENT（段开始），ENDS（段结束），ASSUME（指定段寄存器）<br>$\qquad$ 指定段内的偏移地址：<br>$\qquad$ $\qquad$ “ORG 常数表达式”指定当前可用的存储单元的偏移地址为常数表达式的值。<br>$\qquad$ $\qquad$ “EVEN”将当前可用的存储单元的偏移地址调整为最近的偶数值。<br>$\qquad$ 示例：</p>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs cpp">DATA SEGMENT<br>  ORG <span class="hljs-number">1000</span>H<br>  A DB <span class="hljs-number">47</span>H,<span class="hljs-number">12</span>H,<span class="hljs-number">45</span>H<br>  EVEN<br>  B DB <span class="hljs-number">47</span>H<br>DATA ENDS<br><span class="hljs-comment">//ORG指令将A的偏移地址部分指定为1000H，从A开始存放3个字节变量，占用地址1000H，1001H和1002H，EVEN指令会将B的偏移地址部分从1003H调整为偶数地址1004H</span><br><br></code></pre></td></tr></table></figure>
+<p>$\qquad$ 过程定义：<br>$\qquad$ $\qquad$ “过程名  PROC  类型属性名”：从过程名代表的地址开始定义一个过程；“类型属性名”可以选择NEAR（近过程）或FAR（远过程），默认为NEAR<br>$\qquad$ $\qquad$ “过程名 ENDP”：表示该过程到此结束，此处的过程名必须与过程开始时PROC左边的过程名相同。</p>
+<hr>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/" class="category-chain-item">CS学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/COD/" class="category-chain-item">COD</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/COD/">#COD</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>2-计算机基本结构</div>
+      <div>https://aki-yzh.github.io/2023/03/19/2-计算机基本结构/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Aki-yzh</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年3月19日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2023年6月10日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/03/19/3-CISC,X86,RISC,MIPS%E6%8C%87%E4%BB%A4/" title="3-CISC,X86,RISC,MIPS指令">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">3-CISC,X86,RISC,MIPS指令</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/03/19/1-%E8%AF%BE%E7%A8%8B%E6%A6%82%E8%BF%B0/" title="1-课程概述">
+                        <span class="hidden-mobile">1-课程概述</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="music-player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=3&id=2512321469&auto=1&height=66"></iframe>
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Aki</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Yzh</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":145,"height":315},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
+</html>
+<script type="text/javascript" src="/js/ribon.js"></script>
+<script type="text/javascript" src="/js/title.js"></script>
+
+
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+
+<script type="text/javascript" src="/js/showtext.js"></script>
+
+<!-- 雪花特效2 -->
+<script type="text/javascript" src="/js/snow.js"></script>
+

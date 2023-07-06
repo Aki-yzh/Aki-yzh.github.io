@@ -1,0 +1,9 @@
+/* 首页文章栏背景透明 */
+#recent-posts>.recent-post-item,.layout_page>div:first-child:not(.recent-posts),.layout_post>#page,.layout_post>#post,.read-mode .layout_post>#post {
+    background: var(--light_bg_color)
+}
+
+/* 侧边栏透明 */
+#aside-content .card-widget {
+    background: var(--light_bg_color)
+}

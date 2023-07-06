@@ -1,0 +1,806 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#50d0d0">
+  <meta name="author" content="Aki-yzh">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="对应 北京大学计算机组成与体系结构第七讲 参考教材COD（计算机组成与设计-硬件&#x2F;软件接口）">
+<meta property="og:type" content="article">
+<meta property="og:title" content="7-输入输出接口">
+<meta property="og:url" content="https://aki-yzh.github.io/2023/05/10/7-%E8%BE%93%E5%85%A5%E8%BE%93%E5%87%BA%E6%8E%A5%E5%8F%A3/index.html">
+<meta property="og:site_name" content="Aki-yzh">
+<meta property="og:description" content="对应 北京大学计算机组成与体系结构第七讲 参考教材COD（计算机组成与设计-硬件&#x2F;软件接口）">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aki-yzh.github.io/txmg/hd07.png">
+<meta property="article:published_time" content="2023-05-10T15:55:10.000Z">
+<meta property="article:modified_time" content="2023-06-10T10:10:04.400Z">
+<meta property="article:author" content="Aki-yzh">
+<meta property="article:tag" content="COD">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aki-yzh.github.io/txmg/hd07.png">
+  
+  
+  
+  <title>7-输入输出接口 - Aki-yzh</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/icon_gundam/iconfont.css">
+<link rel="stylesheet" href="/css/touming.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"aki-yzh.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+ 
+
+
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Aki-yzh</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://aki-yzh.github.io/2023/03/12/GUNPLA/">
+                <i class="iconfont icon-gaoda"></i>
+                <span>高达</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://aki-yzh.github.io/2023/03/12/anime/">
+                <i class="iconfont icon-bilibili-fill"></i>
+                <span>番剧</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/../txmg/hd07.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="7-输入输出接口"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-05-10 23:55" pubdate>
+          2023年5月10日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          2.8k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          24 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">7-输入输出接口</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年6月10日 晚上
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p> 对应 北京大学计算机组成与体系结构第七讲<br> 参考教材COD（计算机组成与设计-硬件&#x2F;软件接口）</p>
+<span id="more"></span>
+<h1 id="计算机组成与体系结构"><a href="#计算机组成与体系结构" class="headerlink" title="计算机组成与体系结构"></a>计算机组成与体系结构</h1><hr>
+<h2 id="输入输出接口"><a href="#输入输出接口" class="headerlink" title="输入输出接口"></a>输入输出接口</h2><p>$\quad$ 第一台微型计算机： Altair 8800</p>
+<h3 id="输入输出接口电路"><a href="#输入输出接口电路" class="headerlink" title="输入输出接口电路"></a>输入输出接口电路</h3><h5 id="I-x2F-O接口的产生原因"><a href="#I-x2F-O接口的产生原因" class="headerlink" title="I&#x2F;O接口的产生原因"></a>I&#x2F;O接口的产生原因</h5><p>$\quad$ 1. CPU和外设之间的速度差距<br>$\quad$ 2. 外设处理的信息格式和接口信号形式多样</p>
+<h5 id="I-x2F-O接口的基本功能"><a href="#I-x2F-O接口的基本功能" class="headerlink" title="I&#x2F;O接口的基本功能"></a>I&#x2F;O接口的基本功能</h5><p>$\quad$ 1. 数据缓冲——解决CPU和外设之间的速度差距<br>$\quad$ 2. 提供联络信息——协调同步数据交换工程<br>$\quad$ 3. 信息和信息格式的转换<br>$\quad$ 4. 设备选择<br>$\quad$ 5. 中断管理<br>$\quad$ 6. 可编程功能</p>
+<h5 id="I-x2F-O接口的基本结构"><a href="#I-x2F-O接口的基本结构" class="headerlink" title="I&#x2F;O接口的基本结构"></a>I&#x2F;O接口的基本结构</h5><p><img src="/../txmg/tx701.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="输入和输出的过程"><a href="#输入和输出的过程" class="headerlink" title="输入和输出的过程"></a>输入和输出的过程</h3><h4 id="I-x2F-O端口及其编址方式"><a href="#I-x2F-O端口及其编址方式" class="headerlink" title="I&#x2F;O端口及其编址方式"></a>I&#x2F;O端口及其编址方式</h4><h5 id="I-x2F-O端口"><a href="#I-x2F-O端口" class="headerlink" title="I&#x2F;O端口"></a>I&#x2F;O端口</h5><p>$\quad$ I&#x2F;O接口内部包含一组称为I&#x2F;O端口的寄存器，每个I&#x2F;O端口都需有自己的端口地址（端口号），以便CPU访问。<br>$\quad$ 与复杂外设连接时，握手（handshaking）信号成对出现，定时协调与联络。</p>
+<p><img src="/../txmg/tx704.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="I-x2F-O端口编址方式"><a href="#I-x2F-O端口编址方式" class="headerlink" title="I&#x2F;O端口编址方式"></a>I&#x2F;O端口编址方式</h5><h6 id="I-x2F-O端口和存储器分开编址"><a href="#I-x2F-O端口和存储器分开编址" class="headerlink" title="I&#x2F;O端口和存储器分开编址"></a>I&#x2F;O端口和存储器分开编址</h6><p>示例：<br><img src="/../txmg/tx702.png" srcset="/img/loading.gif" lazyload><br><strong>优点</strong><br>$\quad$ - I&#x2F;O端口不占用存储器地址，不会减少用户的存储器地址空间<br>$\quad$ -  I&#x2F;O指令编码短，执行速度快<br>$\quad$ - I&#x2F;O指令的地址码较短，地址译码方便<br>$\quad$ - 采用单独的I&#x2F;O指令，使程序中的I&#x2F;O操作和其他操作层次清晰便于理解<br><strong>缺点</strong><br>$\quad$ - 内部结构相对复杂，CPU引脚更多<br>$\quad$ - 处理数据相对间接</p>
+<h6 id="I-x2F-O端口和存储器统一编址"><a href="#I-x2F-O端口和存储器统一编址" class="headerlink" title="I&#x2F;O端口和存储器统一编址"></a>I&#x2F;O端口和存储器统一编址</h6><p>示例：<br><img src="/../txmg/tx703.png" srcset="/img/loading.gif" lazyload><br><strong>优点</strong><br>$\quad$ - 可以用访向存储器的指令来访问I&#x2F;O端口，访问存储器的指令功能比较齐全，可以实现直接对I&#x2F;O端口以内的数据进行处理<br>$\quad$ - 可以将CPU中的I&#x2F;O操作与访问存储器操作统一设计为一套控制逻辑，简化内部结构，同时减少CPU的引脚数目<br><strong>缺点</strong><br>$\quad$ - 由于I&#x2F;O端口占用了一部分存储器地址空间，因而使用户的存储地址空间相对减小<br>$\quad$  - 由于利用访问存储器的指令来进行I&#x2F;O操作指令的长度通常比单独I&#x2F;O指令长，因此指令的执行时间也较长</p>
+<h5 id="I-x2F-O指令说明"><a href="#I-x2F-O指令说明" class="headerlink" title="I&#x2F;O指令说明"></a>I&#x2F;O指令说明</h5><h6 id="IN指令（输入）"><a href="#IN指令（输入）" class="headerlink" title="IN指令（输入）"></a>IN指令（输入）</h6><p>$\quad$ 格式： IN AC，PORT<br>$\quad$ 操作：把外设端口的内容输入到AL或AX</p>
+<h6 id="OUT指令（输出）"><a href="#OUT指令（输出）" class="headerlink" title="OUT指令（输出）"></a>OUT指令（输出）</h6><p>$\quad$ 格式： OUT PORT，AC<br>$\quad$ 操作：把AL或AX的内容输出到外设端口</p>
+<h6 id="寻址方式"><a href="#寻址方式" class="headerlink" title="寻址方式"></a>寻址方式</h6><p>$\quad$ <strong>端口地址为0～255</strong><br>$\quad$ $\quad$ 直接寻址：用一个字节立即数指定端口地址<br>$\quad$ $\quad$ 间接寻址：用DX的内容指定端口地址<br>$\quad$ <strong>端口地址大于255</strong><br>$\quad$ $\quad$ 直接寻址：用DX的内容制定端口地址</p>
+<h4 id="数据输出过程"><a href="#数据输出过程" class="headerlink" title="数据输出过程"></a>数据输出过程</h4><p><img src="/../txmg/tx705.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 1. CPU执行OUT指令，将控制字写入接口的“控制寄存器”，从而设置接口的工作模式<br>$\quad$ 2. CPU执行OUT指令，将数据写到接口的“输出缓冲寄存器”<br>$\quad$ 3. 接口将数据发到“并行数据输出”信号，并将“输出准备好”信号置为己有（亦可由CPU写控制字将该信息置为有效）<br>$\quad$ 4. 外设发现“输出准备好信号”后，从“并行数据输出”信号接收数据，并将“输出回答信号”置为有效<br>$\quad$ 5. 接口发现“输出回答”信号有效后，将“状态寄存器”中的状态位“输出缓存器空”置为有效<br>$\quad$ 6. 在这个过程中，CPU反复执行IN指令从“状态寄存”器中读出状态字，直到发现“输出缓冲器空”，然后开始下一个输出过程，继续输出新数据<br>$\quad$ （此为程序控制方式，还可以采用终端控制方式）</p>
+<h4 id="数据输入过程"><a href="#数据输入过程" class="headerlink" title="数据输入过程"></a>数据输入过程</h4><p> <img src="/../txmg/tx706.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 1. 系统初始化时，CPU执行OUT指令，将控制字写入接口的“控制寄存器”，从而设置接口的工作模式<br>$\quad$ 2. 外设将数据发到“并行数据输入”信号，并将“输入准备好”信号置为有效<br>$\quad$ 3. 接口发现“输入准备好”信号有效后，从“并行数据输入”信号接收数据，放入“输入缓冲寄存器”，并将“输入回答”信号置为有效，阻止外设输入新数据<br>$\quad$ 4. 接口将状态寄存器中的状态位“输入缓存器满”置为有效<br>$\quad$ 5. 在上述过程中，CPU反复执行IN指令从“状态寄存器“中读出状态字，直到发现”输入缓冲器满“，然后执行IN指令，从“输入缓冲寄存器”中读出数据<br>$\quad$ 6. 接口将“输入回答”信号置为无效，等待外设输入新数据<br> $\quad$ （此为程序控制方式，还可以采用终端控制方式）</p>
+<h3 id="串行和并行的比较"><a href="#串行和并行的比较" class="headerlink" title="串行和并行的比较"></a>串行和并行的比较</h3><p>$\quad$ <strong>串行通信</strong>：数据在单条一位宽的传输线上按时间先后一位一位地进行传送<br>$\quad$ <strong>并行通信</strong> ：数据在多位宽的传输线上各位同时进行传送<br>$\quad$ 串口通常指的是RS-232接口（COM接口），并口常指IEEE-1284接口（LPT接口）</p>
+<h5 id="传输线上："><a href="#传输线上：" class="headerlink" title="传输线上："></a>传输线上：</h5><p>$\quad$ 串行传输线数量少，并行传输线数量多<br><img src="/../txmg/tx707.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="转换上："><a href="#转换上：" class="headerlink" title="转换上："></a>转换上：</h5><p>$\quad$ 串行通信需要经过复杂的串&#x2F;并转换，并行不需要<br><img src="/../txmg/tx708.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="数据传输上："><a href="#数据传输上：" class="headerlink" title="数据传输上："></a>数据传输上：</h5><p>$\quad$ 同频率下，串行通信数据传输率低，并行通信数据传输率高</p>
+<h5 id="串扰上："><a href="#串扰上：" class="headerlink" title="串扰上："></a>串扰上：</h5><p>$\quad$ 串行通信不存在信号线之间的串扰而并行存在</p>
+<h5 id="差分信号传输技术"><a href="#差分信号传输技术" class="headerlink" title="差分信号传输技术"></a>差分信号传输技术</h5><p>$\quad$ 发送端在两根线上发送振幅相等、相位相反的信号，接收端比较两个电压差来判断发送的是0或1<br>$\quad$ <strong>优点</strong><br>$\quad$ $\quad$ 抗干扰能力强<br>$\quad$ $\quad$ 能有效抑制电磁干扰<br>$\quad$ $\quad$ 时序定位准确<br>$\quad$ <strong>缺点</strong><br>$\quad$ $\quad$ 在电路板上，差分信号一定要走两根等长，等宽，紧密靠近且在同一层面的线，布线难度高</p>
+<h3 id="并口芯片的应用实例：可编程并行接口8255A"><a href="#并口芯片的应用实例：可编程并行接口8255A" class="headerlink" title="并口芯片的应用实例：可编程并行接口8255A"></a>并口芯片的应用实例：可编程并行接口8255A</h3><p><img src="/../txmg/tx709.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="与外设的连线（24条）"><a href="#与外设的连线（24条）" class="headerlink" title="与外设的连线（24条）"></a>与外设的连线（24条）</h5><p>$\quad$ 端口A，端口B：PA0～7，PB0～7，可分别设定为输入或输出端口<br>$\quad$ 端口C：PC0～7 ：通常不用于普通的数据传送，而是作为A和B的”握手信号“，称为“A组”，“B组”</p>
+<h5 id="与系统总线的连线"><a href="#与系统总线的连线" class="headerlink" title="与系统总线的连线"></a>与系统总线的连线</h5><p>$\quad$ 地址A1，A0：端口选择信号，CS有效时启用<br><img src="/../txmg/tx710.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="工作方式"><a href="#工作方式" class="headerlink" title="工作方式"></a>工作方式</h5><p>$\quad$ 0- 基本输入&#x2F;输出：单向输入&#x2F;输出，无握手信号<br>$\quad$ 1- 选通输入&#x2F;输出：单向输入&#x2F;输出，C用于握手信号<br>$\quad$ 2- 双向传输：双向传输，C用于握手信号</p>
+<h5 id="XLAT指令说明"><a href="#XLAT指令说明" class="headerlink" title="XLAT指令说明"></a>XLAT指令说明</h5><p>$\quad$ 格式：XLAT<br>$\quad$ 操作：（事先定义字节型数据表）<br>$\quad$ $\quad$ 1. 从BX中取得数据表起始地址的偏移量<br>$\quad$ $\quad$ 2. 从AL中取得数据表项索引值<br>$\quad$ $\quad$ 3. 在数据表中查得表项内容<br>$\quad$ $\quad$ 4. 将查得表项内容存入AL</p>
+<hr>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/" class="category-chain-item">CS学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/COD/" class="category-chain-item">COD</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/COD/">#COD</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>7-输入输出接口</div>
+      <div>https://aki-yzh.github.io/2023/05/10/7-输入输出接口/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Aki-yzh</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年5月10日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2023年6月10日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/05/18/8-%E4%B8%AD%E6%96%AD%E5%92%8C%E5%BC%82%E5%B8%B8/" title="8-中断和异常">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">8-中断和异常</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/05/01/6-%E6%B5%81%E6%B0%B4%E7%BA%BF%E4%BC%98%E5%8C%96%E6%8A%80%E6%9C%AF/" title="6-流水线优化技术">
+                        <span class="hidden-mobile">6-流水线优化技术</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="music-player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=3&id=2512321469&auto=1&height=66"></iframe>
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Aki</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Yzh</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":145,"height":315},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
+</html>
+<script type="text/javascript" src="/js/ribon.js"></script>
+<script type="text/javascript" src="/js/title.js"></script>
+
+
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+
+<script type="text/javascript" src="/js/showtext.js"></script>
+
+<!-- 雪花特效2 -->
+<script type="text/javascript" src="/js/snow.js"></script>
+

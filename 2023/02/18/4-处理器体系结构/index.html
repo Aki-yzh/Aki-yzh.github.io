@@ -1,0 +1,893 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#50d0d0">
+  <meta name="author" content="Aki-yzh">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="对应 CSAPP 第四章节">
+<meta property="og:type" content="article">
+<meta property="og:title" content="4-处理器体系结构">
+<meta property="og:url" content="https://aki-yzh.github.io/2023/02/18/4-%E5%A4%84%E7%90%86%E5%99%A8%E4%BD%93%E7%B3%BB%E7%BB%93%E6%9E%84/index.html">
+<meta property="og:site_name" content="Aki-yzh">
+<meta property="og:description" content="对应 CSAPP 第四章节">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aki-yzh.github.io/icsmg/4.png">
+<meta property="article:published_time" content="2023-02-17T20:00:00.000Z">
+<meta property="article:modified_time" content="2023-02-19T07:22:20.285Z">
+<meta property="article:author" content="Aki-yzh">
+<meta property="article:tag" content="CSAPP">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aki-yzh.github.io/icsmg/4.png">
+  
+  
+  
+  <title>4-处理器体系结构 - Aki-yzh</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/icon_gundam/iconfont.css">
+<link rel="stylesheet" href="/css/touming.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"aki-yzh.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+ 
+
+
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Aki-yzh</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://aki-yzh.github.io/2023/03/12/GUNPLA/">
+                <i class="iconfont icon-gaoda"></i>
+                <span>高达</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://aki-yzh.github.io/2023/03/12/anime/">
+                <i class="iconfont icon-bilibili-fill"></i>
+                <span>番剧</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/../icsmg/top.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="4-处理器体系结构"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-02-18 04:00" pubdate>
+          2023年2月18日 凌晨
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          5.7k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          48 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">4-处理器体系结构</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年2月19日 下午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <hr>
+<h2 id="对应-CSAPP-第四章节"><a href="#对应-CSAPP-第四章节" class="headerlink" title="对应 CSAPP 第四章节"></a>对应 CSAPP 第四章节</h2><span id="more"></span>
+
+
+
+<h1 id="ICS"><a href="#ICS" class="headerlink" title="ICS"></a><a href="https://aki-yzh.github.io/2023/02/18/1-%E8%AE%A1%E7%AE%97%E6%9C%BA%E7%B3%BB%E7%BB%9F%E6%BC%AB%E6%B8%B8&%E7%9B%AE%E5%BD%95">ICS</a></h1><hr>
+<h3 id="四、处理器体系结构"><a href="#四、处理器体系结构" class="headerlink" title="四、处理器体系结构"></a>四、处理器体系结构</h3><h5 id="4-1-Y86-64指令集体系结构"><a href="#4-1-Y86-64指令集体系结构" class="headerlink" title="4.1 Y86-64指令集体系结构"></a>4.1 Y86-64指令集体系结构</h5><h6 id="4-1-1-程序员可见的状态"><a href="#4-1-1-程序员可见的状态" class="headerlink" title="4.1.1 程序员可见的状态"></a>4.1.1 程序员可见的状态</h6><p>$\quad$ 程序员：用汇编代码写程序的人或产生机器级代码的编译器</p>
+<p>$\quad$ 可见状态：每条指令都会读取或修改处理器状态的某些部分<br>    <br><img src="/../icsmg/20221119152952.png" srcset="/img/loading.gif" lazyload><br>    <br>$\quad$ 15个程序寄存器，每个程序寄存器存储一个64位的字（8字节），寄存器%rsp被出栈，入栈，调用和返回指令作为栈指针。3个1位的条件码ZF，OF，SF，程序计数器PC存放当前正在执行指令的地址</p>
+<h6 id="4-1-2-Y86-64指令"><a href="#4-1-2-Y86-64指令" class="headerlink" title="4.1.2 Y86-64指令"></a>4.1.2 Y86-64指令</h6><p>$\quad$ movq指令被分成了4个不同的指令：irmovq，rrmovq，mrmovq，rmmovq，源可以是立即数（i），寄存器（r）或内存（m）。指令的第一个字符表示源的类型，第二个表示了目的的类型。同x86-64，我们不允许将内存直接传送到另一个内存，也不允许将立即数传送到内存。<br>    <br><img src="/../icsmg/20221119153309.png" srcset="/img/loading.gif" lazyload><br>$\quad$ halt 停止指令的执行</p>
+<p>$\quad$ nop 空操作</p>
+<p>$\quad$ 4个整数操作指令addq，subq，andq，xorq</p>
+<p>$\quad$ 7个跳转指令（图中的jxx）jmp、jle、jl、je、jne、jge、jg分支条件和x86-64一致。</p>
+<p>$\quad$ 6个条件传送指令（图中的cmovxx）：cmovle、cmovl、cmove、cmovne、cmovge和cmovg、格式与rrmovq一样，但是只有当条件码满足约束才会更新寄存器的值。</p>
+<p>$\quad$ call 将返回地址入栈，然后跳到目的地址。ret指令从这样的调用中返回。</p>
+<p>$\quad$ pushq和pullq实现了入栈和出栈。</p>
+<h6 id="4-1-3指令编码"><a href="#4-1-3指令编码" class="headerlink" title="4.1.3指令编码"></a>4.1.3指令编码</h6><p>$\quad$ 每条指令需要1～10个字节不等，每条指令的第一个字节表示指令的类型，这些字节分为两个部分，每部分4位：高四位是代码部分，低四位是功能部分（fn）。代码值位0～0x8<br><img src="/../icsmg/20221119153404.png" srcset="/img/loading.gif" lazyload><br>$\quad$ rrmovq与条件传送有相同的指令代码，可以把它看作是无条件传送，功能代码都是0</p>
+<p>寄存器标识符</p>
+<p><img src="/../icsmg/20221119153049.png" srcset="/img/loading.gif" lazyload><br>$\quad$ rA和rB被称为寄存器指示符字节，指定标识符对应的寄存器。不需要寄存器的则将r设置为0xF。</p>
+<p>$\quad$ 有些指令需要一个附加的8字节常数字，这个字能作为irmovq的立即数，rmmovq和mrmovq的地址指示符的偏移量，以及分支指令和调用指令的目的地址。（分支指令和调用指令的目的是一个绝对地址，而非相对寻址）</p>
+<p>$\quad$ 比如对 rmmovq %rsp，0x123456789abcd（%rdx）；先填充为8字节得00 01 23 45 67 89 ab cd在小断法反序成cd ab 89 67 45 23 01 00，连起来得指令的编码为40 42 cd ab 89 67 45 23 01 00.</p>
+<p>$\quad$ 字节编码有唯一的解释。</p>
+<h6 id="旁注-RISC和CISC"><a href="#旁注-RISC和CISC" class="headerlink" title="旁注  RISC和CISC"></a>旁注  RISC和CISC</h6><p>$\quad$ 二者主要区别在于CISC指令数量很多而RISC少，RISC代码固定为4字节，RISC没有条件码，RISC寻址简单，RISC只有load和store允许内存调用，RISC细节可见。RISC指令延迟短，RISC比较简单，故代码长度一般更长</p>
+<h6 id="4-1-4-Y86-64异常"><a href="#4-1-4-Y86-64异常" class="headerlink" title="4.1.4  Y86-64异常"></a>4.1.4  Y86-64异常</h6><p>$\quad$ 状态码Stat描述程序运行的总体状态。<br><img src="/../icsmg/20221119153452.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="4-1-5-Y86-64程序"><a href="#4-1-5-Y86-64程序" class="headerlink" title="4.1.5 Y86-64程序"></a>4.1.5 Y86-64程序</h6><p>$\quad$ 与x86-64的汇编代码相比，Y86-64需要将常数加载到寄存器。从内存中读取数值并与一个寄存器相加时，Y86-64需要两条指令，x86-64只需要一条。</p>
+<h5 id="4-2-逻辑设计和硬件控制语言HCL"><a href="#4-2-逻辑设计和硬件控制语言HCL" class="headerlink" title="4.2 逻辑设计和硬件控制语言HCL"></a>4.2 逻辑设计和硬件控制语言HCL</h5><h6 id="逻辑门"><a href="#逻辑门" class="headerlink" title="逻辑门"></a>逻辑门</h6><p><img src="/../icsmg/20221119153513.png" srcset="/img/loading.gif" lazyload><br>组合电路要求：<br>$\quad$ 1）每个逻辑门的输入必须连接到系统输入或者存储器输出或逻辑门输出上<br>$\quad$ 2） 逻辑门的输出不能连在一起<br>$\quad$ 3）网必须是无环的</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs c">HCL：<br>数据类型：<span class="hljs-type">bool</span>, <span class="hljs-type">int</span><br>操作<br>简单的布尔表达式:    <span class="hljs-type">bool</span> out = (s&amp;&amp;a)||(!s&amp;&amp;b)<br>情况表达式（多选器） word out = [select1 : expr1, select2 : expr2 ... ]<br>集合关系 <span class="hljs-type">bool</span> s = code in &#123; item1, item2, ... &#125;<br>与C语言逻辑运算的区别<br>组合电路输出持续响应输入的变化<br>HCL无C语言中的“短路”，不会部分求值<br></code></pre></td></tr></table></figure>
+
+<p>存储器<br>$\quad$ 分为时钟存储器和随机访问存储器</p>
+<h5 id="4-3-Y86-64程序的实现"><a href="#4-3-Y86-64程序的实现" class="headerlink" title="4.3  Y86-64程序的实现"></a>4.3  Y86-64程序的实现</h5><p>$\quad$ 描述一个SEQ的处理器</p>
+<h6 id="4-3-1-将处理组织成阶段"><a href="#4-3-1-将处理组织成阶段" class="headerlink" title="4.3.1  将处理组织成阶段"></a>4.3.1  将处理组织成阶段</h6><p>$\quad$ 1.取指（fetch）：从内存读取指令字节，地址为PC的值。从指令中抽取出指令指示符字节的两个四位部分，icode（指令代码）和ifun（指令功能）。可能取出一个寄存器指示符字节，指明一个或两个寄存器操作数指示符rA和rB。还可能取出个8字节常数字valC，计算出下一条指令地址valP。即valP等于PC+已执行操作的字节</p>
+<p>$\quad$ 2.译码（decode）：从寄存器文件读入最多两个操作数，得到valA和&#x2F;或valB</p>
+<p>$\quad$ 3.执行（execute）ALU进行指令指明的操作或对栈指针进行增减，同时可能设置条件码</p>
+<p>$\quad$ 4.访存（memory） 将数据写入内存或读出数据</p>
+<p>$\quad$ 5.写回（write back）将结果写回寄存器文件</p>
+<p>$\quad$ 6.更新PC（PCupdate）将PC设置成下一条指令的地址</p>
+<p>例：<br><img src="/../icsmg/20221119153959.png" srcset="/img/loading.gif" lazyload><br><img src="/../icsmg/20221119155842.png" srcset="/img/loading.gif" lazyload><br><img src="/../icsmg/20221119155911.png" srcset="/img/loading.gif" lazyload><br><img src="/../icsmg/20221119155923.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 其中PC 、rA、rB、OP等在运算中都是具体的值。</p>
+<p>$\quad$ 整数操作指令遵循上面列出的通用模式。</p>
+<p>如<br><img src="/../icsmg/20221119155946.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 其他的操作同理。</p>
+<h6 id="4-3-2-SEQ硬件结构"><a href="#4-3-2-SEQ硬件结构" class="headerlink" title="4.3.2  SEQ硬件结构"></a>4.3.2  SEQ硬件结构</h6><p><img src="/../icsmg/20221119160543.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 取指：将程序计数器寄存器作为地址</p>
+<p>$\quad$ 译码：寄存器文件有两个读端口A和B，从这两个端口分别读取寄存器值valA和valB</p>
+<p>$\quad$ 执行：ALU执行，CC为条件码寄存器</p>
+<p>$\quad$ 访存：访问内存，进行写入或者读</p>
+<p>$\quad$ 写回：寄存器文件有两个写端口，E用来写入ALU计算出的值，M用来写从数据内存中读出来的值</p>
+<p>$\quad$ PC更新：valP：下一条指令的地址；valC：调用指令或跳转指令制定的目标地址；valM：从内存读取的返回地址</p>
+<h6 id="4-3-3-SEQ的时序"><a href="#4-3-3-SEQ的时序" class="headerlink" title="4.3.3 SEQ的时序"></a>4.3.3 SEQ的时序</h6><p>$\quad$ 原则：从不回读（处理器从来不需要为了完成一条指令的执行而去读由该指令更新了的状态）<br>例：没有指令既设置又读取条件码</p>
+<h6 id="4-3-4-SEQ阶段的实现"><a href="#4-3-4-SEQ阶段的实现" class="headerlink" title="4.3.4 SEQ阶段的实现"></a>4.3.4 SEQ阶段的实现</h6><p><img src="/../icsmg/20221119160132.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 1.取指阶段：以PC作为字节0的地址，一次从内存读出10个字节。第一个字节被解释成指令字节，然后icode和ifun的控制逻辑块计算指令和功能码。</p>
+<p>$\quad$ instr_valid：指令非法</p>
+<p>$\quad$ need_regids:包含寄存器指示符字节</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs hcl">bool need_regids=&#123;<br>    icode in&#123;IRRMOVLQ,IOPQ,IPUSHQ,IPOPQ,<br>        IIRMOVQ,IRMMOVQ,IMRMOVQ&#125;;<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p>$\quad$ need_valC:包含常数字节</p>
+<p> $\quad$ 剩下9个字节是寄存器指示符字节和常数字节的组合编码。</p>
+<p>$\quad$ 若need_regids为1，则字节1被分开装入rA和rB中，否则设为0xFF</p>
+<p>$\quad$ 产生常数valC根据need_regids的值由2～9或者1～8产生<br><img src="/../icsmg/20221119160213.png" srcset="/img/loading.gif" lazyload><br>$\quad$ PC值为p+1+r+8i（r为need_regids的值，i为need_valC的值，p为初始PC）</p>
+<p>$\quad$ 2.译码和写回阶段：从寄存器文件中读取数据，寄存器文件有四个端口，读端口的地址输入为srcA和srcB，写端口的地址输入为dstE和dstM。读出的数值通过valA和valB输出，写入的数值通过valM和valE</p>
+<p><img src="/../icsmg/20221119160237.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs hcl">word srcA=&#123;<br>    icode in &#123;IRRMOVQ,IRMMOVQ,IOPQ,IPUSHQ&#125;:rA;<br>    icode in&#123;IPOPQ,IRET&#125;:RRSP;<br>    1:RNONE;#Don&#x27;t need register<br>&#125;<br>#warning :conditional move not implemented correctly here<br>word destE=&#123;<br>    icode in&#123;IRRMOVQ&#125;:rB;<br>    icode in &#123;IIRMOVQ,IOPQ&#125;:rB;<br>    icode in &#123; IPUSHQ,IPOPQ,ICALL,IRET&#125;:RRSP;<br>    1:RNONE;#Don&#x27;t need register<br>&#125;<br></code></pre></td></tr></table></figure>
+
+<p> 3.执行阶段：</p>
+<p>$\quad$ 对输入的aluA和aluB进行算数与逻辑运算<br><img src="/../icsmg/20221119160348.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs hcl">word aluA=&#123;<br>    icode in&#123;IRRMOVQ,IOPQ &#125;:valA;<br>    icode in&#123;IIRMOVQ,IRMMOVQ,IMRMOVQ&#125;:valC;<br>    icode in &#123;ICALL,IPUShQ&#125;:-8;<br>    icode in &#123;IRET,IPOPQ&#125;:8;<br>    #other instructions don&#x27;t need ALU<br>&#125;<br>bool set_cc = icode in &#123;IOPQ&#125;;//仅运算改变条件码寄存器<br></code></pre></td></tr></table></figure>
+
+<p>4.访存阶段</p>
+<p>$\quad$ 从内存读入或者把数据写入内存中</p>
+<p>$\quad$ 进行读时产生valM<br><img src="/../icsmg/20221119160328.png" srcset="/img/loading.gif" lazyload></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs hcl">word mem_addr=[<br>    icode in &#123;IRMMOVQ,IPUSHQ,ICALL,IMRMOVQ&#125;:valE;<br>    icode in&#123;IPOPQ,IRET&#125;:valA;<br>#Other instructions don&#x27;t need address<br><br>];<br>bool mem_read=[<br>    icode in&#123;IMRMOVQ,IPOPQ,IRET&#125;;<br>]//只读数据<br></code></pre></td></tr></table></figure>
+
+<p>5.更新PC状态<br><img src="/../icsmg/20221119160424.png" srcset="/img/loading.gif" lazyload><br>新PC可能是valC，valM或valP</p>
+<p>$\quad$ 当正在执行call或者满足跳转条件即将跳转时，PC为valC，正在执行RET，valM，其他为当前PC加当前指令长度</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs hcl">word new_PC=[<br>    icode == ICALL:valC;<br>    icode == IJXX&amp;&amp;Cnd:valC;<br>    icode == IRET:valM;<br>    #default <br>    1:valP;<br>]<br></code></pre></td></tr></table></figure>
+
+<p>总结<br><img src="/../icsmg/20221119160037.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="4-4-流水线的通用原理"><a href="#4-4-流水线的通用原理" class="headerlink" title="4.4 流水线的通用原理"></a>4.4 流水线的通用原理</h5><p>$\quad$ 我们用每秒千兆条指令（GIPS），也就是每秒十亿条指令，为单位来描述吞吐量。延迟为吞吐量的倒数。</p>
+<p>$\quad$ 吞吐量&#x3D;1&#x2F;（执行时间+延迟）</p>
+<p>$\quad$ 画出流程图进行分析</p>
+<p>v指令的转移由时钟信号决定</p>
+<h5 id="4-5-Y86-64的流水线实现"><a href="#4-5-Y86-64的流水线实现" class="headerlink" title="4.5 Y86-64的流水线实现"></a>4.5 Y86-64的流水线实现</h5><p>$\quad$ 将更新PC放在一个时钟周期的开始时执行</p>
+<p> $\quad$ 实现方法：创建一个寄存器来保存指令在执行过程中产生的信号，标号为前面加个p：电路重定时</p>
+<p> $\quad$ 流水线寄存器：</p>
+<p>$\quad$ F：保存程序计数器的预测值</p>
+<p>$\quad$ D：位于取指和译码之间，保存最新取出的指令的信息</p>
+<p>$\quad$ E：位于译码和执行之间，保存关于最新译码的指令和从寄存器文件中读出的值的信息</p>
+<p>$\quad$ M ：位于执行和访存之间，保存最新执行的指令的结果</p>
+<p>$\quad$ W：位于访存和反馈路径之间<br><img src="/../icsmg/20221119160847.png" srcset="/img/loading.gif" lazyload><br> $\quad$ 流水线冒险<br><img src="/../icsmg/20221119161037.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 存在数据相关或者控制相关，会产生错误的结果</p>
+<p>$\quad$ 指令在译码阶段读取寄存器时， 寄存器的ID分别与执行阶段，访存阶段以及写回阶段的目的寄存器进行比较 ，若相等则存在数据相关。</p>
+<p>$\quad$ 1.用暂停来避免数据冒险</p>
+<p>         stalling； 让一条指令停止在译码阶段，直到产生它的源操作数的指令通过了写回阶段</p>
+<p>$\quad$ 方法：插入气泡（bubble）气泡会占据周期<br><img src="/../icsmg/20221119161100.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 用暂停实现会严重降低流水线的吞吐量</p>
+<p>$\quad$ 2.用转发来避免数据冒险</p>
+<p>$\quad$   $\quad$ 转发在基本的硬件结构里添加了额外的数据链接与控制逻辑</p>
+<p>$\quad$ 增加逻辑块Sel+FwdA和FwdB<br><img src="/../icsmg/20221119161146.png" srcset="/img/loading.gif" lazyload><br>$\quad$ 不能单用转发解决的，暂停和转发结合使用</p>
+<p>控制冒险：</p>
+<p>$\quad$ 取指出现ret指令（暂停处理新指令直到ret到达写回阶段）</p>
+<p>$\quad$ 出现jxx指令：分支预测</p>
+<p>$\quad$ 假设总是进行跳转；若到达执行阶段发现预测错误则取消这些指令</p>
+<p><strong>PIPE各阶段的实现</strong></p>
+<p>$\quad$ 1.PC选择和取指阶段</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs hcl">word f_pc&#123;<br>    M_icode == IJXX &amp;&amp; !M_Cnd:M_valA;<br>    W_icode == IRET :W_valM;<br>    1：F_predPC;<br>&#125;;<br>word f_predPC =[<br>    f_icode in &#123;IJXX,ICALL&#125;:f_valC;<br>    1:f_valP;<br>];<br></code></pre></td></tr></table></figure>
+
+<p>$\quad$ 2.译码和写回阶段</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs hcl">//译码阶段由于加入了转发变得复杂<br>word d_valA =[<br>    D_icode in &#123;ICALL,IJXX&#125;:D_valP;<br>    d_srcA == e_dstE :e_valE ;//优先级执行优先<br>    d_srcA == M_dstM : m_valM ;//访存次之<br>    d_srcA == M_dstE : M_valE;<br>    d_srcA == W_dstM : W_valM;//写回最次，先M后E<br>    d_secA == W_dstE :W_valE;<br>    1:d_rvalA;<br>]<br></code></pre></td></tr></table></figure>
+
+<p>$\quad$ 3.执行阶段</p>
+<p>$\qquad$ 与SEQ差别不大</p>
+<p>$\quad$ 4.访存阶段</p>
+<p>$\qquad$ 差别不大</p>
+<p><strong>性能分析</strong></p>
+<p>$\quad$ 一个阶段处理了$C_i$条指令和$C_b$个气泡</p>
+<p>$\quad$ CPI &#x3D; 1+Cb&#x2F;Ci</p>
+<p>估算：</p>
+<p>$\quad$ 加载指令（mrmovq和popq）占执行指令的25%，20%会导致冒险1气泡</p>
+<p>$\quad$ 条件分支指令占20%，40%不选择分支，2气泡</p>
+<p>$\quad$ 返回指令占2% 3气泡</p>
+<p>$\quad$ CPI&#x3D;1+$\sum$ 指令频率x条件频率x气泡数</p>
+<hr>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/" class="category-chain-item">CS学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/ICS/" class="category-chain-item">ICS</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CSAPP/">#CSAPP</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>4-处理器体系结构</div>
+      <div>https://aki-yzh.github.io/2023/02/18/4-处理器体系结构/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Aki-yzh</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年2月18日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2023年2月19日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/02/18/5-%E4%BC%98%E5%8C%96%E7%A8%8B%E5%BA%8F%E6%80%A7%E8%83%BD/" title="5-优化程序性能">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">5-优化程序性能</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/02/18/3-%E7%A8%8B%E5%BA%8F%E7%9A%84%E6%9C%BA%E5%99%A8%E7%BA%A7%E8%A1%A8%E7%A4%BA/" title="3-程序的机器级表示">
+                        <span class="hidden-mobile">3-程序的机器级表示</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="music-player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=3&id=2512321469&auto=1&height=66"></iframe>
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Aki</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Yzh</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":145,"height":315},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
+</html>
+<script type="text/javascript" src="/js/ribon.js"></script>
+<script type="text/javascript" src="/js/title.js"></script>
+
+
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+
+<script type="text/javascript" src="/js/showtext.js"></script>
+
+<!-- 雪花特效2 -->
+<script type="text/javascript" src="/js/snow.js"></script>
+
