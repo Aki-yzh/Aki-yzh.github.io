@@ -16,25 +16,25 @@
   <meta name="author" content="Aki-yzh">
   <meta name="keywords" content="">
   
-    <meta name="description" content="对毫米波雷达采集到的点云进行处理">
+    <meta name="description" content="对应 北京大学计算机网络课程第二讲 参考教材计算机网络-自顶向下方法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="FMCW点云与深度学习">
-<meta property="og:url" content="https://aki-yzh.github.io/2023/09/13/FMCW%20%E7%82%B9%E4%BA%91%E4%B8%8E%E6%B7%B1%E5%BA%A6%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:title" content="应用层-Web与HTTP">
+<meta property="og:url" content="https://aki-yzh.github.io/2023/09/22/%E5%BA%94%E7%94%A8%E5%B1%82-Web%E4%B8%8EHTTP/index.html">
 <meta property="og:site_name" content="Aki-yzh">
-<meta property="og:description" content="对毫米波雷达采集到的点云进行处理">
+<meta property="og:description" content="对应 北京大学计算机网络课程第二讲 参考教材计算机网络-自顶向下方法">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-09-13T15:55:10.000Z">
-<meta property="article:modified_time" content="2023-09-11T12:46:07.422Z">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN101.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN102.png">
+<meta property="article:published_time" content="2023-09-22T15:55:10.000Z">
+<meta property="article:modified_time" content="2023-09-22T10:31:23.683Z">
 <meta property="article:author" content="Aki-yzh">
-<meta property="article:tag" content="FMCW">
-<meta property="article:tag" content="ai">
-<meta property="article:tag" content="deep">
-<meta property="article:tag" content="learning">
+<meta property="article:tag" content="CN">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aki-yzh.github.io/CNP/CN101.png">
   
   
   
-  <title>FMCW点云与深度学习 - Aki-yzh</title>
+  <title>应用层-Web与HTTP - Aki-yzh</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -244,7 +244,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="FMCW点云与深度学习"></span>
+            <span id="subtitle" data-typed-text="应用层-Web与HTTP"></span>
           
         </div>
 
@@ -255,8 +255,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-09-13 23:55" pubdate>
-          2023年9月13日 晚上
+        <time datetime="2023-09-22 23:55" pubdate>
+          2023年9月22日 晚上
         </time>
       </span>
     
@@ -267,7 +267,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          16 字
+          1.8k 字
         
       </span>
     
@@ -278,7 +278,7 @@
         
         
         
-          1 分钟
+          15 分钟
         
       </span>
     
@@ -316,12 +316,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">FMCW点云与深度学习</h1>
+            <h1 style="display: none">应用层-Web与HTTP</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年9月11日 晚上
+                    本文最后更新于：2023年9月22日 晚上
                   
                 
               </p>
@@ -329,9 +329,17 @@
             
               <div class="markdown-body">
                 
-                <p>对毫米波雷达采集到的点云进行处理</p>
+                <p> 对应 北京大学计算机网络课程第二讲<br> 参考教材计算机网络-自顶向下方法</p>
 <span id="more"></span>
-
+<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><h2 id="应用层-Web与HTTP"><a href="#应用层-Web与HTTP" class="headerlink" title="应用层-Web与HTTP"></a>应用层-Web与HTTP</h2><p>$\quad$·不同主机上的程序之间通过网络应用层完成交互<br>$\quad$·典型的应用层服务：语音通话，在线会议，社交网络，搜索引擎，信息推送Web访问，文件传输，电子邮件，即时通讯，远程登陆，P2P文件共享，在线游戏，流媒体。。。。。。。</p>
+<h5 id="应用层与下层网络（传输层）接口"><a href="#应用层与下层网络（传输层）接口" class="headerlink" title="应用层与下层网络（传输层）接口"></a>应用层与下层网络（传输层）接口</h5><p>$\quad$·应用程序在端系统上以进程的形式呈现<br>$\quad$·进程利用socket（套接字）发送&#x2F;接收消息（通过传输层）<br>$\quad$·socket类似一扇门：从门中向外发送消息，从其他进程收到的消息堆积在门口等待接收<br>$\quad$·希望传输层提供的服务：可靠传输，高吞吐，低时延，安全</p>
+<h6 id="实际传输层提供的服务"><a href="#实际传输层提供的服务" class="headerlink" title="实际传输层提供的服务"></a>实际传输层提供的服务</h6><p>$\quad$·TCP服务<br>$\quad$$\quad$·面向连接：传输前建立连接<br>$\quad$$\quad$·可靠传输：丢包重传<br>$\quad$$\quad$·有序传输<br>$\quad$$\quad$·流量控制：防止接收端过载<br>$\quad$$\quad$· 拥塞控制：防止网络核心过载<br>$\quad$$\quad$·无法保证：延迟，吞吐，安全<br>$\quad$·UDP服务<br>$\quad$$\quad$·无连接<br>$\quad$$\quad$· 不可靠传输：可能丢包，丢包也无法回复<br>$\quad$$\quad$· 无法保证：可靠性，顺序，流量控制，拥塞控制，延迟，吞吐量，安全<br>$\quad$$\quad$· 问：为什么还有UDP：简单，性能好</p>
+<h4 id="网络应用层的好处："><a href="#网络应用层的好处：" class="headerlink" title="网络应用层的好处："></a>网络应用层的好处：</h4><p>$\quad$·屏蔽底层细节<br>$\quad$$\quad$·设计应用层程序时，需要考虑到TCP与UDP的性质<br>$\quad$$\quad$·应用程序无需为下层网络设备编写代码<br>$\quad$·抽象：许多网络应用有相同的通信模式，网络应用层封装这些共同模式<br>$\quad$·提供额外的功能：如安全性<br>·总之网络应用层极大简化了网络应用开发，使得互联网可以快速发展</p>
+<h4 id="应用层的通信实体"><a href="#应用层的通信实体" class="headerlink" title="应用层的通信实体"></a>应用层的通信实体</h4><p>$\quad$·应用层的实体就是应用程序<br>$\quad$·我们可以给网络中的每台主机命名<br>$\quad$$\quad$·网卡MAC地址<br>$\quad$$\quad$·IP地址<br>$\quad$$\quad$·主机名<br>$\quad$·每个主机的命名仍然不够<br>$\quad$·对于接收到的消息，需要区分是发给哪个应用程序<br>$\quad$$\quad$·单个主机上可能运行多个应用程序<br>$\quad$$\quad$·单个应用程序也可能创建多个连接（socket）<br>$\quad$·解决方案：为每个应用以IP地址+端口号命名<br>$\quad$$\quad$·HTTP服务器：80<br>$\quad$$\quad$·邮件服务器：25</p>
+<h4 id="应用层的组织架构"><a href="#应用层的组织架构" class="headerlink" title="应用层的组织架构"></a>应用层的组织架构</h4><p>$\quad$·应用程序以两种方法组织:</p>
+<h5 id="客户-x2F-服务器方式（C-x2F-S）"><a href="#客户-x2F-服务器方式（C-x2F-S）" class="headerlink" title="客户&#x2F;服务器方式（C&#x2F;S）"></a>客户&#x2F;服务器方式（C&#x2F;S）</h5><p>$\quad$·应用层的许多协议是基于C&#x2F;S方式<br>$\quad$·客户端与服务器是指通信中所涉及的两个应用进程<br>$\quad$·客户、服务器方式描述的是应用进程之间服务与被服务之间的关系<br>$\quad$·客户是服务请求方，服务器是服务提供方<br><img src="/../CNP/CN101.png" srcset="/img/loading.gif" lazyload><br>$\quad$·分层视角：<br><img src="/../CNP/CN102.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h6><p>$\quad$·根据是否建立连接：<br>$\quad$$\quad$·可以是面向连接的，也可以是无连接的<br>$\quad$$\quad$·面向连接时，C&#x2F;S通信关系一旦建立，通信就是双向的，都可发送和接收数据<br>$\quad$·根据服务器进程的实现方式<br>$\quad$$\quad$·服务器采用<strong>循环方式(iterative mode)</strong><br>$\quad$$\quad$$\quad$·一次只运行一个服务进程<br>$\quad$$\quad$$\quad$·当有多个客户进程请求服务时，服务进程就按请求的先后顺序依次做出响应 (阻塞方式)<br>$\quad$$\quad$$\quad$·面向连接的TCP与无连接的UDP都可以用<br>$\quad$$\quad$·服务器采用<strong>并发方式(concurrent mode)</strong><br>$\quad$$\quad$$\quad$·可以同时运行多个服务进程<br>$\quad$$\quad$$\quad$·每一个服务进程都对某个特定的客户进程做出响应 (非阻塞方式)<br>$\quad$$\quad$$\quad$·通常只有面向连接的TCP使用</p>
+<h5 id="对等方式（P2P）"><a href="#对等方式（P2P）" class="headerlink" title="对等方式（P2P）"></a>对等方式（P2P）</h5>
                 
               </div>
             
@@ -349,12 +357,12 @@
     
       <span class="category-chain">
         
-  <a href="/categories/CS%E7%A7%91%E7%A0%94/" class="category-chain-item">CS科研</a>
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/" class="category-chain-item">CS学习</a>
   
   
     <span>></span>
     
-  <a href="/categories/CS%E7%A7%91%E7%A0%94/FMCW/" class="category-chain-item">FMCW</a>
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/CN/" class="category-chain-item">CN</a>
   
   
 
@@ -371,13 +379,7 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/FMCW/">#FMCW</a>
-      
-        <a href="/tags/ai/">#ai</a>
-      
-        <a href="/tags/deep/">#deep</a>
-      
-        <a href="/tags/learning/">#learning</a>
+        <a href="/tags/CN/">#CN</a>
       
     </div>
   
@@ -389,8 +391,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>FMCW点云与深度学习</div>
-      <div>https://aki-yzh.github.io/2023/09/13/FMCW 点云与深度学习/</div>
+      <div>应用层-Web与HTTP</div>
+      <div>https://aki-yzh.github.io/2023/09/22/应用层-Web与HTTP/</div>
     </div>
     <div class="license-meta">
       
@@ -402,13 +404,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年9月13日</div>
+          <div>2023年9月22日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年9月11日</div>
+          <div>2023年9月22日</div>
         </div>
       
       
@@ -439,18 +441,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/09/18/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="网络基础知识">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">网络基础知识</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/09/12/FMCW%20%E6%B5%8B%E8%B7%9D%E6%B5%8B%E9%80%9F%E6%B5%8B%E8%A7%92/" title="FMCW测距测速测角">
-                        <span class="hidden-mobile">FMCW测距测速测角</span>
+                      <a href="/2023/09/18/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/" title="网络基础知识">
+                        <span class="hidden-mobile">网络基础知识</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
