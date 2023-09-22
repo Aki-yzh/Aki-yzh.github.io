@@ -31,6 +31,39 @@
   
   
   <entry>
+    <title>树莓派PVM的使用</title>
+    <link href="/2023/09/19/%E6%A0%91%E8%8E%93%E6%B4%BEPVM%E7%9A%84%E4%BD%BF%E7%94%A8/"/>
+    <url>/2023/09/19/%E6%A0%91%E8%8E%93%E6%B4%BEPVM%E7%9A%84%E4%BD%BF%E7%94%A8/</url>
+    
+    <content type="html"><![CDATA[<p>利用树莓派中python GPIO库实现</p><span id="more"></span>]]></content>
+    
+    
+    <categories>
+      
+      <category>CS科研</category>
+      
+      <category>树莓派</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>树莓派</tag>
+      
+      <tag>PVM</tag>
+      
+      <tag>云台</tag>
+      
+      <tag>舵机</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>网络基础知识</title>
     <link href="/2023/09/18/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/"/>
     <url>/2023/09/18/%E7%BD%91%E7%BB%9C%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86/</url>
