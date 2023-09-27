@@ -8,7 +8,7 @@
     <link href="/2023/09/24/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E9%83%A8%E5%88%86/"/>
     <url>/2023/09/24/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E9%83%A8%E5%88%86/</url>
     
-    <content type="html"><![CDATA[<span id="more"></span><h1 id="机器人学基础"><a href="#机器人学基础" class="headerlink" title="机器人学基础"></a>机器人学基础</h1><h2 id="空间描述和变换"><a href="#空间描述和变换" class="headerlink" title="空间描述和变换"></a>空间描述和变换</h2><p>$\quad$·存在一个世界坐标系,讨论任何问题都是基于这个坐标系<br>$\quad$·一旦建立了坐标系,我们就能用一个3x1的位置矢量给世界坐标系中的任何点定位<br>旋转矩阵：</p><p><img src="/../FMCWmg/UCS1.png"></p><p>舵机的旋转即为Z-X-Y欧拉角</p><p>$\quad$ 首先将坐标系{B}和一个已知参考坐标系{A}重合。先将{B}绕$Z_B$转$\alpha$角度，再<br>绕$Y_B$旋转$\beta$ 角，最后绕着$X_B$ 旋转y角<br><img src="/../FMCWmg/UCS2.png"><br>matlab中可以通过rotx()，roty()，rotz()函数计算旋转矩阵</p>]]></content>
+    <content type="html"><![CDATA[<p>利用正运动学以及空间变换控制舵机</p><span id="more"></span><h1 id="机器人学基础"><a href="#机器人学基础" class="headerlink" title="机器人学基础"></a>机器人学基础</h1><h2 id="空间描述和变换"><a href="#空间描述和变换" class="headerlink" title="空间描述和变换"></a>空间描述和变换</h2><p>$\quad$·存在一个世界坐标系,讨论任何问题都是基于这个坐标系<br>$\quad$·一旦建立了坐标系,我们就能用一个3x1的位置矢量给世界坐标系中的任何点定位<br>旋转矩阵：</p><p><img src="/../FMCWmg/UCS1.png"></p><p>舵机的旋转即为Z-X-Y欧拉角</p><p>$\quad$ 首先将坐标系{B}和一个已知参考坐标系{A}重合。先将{B}绕$Z_B$转$\alpha$角度，再<br>绕$Y_B$旋转$\beta$ 角，最后绕着$X_B$ 旋转y角<br><img src="/../FMCWmg/UCS2.png"><br>matlab中可以通过rotx()，roty()，rotz()函数计算旋转矩阵</p>]]></content>
     
     
     <categories>
@@ -231,9 +231,9 @@
     
     <tags>
       
-      <tag>目录</tag>
-      
       <tag>COD</tag>
+      
+      <tag>目录</tag>
       
     </tags>
     
