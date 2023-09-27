@@ -8,7 +8,7 @@
     <link href="/2023/09/24/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E9%83%A8%E5%88%86/"/>
     <url>/2023/09/24/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E9%83%A8%E5%88%86/</url>
     
-    <content type="html"><![CDATA[<p>利用正运动学以及空间变换控制舵机</p><span id="more"></span><h1 id="机器人学基础"><a href="#机器人学基础" class="headerlink" title="机器人学基础"></a>机器人学基础</h1><h2 id="空间描述和变换"><a href="#空间描述和变换" class="headerlink" title="空间描述和变换"></a>空间描述和变换</h2><p>$\quad$·存在一个世界坐标系,讨论任何问题都是基于这个坐标系<br>$\quad$·一旦建立了坐标系,我们就能用一个3x1的位置矢量给世界坐标系中的任何点定位<br>旋转矩阵：</p><p><img src="/../FMCWmg/UCS1.png"></p><p>舵机的旋转即为Z-X-Y欧拉角</p><p>$\quad$ 首先将坐标系{B}和一个已知参考坐标系{A}重合。先将{B}绕$Z_B$转$\alpha$角度，再<br>绕$Y_B$旋转$\beta$ 角，最后绕着$X_B$ 旋转y角<br><img src="/../FMCWmg/UCS2.png"><br>matlab中可以通过rotx()，roty()，rotz()函数计算旋转矩阵</p>]]></content>
+    <content type="html"><![CDATA[<p>利用正运动学以及空间变换控制舵机</p><span id="more"></span><h1 id="机器人学基础"><a href="#机器人学基础" class="headerlink" title="机器人学基础"></a>机器人学基础</h1><h2 id="空间描述和变换"><a href="#空间描述和变换" class="headerlink" title="空间描述和变换"></a>空间描述和变换</h2><p>$\quad$·存在一个世界坐标系,讨论任何问题都是基于这个坐标系<br>$\quad$·一旦建立了坐标系,我们就能用一个3x1的位置矢量给世界坐标系中的任何点定位<br>旋转矩阵：</p><p><img src="/../FMCWmg/UCS1.png"></p><p>舵机的旋转即为Z-X-Y欧拉角</p><p>$\quad$ 首先将坐标系{B}和一个已知参考坐标系{A}重合。先将{B}绕$Z_B$转$\alpha$角度，再<br>绕$Y_B$旋转$\beta$ 角，最后绕着$X_B$ 旋转y角<br><img src="/../FMCWmg/UCS2.png"><br>matlab中可以通过rotx()，roty()，rotz()函数计算旋转矩阵</p><h2 id="实物坐标系建立"><a href="#实物坐标系建立" class="headerlink" title="实物坐标系建立"></a>实物坐标系建立</h2><p><img src="/../FMCWmg/UCS3.png"><br><img src="/../FMCWmg/UCS4.png"><br>代码：</p><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs c"><br><br>%坐标系变换<br><br>%R为雷达测出的距离，angle_PSI,angle_THETA为雷达测出的角度<br><br>%angle_1，angle_2为舵机目前的角度<br><br>%L为舵机<span class="hljs-number">1</span>转轴的长度<br><br>%P_A=Rotate*（P_B+P） 先平移再旋转<br><br>%%<br><br>L = <span class="hljs-number">50</span>;<br><br>Rotate = rotz(angle_2)*roty(<span class="hljs-number">0</span>)*rotx(angle_1);%Z-Y-X欧拉角<br><br>P_MOVE1= [<span class="hljs-number">0</span>;<span class="hljs-number">0</span>;L];<br><br>P_B_x = R * <span class="hljs-built_in">cos</span>(angle_PSI) * <span class="hljs-built_in">sin</span>(angle_THETA);<br><br>P_B_y = R * <span class="hljs-built_in">cos</span>(angle_PSI) * <span class="hljs-built_in">cos</span>(angle_THETA);<br><br>P_B_z = R * <span class="hljs-built_in">sin</span>(angle_PSI);<br><br>P_B = [P_B_x;P_B_y;P_B_z];%<span class="hljs-number">3</span>号（雷达）坐标系下的坐标<br><br>%%<br><br>P_A = Rotate * (P_B - P_MOVE1);%得到<span class="hljs-number">2</span>号坐标系下的坐标<br><br>%%<br><br>P_MOVE2=[<span class="hljs-number">-45</span>;<span class="hljs-number">-75</span>;<span class="hljs-number">-100</span>];<br><br>P_0 = P_A + P_MOVE2;% <span class="hljs-number">1</span>号坐标系下的坐标<br><br>%%<br><br>% P_A = ;<br><br>angle_2_new = <span class="hljs-built_in">atan</span>(P_A(<span class="hljs-number">1</span>)/P_A(<span class="hljs-number">2</span>));%舵机<span class="hljs-number">2</span>要调整到的角度<br><br>temp = <span class="hljs-built_in">sqrt</span>(P_A(<span class="hljs-number">1</span>)*P_A(<span class="hljs-number">1</span>)+P_A(<span class="hljs-number">2</span>)+P_A(<span class="hljs-number">2</span>));<br><br>angle_1_new = <span class="hljs-built_in">atan</span>(P_A(<span class="hljs-number">3</span>)/temp);%舵机<span class="hljs-number">1</span>要调整到的角度<br><br>disp(angle_1_new);<br><br>disp(angle_2_new);<br><br></code></pre></td></tr></table></figure>]]></content>
     
     
     <categories>
@@ -24,9 +24,9 @@
       
       <tag>树莓派</tag>
       
-      <tag>机器人学</tag>
-      
       <tag>舵机</tag>
+      
+      <tag>机器人学</tag>
       
     </tags>
     
@@ -82,11 +82,11 @@
       
       <tag>树莓派</tag>
       
-      <tag>舵机</tag>
-      
       <tag>PVM</tag>
       
       <tag>云台</tag>
+      
+      <tag>舵机</tag>
       
     </tags>
     
