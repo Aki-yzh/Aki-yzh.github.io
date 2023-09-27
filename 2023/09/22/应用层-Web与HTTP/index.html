@@ -16,12 +16,12 @@
   <meta name="author" content="Aki-yzh">
   <meta name="keywords" content="">
   
-    <meta name="description" content="对应 北京大学计算机网络课程第二讲 参考教材计算机网络-自顶向下方法">
+    <meta name="description" content="对应 北京大学计算机网络课程第二讲第一部分 参考教材计算机网络-自顶向下方法">
 <meta property="og:type" content="article">
 <meta property="og:title" content="应用层-Web与HTTP">
 <meta property="og:url" content="https://aki-yzh.github.io/2023/09/22/%E5%BA%94%E7%94%A8%E5%B1%82-Web%E4%B8%8EHTTP/index.html">
 <meta property="og:site_name" content="Aki-yzh">
-<meta property="og:description" content="对应 北京大学计算机网络课程第二讲 参考教材计算机网络-自顶向下方法">
+<meta property="og:description" content="对应 北京大学计算机网络课程第二讲第一部分 参考教材计算机网络-自顶向下方法">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://aki-yzh.github.io/CNP/CN101.png">
 <meta property="og:image" content="https://aki-yzh.github.io/CNP/CN102.png">
@@ -39,10 +39,26 @@
 <meta property="og:image" content="https://aki-yzh.github.io/CNP/CN114.png">
 <meta property="og:image" content="https://aki-yzh.github.io/CNP/CN115.png">
 <meta property="og:image" content="https://aki-yzh.github.io/CNP/CN116.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/(1)CN111.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/(1)CN112.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/(1)CN113.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/(1)CN114.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/(1)CN115.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/(1)CN116.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN117.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN118.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN119.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN120.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN121.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN122.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN123.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN124.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN125.png">
 <meta property="article:published_time" content="2023-09-22T15:55:10.000Z">
-<meta property="article:modified_time" content="2023-09-22T13:54:13.626Z">
+<meta property="article:modified_time" content="2023-09-27T15:36:04.911Z">
 <meta property="article:author" content="Aki-yzh">
 <meta property="article:tag" content="CN">
+<meta property="article:tag" content="应用层">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://aki-yzh.github.io/CNP/CN101.png">
   
@@ -281,7 +297,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.6k 字
+          8.4k 字
         
       </span>
     
@@ -292,7 +308,7 @@
         
         
         
-          39 分钟
+          70 分钟
         
       </span>
     
@@ -335,7 +351,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年9月22日 晚上
+                    本文最后更新于：2023年9月27日 晚上
                   
                 
               </p>
@@ -343,7 +359,7 @@
             
               <div class="markdown-body">
                 
-                <p> 对应 北京大学计算机网络课程第二讲<br> 参考教材计算机网络-自顶向下方法</p>
+                <p> 对应 北京大学计算机网络课程第二讲第一部分<br> 参考教材计算机网络-自顶向下方法</p>
 <span id="more"></span>
 <h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><h2 id="应用层-Web与HTTP"><a href="#应用层-Web与HTTP" class="headerlink" title="应用层-Web与HTTP"></a>应用层-Web与HTTP</h2><p>$\quad$·不同主机上的程序之间通过网络应用层完成交互<br>$\quad$·典型的应用层服务：语音通话，在线会议，社交网络，搜索引擎，信息推送Web访问，文件传输，电子邮件，即时通讯，远程登陆，P2P文件共享，在线游戏，流媒体。。。。。。。</p>
 <h5 id="应用层与下层网络（传输层）接口"><a href="#应用层与下层网络（传输层）接口" class="headerlink" title="应用层与下层网络（传输层）接口"></a>应用层与下层网络（传输层）接口</h5><p>$\quad$·应用程序在端系统上以进程的形式呈现<br>$\quad$·进程利用socket（套接字）发送&#x2F;接收消息（通过传输层）<br>$\quad$·socket类似一扇门：从门中向外发送消息，从其他进程收到的消息堆积在门口等待接收<br>$\quad$·希望传输层提供的服务：可靠传输，高吞吐，低时延，安全</p>
@@ -364,7 +380,21 @@
 <h5 id="Web基本协议"><a href="#Web基本协议" class="headerlink" title="Web基本协议"></a>Web基本协议</h5><p>$\quad$·WWW&#x3D;World Wide Web<br>$\quad$·构成：Web对象（网页，多媒体资源，动态对象与服务），通过URLs定位；HTTP服务器和客户端；服务器与客户端之间执行的HTTP协议<br><img src="/../CNP/CN111.png" srcset="/img/loading.gif" lazyload></p>
 <h6 id="服务器"><a href="#服务器" class="headerlink" title="服务器"></a>服务器</h6><p>$\quad$·Web页面（HTML文档）：包含到多种对象或链接<br>$\quad$·Web对象（包括静态对象和动态对象）：可以是HTML文档，图像文件，视频文件，声音文件，脚本文件等<br>$\quad$·对象用URL（统一资源定位符）编址：协议类型:&#x2F;&#x2F;主机名：端口&#x2F;&#x2F;路径和文件名<br><img src="/../CNP/CN113.png" srcset="/img/loading.gif" lazyload></p>
 <h6 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h6><p>$\quad$·发出请求，接收响应，解释HTML文档并显示<br>$\quad$·有些对象需要浏览器安装插件<br><img src="/../CNP/CN112.png" srcset="/img/loading.gif" lazyload></p>
-<h6 id="Web对象"><a href="#Web对象" class="headerlink" title="Web对象"></a>Web对象</h6><p>$\quad$·静态对象与静态网页<br>$\quad$$\quad$·文本，表格，图片，图像和视频等多媒体类型的信息（实现语言：标记语言，如：HTML，XML，PHP等）<br>$\quad$$\quad$·字体、颜色和布局等风格类型的信息（实现语言：层叠样式表CSS）<br>$\quad$·动态对象与动态网页<br>$\quad$$\quad$·交互信息，比如，用户注册信息、登录信息等（实现：PHP&#x2F;JSP等语言+MySQL等数据库）<br>$\quad$·链接：<br>$\quad$$\quad$·超链接（HyperLinks）：指向其他对象的URLs<br><img src="/../CNP/CN114.png" srcset="/img/loading.gif" lazyload><br>$\quad$·动态Web<br>$\quad$$\quad$·通用网关接口CGI<br>$\quad$$\quad$$\quad$·CGI (Common Gateway Interface) 是一种标准<br>$\quad$$\quad$$\quad$$\quad$·在服务器创建动态文档<br>$\quad$$\quad$$\quad$$\quad$·定义了动态文档应如何创建<br>$\quad$$\quad$$\quad$$\quad$·输入数据应如何提供给应用程序<br>$\quad$$\quad$$\quad$$\quad$·输出结果应如何使用<br><img src="/CNP/CN115.png" srcset="/img/loading.gif" lazyload><br>$\quad$$\quad$·脚本语言+数据库技术<br>$\quad$$\quad$$\quad$·更好的服务器逻辑表示“脚本”指的是一个程序，它被另一个程序（即解释程序，如Web浏览器）解释执行，而不是由计算机的处理器来解释或执行<br>$\quad$$\quad$$\quad$·数据库：更好的数据交换方式<br>$\quad$$\quad$·动态页面的创建，可以在浏览器or &#x2F;and 服务器进行<br><img src="/CNP/CN116.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="Web对象"><a href="#Web对象" class="headerlink" title="Web对象"></a>Web对象</h6><p>$\quad$·静态对象与静态网页<br>$\quad$$\quad$·文本，表格，图片，图像和视频等多媒体类型的信息（实现语言：标记语言，如：HTML，XML，PHP等）<br>$\quad$$\quad$·字体、颜色和布局等风格类型的信息（实现语言：层叠样式表CSS）<br>$\quad$·动态对象与动态网页<br>$\quad$$\quad$·交互信息，比如，用户注册信息、登录信息等（实现：PHP&#x2F;JSP等语言+MySQL等数据库）<br>$\quad$·链接：<br>$\quad$$\quad$·超链接（HyperLinks）：指向其他对象的URLs<br><img src="/../CNP/CN114.png" srcset="/img/loading.gif" lazyload><br>$\quad$·动态Web<br>$\quad$$\quad$·通用网关接口CGI<br>$\quad$$\quad$$\quad$·CGI (Common Gateway Interface) 是一种标准<br>$\quad$$\quad$$\quad$$\quad$·在服务器创建动态文档<br>$\quad$$\quad$$\quad$$\quad$·定义了动态文档应如何创建<br>$\quad$$\quad$$\quad$$\quad$·输入数据应如何提供给应用程序<br>$\quad$$\quad$$\quad$$\quad$·输出结果应如何使用<br><img src="/../CNP/CN115.png" srcset="/img/loading.gif" lazyload><br>$\quad$$\quad$·脚本语言+数据库技术<br>$\quad$$\quad$$\quad$·更好的服务器逻辑表示“脚本”指的是一个程序，它被另一个程序（即解释程序，如Web浏览器）解释执行，而不是由计算机的处理器来解释或执行<br>$\quad$$\quad$$\quad$·数据库：更好的数据交换方式<br>$\quad$$\quad$·动态页面的创建，可以在浏览器or &#x2F;and 服务器进行</p>
+<p><img src="/../CNP/CN116.png" srcset="/img/loading.gif" lazyload><br>$\quad$$\quad$·动态Web的执行:Web内容展示（前端）和服务逻辑（后端）相分离；脚本程序可以在服务器或客户端创建Web文档<br>$\quad$$\quad$·AJAX技术（Asynchronous JavaScript and XML）：超文本标记语言HTML+CSS：用于Web网页内容的显示<br>$\quad$$\quad$$\quad$·文档对象模型DOM:是HTML和XML文档的编程接口，本质上是页面的API，采用树形结构组织。<br>$\quad$$\quad$$\quad$·扩展标记语言XML：用于程序和服务器交换应用数据<br>$\quad$$\quad$$\quad$·异步式工作方式：用于发送和检索XML数据<br>$\quad$$\quad$$\quad$·JavaScript：用于将以上功能进行组合并协同工作<br>$\quad$$\quad$·AJAX不是新的编程语言，而是一种使用现有标准的新方法<br>$\quad$$\quad$·LAMP&#x3D;Linux+Apache+MySQL+PHP<br>$\quad$$\quad$·LAMP不是新的工具，而是一套Web服务器软件集合</p>
+<h5 id="HTTP协议："><a href="#HTTP协议：" class="headerlink" title="HTTP协议："></a>HTTP协议：</h5><p>$\quad$·超文本传输协议HTTP（HyperText Transfer Protocol）在传输层通常使用TCP协议，缺省使用TCP的80端口<br>$\quad$·HTTP为无状态协议，服务器端不保留之前请求的状态信息<br>$\quad$$\quad$·无状态协议：效率低，但简单<br>$\quad$$\quad$·有状态协议：维护状态相对复杂，需要维护历史信息，在客户端或服务器出现故障时，需要保持状态的一致性等。</p>
+<h6 id="HTTP发展现状"><a href="#HTTP发展现状" class="headerlink" title="HTTP发展现状"></a>HTTP发展现状</h6><p><img src="/../CNP/(1)CN111.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="HTTP1-0"><a href="#HTTP1-0" class="headerlink" title="HTTP1.0"></a>HTTP1.0</h6><p><img src="/../CNP/(1)CN112.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="非持久连接和持久连接"><a href="#非持久连接和持久连接" class="headerlink" title="非持久连接和持久连接"></a>非持久连接和持久连接</h6><p>$\quad$·非持久连接<br>$\quad$$\quad$·HTTP&#x2F;1.0缺省为非持久连接<br>$\quad$$\quad$$\quad$·服务器接收请求、响应、关闭TCP连接<br>$\quad$$\quad$·获取每个对象需要三个阶段<br>$\quad$$\quad$$\quad$·建立TCP连接<br>$\quad$$\quad$$\quad$·对象请求和传输<br>$\quad$$\quad$$\quad$·关闭TCP连接<br>$\quad$$\quad$·每次连接需要经历TCP慢启动阶段<br>$\quad$·持久连接<br>$\quad$$\quad$·HTTP&#x2F;1.1缺省为持久连接<br>$\quad$$\quad$$\quad$·在相同的TCP连接上，服务器接收请求、响应；再接收请求、响应；响应后保持连接<br>$\quad$$\quad$·HTTP&#x2F;1.1-pipeline 支持流水线机制<br>$\quad$$\quad$$\quad$·需要按序响应<br>$\quad$$\quad$·经历较少的慢启动过程，减少往返时间<br>$\quad$$\quad$$\quad$·降低响应时间</p>
+<h6 id="HTTP1-x"><a href="#HTTP1-x" class="headerlink" title="HTTP1.x"></a>HTTP1.x</h6><p><img src="/../CNP/(1)CN113.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="HTTP2"><a href="#HTTP2" class="headerlink" title="HTTP2"></a>HTTP2</h6><p>$\quad$·2015年5月，以RFC 7540正式发布<br>$\quad$·多路复用<br>$\quad$$\quad$·HTTP 1.1：一个请求的响应收到后，才能发送下一个请求<br>$\quad$$\quad$·HTTP 1.1-pipeline：可以同时发送多个请求，但要按顺序响应<br>$\quad$$\quad$·HTTP 2：请求&#x2F;响应允许交错，还可以自定义优先级<br>$\quad$·压缩<br>$\quad$·HTTP 2：服务器可以主动推送消息<br>$\quad$$\quad$·确认客户端存活<br>$\quad$$\quad$·预测资源请求<br>$\quad$·流量控制<br>$\quad$$\quad$·HTTP 1.1：完全依赖TCP<br>$\quad$$\quad$·HTTP 2：允许应用层进行控制</p>
+<h6 id="HTTP3"><a href="#HTTP3" class="headerlink" title="HTTP3"></a>HTTP3</h6><p>$\quad$·2022年6月以RFC 9114发布<br>$\quad$$\quad$·同时，HTTP 2更新至RFC 9113<br>$\quad$·主要是传输层变化，与应用层关系不大<br>$\quad$$\quad$·将TCP替换为UDP + QUIC<br>$\quad$$\quad$·（将在传输层章节介绍）</p>
+<h6 id="HTTP请求报文结构"><a href="#HTTP请求报文结构" class="headerlink" title="HTTP请求报文结构"></a>HTTP请求报文结构</h6><p>$\quad$·请求报文由三个部分组成，即开始行、首部行和实体主体<br>$\quad$·在请求报文中，开始行又称请求行<br>$\quad$·方法是对所请求的对象进行的操作，实际上也就是一些命令<br>$\quad$·请求报文的类型是由它所采用的方法决定的<br>$\quad$·URL是所请求资源的URL（有时URL会带一些参数，参数以“?”开始，每个参数的形式为“name&#x3D;value”，参数之间以“&amp;”隔开）<br><img src="/../CNP/(1)CN114.png" srcset="/img/loading.gif" lazyload><br><img src="/../CNP/(1)CN115.png" srcset="/img/loading.gif" lazyload><br><img src="/../CNP/(1)CN116.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="HTTP响应报文结构"><a href="#HTTP响应报文结构" class="headerlink" title="HTTP响应报文结构"></a>HTTP响应报文结构</h6><p>$\quad$·与请求报文类似，由三个部分组成，即开始行、首部行和实体主体<br>$\quad$·在响应报文中，开始行又称状态行<br>$\quad$·状态码都是三位数字<br>$\quad$$\quad$·1xx 表示通知信息的，如请求收到了或正在进行处理。<br>$\quad$$\quad$·2xx 表示成功，如接受或知道了。<br>$\quad$$\quad$·3xx 表示重定向，表示要完成请求还必须采取进一步的行动。<br>$\quad$$\quad$·4xx 表示客户的差错，如请求中有错误的语法或不能完成。<br>$\quad$$\quad$·5xx 表示服务器的差错，如服务器失效无法完成请求。<br>$\quad$$\quad$·典型的状态码<br>$\quad$$\quad$$\quad$·200 OK<br>$\quad$$\quad$$\quad$$\quad$·请求成功，被请求的对象包含在该响应的数据部分<br>$\quad$$\quad$$\quad$·301 Moved Permanently<br>$\quad$$\quad$$\quad$$\quad$·请求的对象被移走，新的位置在响应中通过Location: 给出<br>$\quad$$\quad$$\quad$·400 Bad Request<br>$\quad$$\quad$$\quad$$\quad$·服务器不能解释请求报文<br>$\quad$$\quad$$\quad$·404 Not Found<br>$\quad$$\quad$$\quad$$\quad$·服务器中找不到请求的文档<br>$\quad$$\quad$$\quad$·505 HTTP Version Not Supported<br>$\quad$$\quad$$\quad$$\quad$·服务器不支持相应的HTTP版本<br><img src="/../CNP/CN117.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="HTTP缓存"><a href="#HTTP缓存" class="headerlink" title="HTTP缓存"></a>HTTP缓存</h6><p>$\quad$·浏览器缓存<br>$\quad$$\quad$·在浏览器主机保存用户访问过的服务器Web页副本<br>$\quad$$\quad$·再次访问该页，不必从服务器再次传输，提高访问效率<br><img src="/../CNP/CN118.png" srcset="/img/loading.gif" lazyload><br>$\quad$·代理服务器缓存<br>$\quad$$\quad$·目标：代理服务器缓存已访问过的Web页副本，满足用户浏览器从代理服务器提取Web页，尽量减少原始服务器参与<br>$\quad$$\quad$·设置用户浏览器，通过代理服务器进行Web访问<br>$\quad$$\quad$·浏览器将所有的HTTP请求发送到代理服务器<br>$\quad$$\quad$$\quad$·如果缓存中有被请求的对象，则直接返回对象<br>$\quad$$\quad$$\quad$·否则，代理服务器向原始服务器请求对象，再将对象返回给客户端<br>$\quad$$\quad$·性能分析：<br><img src="/../CNP/CN119.png" srcset="/img/loading.gif" lazyload><br><img src="/../CNP/CN120.png" srcset="/img/loading.gif" lazyload><br>$\quad$$\quad$·Web缓存存在的困难，即Web缓存与原始服务器Web页一致性问题<br>$\quad$$\quad$$\quad$·启发式策略（较少使用）：服务器响应Web页的Last-Modified头和Expires头<br>$\quad$$\quad$$\quad$·询问式策略（常用）：通过特殊的关键字头询问原始服务器，Web副本是否已更新<br><img src="/../CNP/CN121.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h6><p><img src="/../CNP/CN122.png" srcset="/img/loading.gif" lazyload><br><img src="/../CNP/CN123.png" srcset="/img/loading.gif" lazyload><br>$\quad$·Cookies一般包含5个字段<br>$\quad$$\quad$·域指明Cookie来自何方，每个域为每个客户分配Cookie有数量限制<br>$\quad$$\quad$·路径标明服务器的文件树中哪些部分可以使用该Cookie<br>$\quad$$\quad$·内容采用“名字&#x3D;值”的形式，是Cookie存放内容的地方，可以达到4K容量，内容只是字符串，不是可执行程序<br>$\quad$$\quad$·安全指示浏览器只向使用安全传输连接的服务器返回Cookie<br><img src="/../CNP/CN124.png" srcset="/img/loading.gif" lazyload><br>$\quad$$\quad$·Cookie文件保存的只是文本串，没有可执行程序</p>
+<h6 id="访问安全"><a href="#访问安全" class="headerlink" title="访问安全"></a>访问安全</h6><p>$\quad$·Web访问安全<br>$\quad$$\quad$·并非所有Web页都会向公众开放<br>$\quad$$\quad$·Web服务器可以限定客户端访问的IP地址空间，比如限制只向公司内部员工开放<br>$\quad$$\quad$·Apache服务器将设置限制访问规则的文件.htaccess放置在被限制访问的页面所在的目录，客户端访问时进行规则匹配<br>$\quad$$\quad$·无状态：客户端需要在每个请求中携带认证信息<br>$\quad$$\quad$·认证方法：通常在HTTP请求中使用“用户名-密码”<br>$\quad$$\quad$·每个请求头中包含关键字authorization:<br>$\quad$$\quad$·如果请求头中无authorization: ，则服务器拒绝访问，并在响应头中包含WWW authenticate：<br><img src="/../CNP/CN125.png" srcset="/img/loading.gif" lazyload></p>
+<hr>
 
                 
               </div>
@@ -407,6 +437,8 @@
       
         <a href="/tags/CN/">#CN</a>
       
+        <a href="/tags/%E5%BA%94%E7%94%A8%E5%B1%82/">#应用层</a>
+      
     </div>
   
 </div>
@@ -436,7 +468,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年9月22日</div>
+          <div>2023年9月27日</div>
         </div>
       
       

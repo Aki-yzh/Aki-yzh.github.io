@@ -16,29 +16,26 @@
   <meta name="author" content="Aki-yzh">
   <meta name="keywords" content="">
   
-    <meta name="description" content="利用正运动学以及空间变换控制舵机">
+    <meta name="description" content="对应 北京大学计算机网络课程第二讲第二部分 参考教材计算机网络-自顶向下方法">
 <meta property="og:type" content="article">
-<meta property="og:title" content="机器人学部分">
-<meta property="og:url" content="https://aki-yzh.github.io/2023/09/24/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E9%83%A8%E5%88%86/index.html">
+<meta property="og:title" content="应用层-Web与HTTP">
+<meta property="og:url" content="https://aki-yzh.github.io/2023/09/26/%E5%BA%94%E7%94%A8%E5%B1%82-DNS%EF%BC%8C%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6/index.html">
 <meta property="og:site_name" content="Aki-yzh">
-<meta property="og:description" content="利用正运动学以及空间变换控制舵机">
+<meta property="og:description" content="对应 北京大学计算机网络课程第二讲第二部分 参考教材计算机网络-自顶向下方法">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://aki-yzh.github.io/FMCWmg/UCS1.png">
-<meta property="og:image" content="https://aki-yzh.github.io/FMCWmg/UCS2.png">
-<meta property="og:image" content="https://aki-yzh.github.io/FMCWmg/UCS3.png">
-<meta property="og:image" content="https://aki-yzh.github.io/FMCWmg/UCS4.png">
-<meta property="article:published_time" content="2023-09-24T15:55:10.000Z">
-<meta property="article:modified_time" content="2023-09-27T15:30:37.709Z">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN201.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN202.png">
+<meta property="article:published_time" content="2023-09-26T15:55:10.000Z">
+<meta property="article:modified_time" content="2023-09-27T15:36:17.450Z">
 <meta property="article:author" content="Aki-yzh">
-<meta property="article:tag" content="树莓派">
-<meta property="article:tag" content="机器人学">
-<meta property="article:tag" content="舵机">
+<meta property="article:tag" content="CN">
+<meta property="article:tag" content="应用层">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://aki-yzh.github.io/FMCWmg/UCS1.png">
+<meta name="twitter:image" content="https://aki-yzh.github.io/CNP/CN201.png">
   
   
   
-  <title>机器人学部分 - Aki-yzh</title>
+  <title>应用层-Web与HTTP - Aki-yzh</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -248,7 +245,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="机器人学部分"></span>
+            <span id="subtitle" data-typed-text="应用层-Web与HTTP"></span>
           
         </div>
 
@@ -259,8 +256,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-09-24 23:55" pubdate>
-          2023年9月24日 晚上
+        <time datetime="2023-09-26 23:55" pubdate>
+          2023年9月26日 晚上
         </time>
       </span>
     
@@ -271,7 +268,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          936 字
+          3.2k 字
         
       </span>
     
@@ -282,7 +279,7 @@
         
         
         
-          8 分钟
+          27 分钟
         
       </span>
     
@@ -320,7 +317,7 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">机器人学部分</h1>
+            <h1 style="display: none">应用层-Web与HTTP</h1>
             
               <p class="note note-info">
                 
@@ -333,16 +330,18 @@
             
               <div class="markdown-body">
                 
-                <p>利用正运动学以及空间变换控制舵机</p>
+                <p> 对应 北京大学计算机网络课程第二讲第二部分<br> 参考教材计算机网络-自顶向下方法</p>
 <span id="more"></span>
-
-<h1 id="机器人学基础"><a href="#机器人学基础" class="headerlink" title="机器人学基础"></a>机器人学基础</h1><h2 id="空间描述和变换"><a href="#空间描述和变换" class="headerlink" title="空间描述和变换"></a>空间描述和变换</h2><p>$\quad$·存在一个世界坐标系,讨论任何问题都是基于这个坐标系<br>$\quad$·一旦建立了坐标系,我们就能用一个3x1的位置矢量给世界坐标系中的任何点定位<br>旋转矩阵：</p>
-<p><img src="/../FMCWmg/UCS1.png" srcset="/img/loading.gif" lazyload></p>
-<p>舵机的旋转即为Z-X-Y欧拉角</p>
-<p>$\quad$ 首先将坐标系{B}和一个已知参考坐标系{A}重合。先将{B}绕$Z_B$转$\alpha$角度，再<br>绕$Y_B$旋转$\beta$ 角，最后绕着$X_B$ 旋转y角<br><img src="/../FMCWmg/UCS2.png" srcset="/img/loading.gif" lazyload><br>matlab中可以通过rotx()，roty()，rotz()函数计算旋转矩阵</p>
-<h2 id="实物坐标系建立"><a href="#实物坐标系建立" class="headerlink" title="实物坐标系建立"></a>实物坐标系建立</h2><p><img src="/../FMCWmg/UCS3.png" srcset="/img/loading.gif" lazyload><br><img src="/../FMCWmg/UCS4.png" srcset="/img/loading.gif" lazyload><br>代码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs c"><br><br>%坐标系变换<br><br>%R为雷达测出的距离，angle_PSI,angle_THETA为雷达测出的角度<br><br>%angle_1，angle_2为舵机目前的角度<br><br>%L为舵机<span class="hljs-number">1</span>转轴的长度<br><br>%P_A=Rotate*（P_B+P） 先平移再旋转<br><br>%%<br><br>L = <span class="hljs-number">50</span>;<br><br>Rotate = rotz(angle_2)*roty(<span class="hljs-number">0</span>)*rotx(angle_1);%Z-Y-X欧拉角<br><br>P_MOVE1= [<span class="hljs-number">0</span>;<span class="hljs-number">0</span>;L];<br><br>P_B_x = R * <span class="hljs-built_in">cos</span>(angle_PSI) * <span class="hljs-built_in">sin</span>(angle_THETA);<br><br>P_B_y = R * <span class="hljs-built_in">cos</span>(angle_PSI) * <span class="hljs-built_in">cos</span>(angle_THETA);<br><br>P_B_z = R * <span class="hljs-built_in">sin</span>(angle_PSI);<br><br>P_B = [P_B_x;P_B_y;P_B_z];%<span class="hljs-number">3</span>号（雷达）坐标系下的坐标<br><br>%%<br><br>P_A = Rotate * (P_B - P_MOVE1);%得到<span class="hljs-number">2</span>号坐标系下的坐标<br><br>%%<br><br>P_MOVE2=[<span class="hljs-number">-45</span>;<span class="hljs-number">-75</span>;<span class="hljs-number">-100</span>];<br><br>P_0 = P_A + P_MOVE2;% <span class="hljs-number">1</span>号坐标系下的坐标<br><br>%%<br><br>% P_A = ;<br><br>angle_2_new = <span class="hljs-built_in">atan</span>(P_A(<span class="hljs-number">1</span>)/P_A(<span class="hljs-number">2</span>));%舵机<span class="hljs-number">2</span>要调整到的角度<br><br>temp = <span class="hljs-built_in">sqrt</span>(P_A(<span class="hljs-number">1</span>)*P_A(<span class="hljs-number">1</span>)+P_A(<span class="hljs-number">2</span>)+P_A(<span class="hljs-number">2</span>));<br><br>angle_1_new = <span class="hljs-built_in">atan</span>(P_A(<span class="hljs-number">3</span>)/temp);%舵机<span class="hljs-number">1</span>要调整到的角度<br><br>disp(angle_1_new);<br><br>disp(angle_2_new);<br><br></code></pre></td></tr></table></figure>
-
+<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><h2 id="应用层-DNS-电子邮件"><a href="#应用层-DNS-电子邮件" class="headerlink" title="应用层-DNS,电子邮件"></a>应用层-DNS,电子邮件</h2><h3 id="域名系统DNS"><a href="#域名系统DNS" class="headerlink" title="域名系统DNS"></a>域名系统DNS</h3><h3 id="电子邮件服务"><a href="#电子邮件服务" class="headerlink" title="电子邮件服务"></a>电子邮件服务</h3><p>$\quad$·电子邮件（E-mail）是自早期Internet出现以来最广泛的应用，是一种异步通讯媒介<br>$\quad$·优越性<br>$\quad$$\quad$·比纸质信件更快更便宜<br>$\quad$$\quad$·使用门槛低<br>$\quad$$\quad$·收件人可随时上网到自己邮箱读取邮件<br>$\quad$$\quad$·电子邮件不仅可传送文字信息，而且还可附上声音和图像等</p>
+<h4 id="电子邮件体系结构"><a href="#电子邮件体系结构" class="headerlink" title="电子邮件体系结构"></a>电子邮件体系结构</h4><p>$\quad$·采用客户&#x2F;服务器工作模式<br>$\quad$$\quad$·用户代理（user agent）——邮件客户端：编辑和发送邮件，接收、读取和管理邮件，管理地址簿；无统一标准<br>$\quad$$\quad$·传送代理（message transfer agent）——邮件服务器：邮箱：保存用户收到的邮件，邮件输出队列：存储等待发送的邮件；运行电子邮件协议<br>$\quad$$\quad$$\quad$·邮箱是邮件服务器中的一块内存区域，其标识即为电子邮件地址（邮箱名）<br>$\quad$$\quad$$\quad$·电子邮件地址是一个字符串，用于指定邮件接收者<br>$\quad$$\quad$·简单邮件传输协议SMTP（Simple Mail Transfer  Protocol）——邮件服务器之间传递邮件使用的协议：smtp客户: 发送邮件端；smtp服务器: 接收邮件端<br>$\quad$$\quad$$\quad$·SMTP利用TCP可靠地从客户向服务器传递邮件，使用端口25<br>$\quad$$\quad$$\quad$·直接投递: 发送端直接到接收端<br>$\quad$$\quad$$\quad$·SMTP的3个阶段：连接建立、邮件传送、连接关闭<br>$\quad$$\quad$$\quad$·SMTP是一个简单的ASCII协议，邮件必须为7位ASCII<br><img src="/../CNP/CN201.png" srcset="/img/loading.gif" lazyload><br>$\quad$$\quad$·命令&#x2F;响应<br>$\quad$$\quad$$\quad$·命令: ASCII字符串<br>$\quad$$\quad$$\quad$·响应: 状态码+短语</p>
+<h4 id="相关协议"><a href="#相关协议" class="headerlink" title="相关协议"></a>相关协议</h4><h5 id="SMTP"><a href="#SMTP" class="headerlink" title="SMTP"></a>SMTP</h5><p>$\quad$·客户端发送的行用”C:”标识，服务发送的行用”S:”标识<br>$\quad$·来自客户的第一条命令HELO<br>$\quad$·RCPT命令可以将一个邮件发送给多个收件人，此处只有一个收件人，只使用一个RCPT命令</p>
+<h6 id="场景"><a href="#场景" class="headerlink" title="场景"></a>场景</h6><p>$\quad$·Alice使用用户代理撰写发送给 Bob的邮件<br>$\quad$·Alice的用户代理发送邮件到她的邮件服务器；邮件存放在邮件队列<br>$\quad$·SMTP客户端建立与SMTP邮件服务器的TCP连接<br>$\quad$·SMTP客户端通过TCP连接发送Alice的邮件<br>$\quad$·Bob的邮件服务器把邮件存放在Bob的邮箱<br>$\quad$·Bob调用他的用户代理来读取邮件</p>
+<h6 id="不足"><a href="#不足" class="headerlink" title="不足"></a>不足</h6><p>$\quad$·不包括认证<br>$\quad$·传输ASCII而不是二进制数据<br>$\quad$·邮件以明文形式出现</p>
+<h5 id="邮件格式"><a href="#邮件格式" class="headerlink" title="邮件格式"></a>邮件格式</h5><p>$\quad$·SMTP定义了如何传输邮件，但邮件本身也需遵循特定格式<br>$\quad$$\quad$·SMTP类似HTTP，定义如何传输邮件<br>$\quad$$\quad$·邮件格式类似HTML，定义如何描述邮件<br>$\quad$·首部（header）必须含有一个From:首部行和一个To:首部行，还可以包含 Subject: 等其他可选的首部行<br>$\quad$·消息体（body）指邮件正文<br>$\quad$·MIME(Multipurpose Internet Mail Extensions)—多用途Internet邮件扩展<br>$\quad$$\quad$·基本格式的多媒体扩展<br>$\quad$$\quad$·可传输多媒体消息和二进制文件</p>
+<h5 id="最后传递协议"><a href="#最后传递协议" class="headerlink" title="最后传递协议"></a>最后传递协议</h5><p>$\quad$·邮件已经到达Bob的邮箱，接下来的工作就是将邮件的一个副本传送到Bob的用户代理以便显示<br>$\quad$·最终交付（邮件访问）协议: 从邮件服务器的邮箱中获取邮件<br>$\quad$$\quad$·POP3：Post Office Protocol-Version 3，第三版邮局协议<br>$\quad$$\quad$·IMAP：Internet Message Access Protocol，Internet邮件访问协议<br>$\quad$$\quad$·Webmail（HTTP）：基于Web的电子邮件<br>$\quad$$\quad$·为什么不能使用SMTP获取邮件？<br>$\quad$$\quad$$\quad$·接收方的用户代理不能使用 SMTP 从传输代理获取邮件，因为取邮件是一个拉操作<br>$\quad$$\quad$$\quad$·而 SMTP 是一个推协议，需要推送目标在线<br>$\quad$$\quad$$\quad$·通过引入最终交付（邮件访问）协议来解决这个问题。</p>
+<h6 id="POP3协议"><a href="#POP3协议" class="headerlink" title="POP3协议"></a>POP3协议</h6><p>$\quad$·POP3由RFC1939定义，是一个非常简单的最终交付协议<br>$\quad$·当用户代理打开一个到端口110上的TCP连接后，客户&#x2F;服务器开始工作<br>$\quad$·POP3的三个阶段：<br>$\quad$$\quad$·认证(Authorization)：处理用户登录的过程<br>$\quad$$\quad$·事务处理(Trnsactions)：用户收取电子邮件，并将邮件标记为删除<br>$\quad$$\quad$·更新(Update)：将标为删除的电子邮件删除<br>$\quad$·POP3使用客户&#x2F;服务器工作方式，在接收邮件的用户PC机中必须运行POP客户程序，而在用户所连接的ISP的邮件服务器中则运行POP服务器程序</p>
+<h6 id="IMAP"><a href="#IMAP" class="headerlink" title="IMAP"></a>IMAP</h6><p>$\quad$·IMAP—Internet邮件访问协议[RFC 2060]<br>$\quad$·用于最终交付的主要协议<br>$\quad$·IMAP是较早使用的最终交付协议—POP3(邮局协议，版本3)的改进版<br>$\quad$·邮件服务器运行侦听端口143的IMAP服务器<br>$\quad$·用户代理运行一个IMAP客户端<br>$\quad$·客户端连接到服务器并开始发出命令<br>Ø$\quad$·MAP允许用户在不同的地方使用不同的计算机随时上网阅读和处理自己的邮件<br>$\quad$·IMAP服务器把每个邮件与一个文件夹联系起来，<br>$\quad$$\quad$·当邮件第一次到达服务器时，它与收件人的INBOX文件夹相关联<br>$\quad$$\quad$·收件人能够把邮件移到一个新的、用户创建的文件夹中，阅读邮件，删除邮件等<br>$\quad$·IMAP还为用户提供了在远程文件夹中查询邮件的命令，按指定条件去查询匹配的邮件<br>$\quad$·与POP3不同，IMAP服务器维护了用户状态信息<br>$\quad$$\quad$·例如，文件夹的名字以及哪些邮件与哪些文件夹相关联<br>$\quad$·IMAP具有允许用户代理获取邮件某些部分的命令<br>$\quad$$\quad$·例如，一个用户代理可以只读取一个邮件的首部，或只是一个多部分MIME邮件的一部分<br>$\quad$·用户代理和其邮件服务器之间使用低带宽连接（如一个低速调制解调器链路）的时候，用户可能并不想取回邮箱中的所有邮件，其要避免可能包含如音频或视频片断的大邮件<br>$\quad$·IMAP的缺点是如果用户没有将邮件复制到自己的PC上，则邮件一直是存放在IMAP服务器上。因此用户需要经常与IMAP服务器建立连接</p>
+<h6 id="Webmail"><a href="#Webmail" class="headerlink" title="Webmail"></a>Webmail</h6><p>$\quad$·Webmail——基于Web的电子邮件<br>$\quad$$\quad$·提供电子邮件服务的IMAP和SMTP替代方案<br>$\quad$$\quad$·使用Web作为界面，用户代理就是普通的浏览器<br>$\quad$$\quad$·用户及其远程邮箱之间的通信通过HTTP进行<br><img src="/../CNP/CN202.png" srcset="/img/loading.gif" lazyload></p>
 <hr>
 
                 
@@ -362,12 +361,12 @@
     
       <span class="category-chain">
         
-  <a href="/categories/CS%E7%A7%91%E7%A0%94/" class="category-chain-item">CS科研</a>
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/" class="category-chain-item">CS学习</a>
   
   
     <span>></span>
     
-  <a href="/categories/CS%E7%A7%91%E7%A0%94/%E6%A0%91%E8%8E%93%E6%B4%BE/" class="category-chain-item">树莓派</a>
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/CN/" class="category-chain-item">CN</a>
   
   
 
@@ -384,11 +383,9 @@
     <div class="post-meta">
       <i class="iconfont icon-tags"></i>
       
-        <a href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/">#树莓派</a>
+        <a href="/tags/CN/">#CN</a>
       
-        <a href="/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6/">#机器人学</a>
-      
-        <a href="/tags/%E8%88%B5%E6%9C%BA/">#舵机</a>
+        <a href="/tags/%E5%BA%94%E7%94%A8%E5%B1%82/">#应用层</a>
       
     </div>
   
@@ -400,8 +397,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>机器人学部分</div>
-      <div>https://aki-yzh.github.io/2023/09/24/机器人学部分/</div>
+      <div>应用层-Web与HTTP</div>
+      <div>https://aki-yzh.github.io/2023/09/26/应用层-DNS，电子邮件/</div>
     </div>
     <div class="license-meta">
       
@@ -413,7 +410,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年9月24日</div>
+          <div>2023年9月26日</div>
         </div>
       
       
@@ -450,18 +447,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/09/26/%E5%BA%94%E7%94%A8%E5%B1%82-DNS%EF%BC%8C%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6/" title="应用层-Web与HTTP">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">应用层-Web与HTTP</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/09/22/%E5%BA%94%E7%94%A8%E5%B1%82-Web%E4%B8%8EHTTP/" title="应用层-Web与HTTP">
-                        <span class="hidden-mobile">应用层-Web与HTTP</span>
+                      <a href="/2023/09/24/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E9%83%A8%E5%88%86/" title="机器人学部分">
+                        <span class="hidden-mobile">机器人学部分</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
