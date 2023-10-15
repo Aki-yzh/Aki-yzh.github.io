@@ -4,6 +4,35 @@
   
   
   <entry>
+    <title>应用层-其他应用层协议</title>
+    <link href="/2023/10/15/%E5%BA%94%E7%94%A8%E5%B1%82-%E5%85%B6%E4%BB%96%E5%BA%94%E7%94%A8%E5%B1%82%E5%8D%8F%E8%AE%AE/"/>
+    <url>/2023/10/15/%E5%BA%94%E7%94%A8%E5%B1%82-%E5%85%B6%E4%BB%96%E5%BA%94%E7%94%A8%E5%B1%82%E5%8D%8F%E8%AE%AE/</url>
+    
+    <content type="html"><![CDATA[<p> 对应 北京大学计算机网络课程第二讲第三部分</p><p> 参考教材计算机网络-自顶向下方法</p><span id="more"></span><h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><h2 id="应用层-其他应用层协议"><a href="#应用层-其他应用层协议" class="headerlink" title="应用层-其他应用层协议"></a>应用层-其他应用层协议</h2><h3 id="P2P"><a href="#P2P" class="headerlink" title="P2P"></a>P2P</h3><p>$\quad$·每个实体都是一个对等结点（peer）<br>$\quad$·服务：去中心化的连接与传输<br>$\quad$$\quad$·不需要长期在线服务器<br>$\quad$$\quad$·任意的对等结点可以直接建立连接<br>$\quad$$\quad$·对等结点可以随时加入或退出<br>$\quad$$\quad$·对等结点可以变换IP地址<br>$\quad$·典型例子：<br>$\quad$$\quad$·P2P文件分享（BitTorrent)<br>$\quad$$\quad$·视频流（PPLive）<br>$\quad$$\quad$·VoIP（Skype）</p><h4 id="优势"><a href="#优势" class="headerlink" title="优势"></a>优势</h4><p>$\quad$·避免单一中心化结点造成的性能瓶颈<br>例:<br><img src="/../CNP/CN301.png"><br><img src="/../CNP/CN302.png"></p><h4 id="核心问题：Peer索引"><a href="#核心问题：Peer索引" class="headerlink" title="核心问题：Peer索引"></a>核心问题：Peer索引</h4><p>$\quad$·P2P协议中，资源索引都是最关键的问题<br>$\quad$$\quad$·目标：给定资源，查询拥有资源的peer<br>$\quad$$\quad$·Peer可以随时加入或者退出，也可以动态更改IP地址<br>$\quad$·例：P2P文件传输<br>$\quad$$\quad$·索引系统：记录文件到网络位置（IP地址 + 端口号）的映射<br>$\quad$$\quad$·通过索引系统，定位文件的下载地址<br>$\quad$$\quad$·需要动态追踪每个peer拥有的文件<br>$\quad$·例：P2P即时通讯<br>$\quad$$\quad$·索引系统：记录用户ID到网络位置（IP地址 + 端口号）的映射<br>$\quad$$\quad$·用户启动即时通讯软件时，告诉索引系统当前IP地址与端口号<br>$\quad$$\quad$·Peers通过索引系统，查找发送目标的网络位置</p><h5 id="中心化索引"><a href="#中心化索引" class="headerlink" title="中心化索引"></a>中心化索引</h5><p>$\quad$·由一个中心化服务器帮助检索<br>$\quad$$\quad$·P2P模式传输资源（文件，即时消息）<br>$\quad$$\quad$·中心化模式定位资源位置</p><h6 id="过程"><a href="#过程" class="headerlink" title="过程"></a>过程</h6><p>$\quad$·每个peer需要连接中心化服务器, 告知:<br>$\quad$$\quad$·自身IP地址<br>$\quad$$\quad$·拥有内容<br>$\quad$·Alice下载文件时，先向中心化服务器查询某个内容的拥有者Bob<br>$\quad$· Alice向Bob提出请求</p><h6 id="问题"><a href="#问题" class="headerlink" title="问题"></a>问题</h6><p>$\quad$·单点故障与性能瓶颈<br>$\quad$·解决：洪泛请求<br>$\quad$$\quad$·每个peer独立建立索引，记录自身拥有的资源<br>$\quad$$\quad$·Peer之间形成一个图（graph）<br>$\quad$$\quad$$\quad$·图中的边为TCP连接<br>$\quad$$\quad$$\quad$·通常每个peer建立小于10个连接<br>$\quad$$\quad$$\quad$·注意：peers与TCP连接形成的网络，又被成为Overlay网络，有别于IP网络<br>$\quad$$\quad$·查找资源：<br>$\quad$$\quad$$\quad$·每个peer向邻居peer查询，如果邻居peer没有该资源，则邻居peer向自身邻居递归查询<br>$\quad$$\quad$$\quad$·一旦查询到结果，沿查询路径返回最初的查询发起者<br><img src="/../CNP/CN303.png"><br>$\quad$·解决：混合索引<br>$\quad$$\quad$·混合方法: 介于中心化索引与洪泛索引之间<br>$\quad$$\quad$·将Overlay网络组织为层次化结构<br>$\quad$$\quad$$\quad$·存在超级结点<br>$\quad$$\quad$$\quad$·每个普通结点连向至少1个超级结点<br>$\quad$$\quad$$\quad$·超级结点之间可以任意建立连接<br>$\quad$$\quad$·普通结点与超级结点间，使用中心化索引<br>$\quad$$\quad$$\quad$·超级结点扮演中心化服务器<br>$\quad$$\quad$$\quad$·超级结点记录“资源-&gt;网络位置”映射<br>$\quad$$\quad$·超级结点间采用去中心化的洪泛方式查询索引</p><h4 id="实例"><a href="#实例" class="headerlink" title="实例"></a>实例</h4><h5 id="Gnutella"><a href="#Gnutella" class="headerlink" title="Gnutella"></a>Gnutella</h5><p>$\quad$·纯P2P的文件分发协议<br>$\quad$·建立TCP connections：洪泛过程<br>$\quad$$\quad$·1.新加入结点Alice通过candidate peers列表，找到其他peers<br>$\quad$$\quad$·2.Alice遍历列表里每个peer，直到与某个peer Bob建立TCP连接<br>$\quad$$\quad$·3.洪泛: Alice发送Ping消息给Bob，Bob将这个Ping消息转发给所有邻居，邻居们也不断重复<br>$\quad$$\quad$$\quad$·Peers收到Ping消息后，向Alice回复Pong消息<br>$\quad$$\quad$·4.Alice收到Pong消息后，可以建立新的TCP连接</p><h5 id="BitTorret"><a href="#BitTorret" class="headerlink" title="BitTorret"></a>BitTorret</h5><p>$\quad$·BitTorrent是基于P2P思想的文件分发的一个协议<br>$\quad$·BitTorrent不是纯P2P架构<br>$\quad$·所有正在交换某个文件的peer，组成一个torrent（种子）<br>$\quad$·中心化的跟踪器(Tracker)：<br>$\quad$$\quad$·一个独立服务器<br>$\quad$$\quad$·维护着一个正在主动上传和下载该内容的所有其他对等用户列表<br>$\quad$$\quad$·对等方可以通过Tracker（跟踪器）找到其他对等方<br><img src="/../CNP/CN304.png"></p><h6 id="工作流程"><a href="#工作流程" class="headerlink" title="工作流程"></a>工作流程</h6><p>$\quad$·文件被划分为256Kb大小的块(chunk)<br>$\quad$·torrent中的节点发送或接收文件<br>$\quad$·当一个peer加入torrent时<br>$\quad$$\quad$·向追踪器注册，加入torrent中<br>$\quad$$\quad$·没有任何块，但随后会从其他peers逐渐获取文件块<br>$\quad$·下载过程：<br>$\quad$$\quad$·peers彼此之间交换各自拥有的块清单<br>$\quad$$\quad$·下载与上传文件块可同时进行<br>$\quad$$\quad$·也与其他peers互相交换各自知道的peers<br>$\quad$·节点动态加入和退出<br>$\quad$·获取整个文件后，存在自私离开可能</p><h6 id="结点优化策略"><a href="#结点优化策略" class="headerlink" title="结点优化策略"></a>结点优化策略</h6><p>$\quad$·一些优化策略<br>$\quad$$\quad$·选择罕见的很难找到的块下载<br>$\quad$$\quad$·趋向于匹配那些相互之间具有可比性上传和下载速率的对等节点（同级别结点）<br>$\quad$$\quad$·一个对等节点为其他对等节点作出的贡献越多，它预期的回报就越大</p><h5 id="Skype"><a href="#Skype" class="headerlink" title="Skype"></a>Skype</h5><p>$\quad$·基于P2P的即使通讯<br>$\quad$·私有的应用层协议<br>$\quad$$\quad$·通过逆向工程推断工作原理<br>$\quad$·基于层次化结构的混合方法<br>$\quad$$\quad$·存在超级结点<br>$\quad$·超级结点上的索引系统记录：<br>$\quad$$\quad$·用户名 -&gt; IP地址</p><h6 id="层级化结构"><a href="#层级化结构" class="headerlink" title="层级化结构"></a>层级化结构</h6><p>$\quad$·避免网络管理导致普通结点之间无法直接建立连接<br>$\quad$·网络地址转换（Network address translation，NAT）<br>$\quad$·防火墙<br>$\quad$·可以利用超级结点作为中继代理<br>$\quad$·超级结点之间也并非完全联通，有时候还需要第三方超级结点作为中继<br><img src="/../CNP/CN305.png"></p><h5 id="分布式哈希表"><a href="#分布式哈希表" class="headerlink" title="分布式哈希表"></a>分布式哈希表</h5><p>$\quad$·没有中心化追踪器，实现P2P<br>$\quad$·P2P系统本质是将关键字(key)集合分散到多个peers上<br>$\quad$·核心挑战：如何管理key-&gt;peer映射<br>$\quad$$\quad$·peers可能随时加入或退出<br>$\quad$$\quad$·需要追踪关键字存储位置的变化<br>$\quad$$\quad$·追踪器以中心化的方式，记录各个peers的活跃情况与保存关键字<br>$\quad$·分布式哈希表（distributed hash tables, DHTs)<br>$\quad$$\quad$·不需要中心化追踪器，就能查询每个key在哪个peers上<br>$\quad$·DHT是一个概念，具体有多种实现方式:</p><h6 id="Chord"><a href="#Chord" class="headerlink" title="Chord"></a>Chord</h6><p><img src="/../CNP/CN306.png"><br>$\quad$·基本思想：<br>$\quad$·对所有peers地址，以及key计算哈希值<br>$\quad$·哈希值取模后，排列在一个圆环上<br>$\quad$·每个key由圆环上顺时针方向的下一个peer负责存储<br>$\quad$·若查询失败，则继续沿着顺时针方向查询<br>$\quad$·Peers加入或退出时，需要更新操作<br>$\quad$$\quad$·可以延迟更新，但增加查询开销<br>$\quad$$\quad$·当新Peer加入：<br>$\quad$$\quad$$\quad$·通知前驱结点、后续Peer更改邻居关系<br>$\quad$$\quad$$\quad$·从后续Peer迁移数据<br>$\quad$$\quad$·如果多个Peers几乎同时加入<br>$\quad$$\quad$$\quad$·周期性咨询后续Peer：谁是你的前驱Peer<br>$\quad$$\quad$$\quad$·进行邻居关系更新、数据迁移<br>$\quad$$\quad$·当Peer正常退出：<br>$\quad$$\quad$$\quad$·通知前驱结点、后续Peer更改邻居关系<br>$\quad$$\quad$$\quad$·将数据迁移至后续Peer<br>$\quad$$\quad$·当Peer异常退出<br>$\quad$$\quad$$\quad$·发送数据丢失<br>$\quad$$\quad$$\quad$·解决方案：每份数据在多个peer上进行备份,一旦发现异常退出，从备份数据中进行恢复</p><hr>]]></content>
+    
+    
+    <categories>
+      
+      <category>CS学习</category>
+      
+      <category>CN</category>
+      
+    </categories>
+    
+    
+    <tags>
+      
+      <tag>CN</tag>
+      
+      <tag>应用层</tag>
+      
+    </tags>
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>应用层-DNS,电子邮件</title>
     <link href="/2023/09/26/%E5%BA%94%E7%94%A8%E5%B1%82-DNS%EF%BC%8C%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6/"/>
     <url>/2023/09/26/%E5%BA%94%E7%94%A8%E5%B1%82-DNS%EF%BC%8C%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6/</url>
@@ -53,9 +82,9 @@
       
       <tag>树莓派</tag>
       
-      <tag>机器人学</tag>
-      
       <tag>舵机</tag>
+      
+      <tag>机器人学</tag>
       
     </tags>
     
@@ -113,11 +142,11 @@
       
       <tag>树莓派</tag>
       
-      <tag>舵机</tag>
-      
       <tag>PVM</tag>
       
       <tag>云台</tag>
+      
+      <tag>舵机</tag>
       
     </tags>
     
