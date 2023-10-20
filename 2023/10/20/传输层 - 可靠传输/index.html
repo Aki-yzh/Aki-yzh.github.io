@@ -26,7 +26,7 @@
 <meta property="og:image" content="https://aki-yzh.github.io/CNP/CN501.png">
 <meta property="og:image" content="https://aki-yzh.github.io/CNP/CN502.png">
 <meta property="article:published_time" content="2023-10-20T15:55:10.000Z">
-<meta property="article:modified_time" content="2023-10-20T14:34:01.203Z">
+<meta property="article:modified_time" content="2023-10-20T14:53:29.228Z">
 <meta property="article:author" content="Aki-yzh">
 <meta property="article:tag" content="CN">
 <meta property="article:tag" content="传输层">
@@ -268,7 +268,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          944 字
+          911 字
         
       </span>
     
@@ -333,39 +333,39 @@
                 <p> 对应 北京大学计算机网络课程第三讲第二部分<br> 参考教材计算机网络-自顶向下方法</p>
 <span id="more"></span>
 <h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><h2 id="传输层-可靠传输"><a href="#传输层-可靠传输" class="headerlink" title="传输层 - 可靠传输"></a>传输层 - 可靠传输</h2><h4 id="TCP概述"><a href="#TCP概述" class="headerlink" title="TCP概述"></a>TCP概述</h4><p><img src="/../CNP/CN501.png" srcset="/img/loading.gif" lazyload></p>
-<h5 id="提供的服务"><a href="#提供的服务" class="headerlink" title="提供的服务"></a>提供的服务</h5><p>$\quad$·TCP服务模型：</p>
-<p>$\quad$$\quad$·在一对通信的进程之间提供一条理想的字节流管道</p>
-<p>$\quad$·点到点通信:</p>
-<p>$\quad$$\quad$·仅涉及一对通信进程</p>
-<p>$\quad$·全双工：</p>
-<p>$\quad$$\quad$·可以同时双向传输数据</p>
-<p>$\quad$·可靠、有序的字节流：</p>
-<p>$\quad$$\quad$·不保留报文边界</p>
-<h5 id="需要的机制"><a href="#需要的机制" class="headerlink" title="需要的机制"></a>需要的机制</h5><p>$\quad$·建立连接:</p>
-<p>$\quad$$\quad$·通信双方为本次通信建立数据传输所需的状态（套接字、缓存、变量等）</p>
-<p>$\quad$·可靠数据传输：</p>
-<p>$\quad$$\quad$·流水线式发送，报文段检错，丢失重传</p>
-<p>$\quad$·流量控制:</p>
-<p>$\quad$$\quad$·发送方不会令接收方缓存溢出</p>
-<p>$\quad$·拥塞控制:</p>
-<p>$\quad$$\quad$·发送方不会造成网络拥塞</p>
-<h4 id="可靠传输"><a href="#可靠传输" class="headerlink" title="可靠传输"></a>可靠传输</h4><h6 id="不可靠信道"><a href="#不可靠信道" class="headerlink" title="不可靠信道"></a>不可靠信道</h6><p>$\quad$·外部信号干扰导致比特错误（数据损坏）</p>
-<p>$\quad$·链路过载导致数据丢失</p>
-<p>$\quad$·多路径导致乱序</p>
-<h5 id="可靠传输问题"><a href="#可靠传输问题" class="headerlink" title="可靠传输问题"></a>可靠传输问题</h5><p>$\quad$·保证数据在不可靠信道上完整、正确、有序地从源到目的进行传送</p>
-<p>$\quad$·可靠传输不仅是TCP中的问题，在网络的各个层次都需要考虑</p>
-<p>$\quad$$\quad$·OSI模型中的链路层</p>
-<p>$\quad$$\quad$·各类基于UDP的应用层协议（如TFTP）</p>
-<p>$\quad$$\quad$·5G通信</p>
-<p>$\quad$$\quad$·时延敏感网络</p>
-<p>$\quad$$\quad$·远程直接内存访问（Remote Direct Memory Access，RDMA）</p>
-<h6 id="本课关注的可靠传输"><a href="#本课关注的可靠传输" class="headerlink" title="本课关注的可靠传输"></a>本课关注的可靠传输</h6><p>$\quad$·计算机网络中对底层不可靠信道的假设</p>
-<p>$\quad$$\quad$·通讯链路会丢失信息</p>
-<p>$\quad$$\quad$·消息会发生乱序</p>
-<p>$\quad$$\quad$·通讯数据在传输过程中可能发生随机的错误，但能通过校验技术进行检测</p>
-<p>$\quad$·不考虑的场景</p>
-<p>$\quad$$\quad$·数据在通信中可能遭到有意的篡改，且无法通过校验检测</p>
-<p>$\quad$$\quad$·收到的数据可能不是来自发送方，而是某第三方编造</p>
+<h5 id="提供的服务"><a href="#提供的服务" class="headerlink" title="提供的服务"></a>提供的服务</h5><p>$\quad$ TCP服务模型：</p>
+<p>$\quad$ $\quad$ 在一对通信的进程之间提供一条理想的字节流管道</p>
+<p>$\quad$ 点到点通信:</p>
+<p>$\quad$ $\quad$ 仅涉及一对通信进程</p>
+<p>$\quad$ 全双工：</p>
+<p>$\quad$ $\quad$ 可以同时双向传输数据</p>
+<p>$\quad$ 可靠、有序的字节流：</p>
+<p>$\quad$ $\quad$ 不保留报文边界</p>
+<h5 id="需要的机制"><a href="#需要的机制" class="headerlink" title="需要的机制"></a>需要的机制</h5><p>$\quad$ 建立连接:</p>
+<p>$\quad$ $\quad$ 通信双方为本次通信建立数据传输所需的状态（套接字、缓存、变量等）</p>
+<p>$\quad$ 可靠数据传输：</p>
+<p>$\quad$ $\quad$ 流水线式发送，报文段检错，丢失重传</p>
+<p>$\quad$ 流量控制:</p>
+<p>$\quad$ $\quad$ 发送方不会令接收方缓存溢出</p>
+<p>$\quad$ 拥塞控制:</p>
+<p>$\quad$ $\quad$ 发送方不会造成网络拥塞</p>
+<h4 id="可靠传输"><a href="#可靠传输" class="headerlink" title="可靠传输"></a>可靠传输</h4><h6 id="不可靠信道"><a href="#不可靠信道" class="headerlink" title="不可靠信道"></a>不可靠信道</h6><p>$\quad$ 外部信号干扰导致比特错误（数据损坏）</p>
+<p>$\quad$ 链路过载导致数据丢失</p>
+<p>$\quad$ 多路径导致乱序</p>
+<h5 id="可靠传输问题"><a href="#可靠传输问题" class="headerlink" title="可靠传输问题"></a>可靠传输问题</h5><p>$\quad$ 保证数据在不可靠信道上完整、正确、有序地从源到目的进行传送</p>
+<p>$\quad$ 可靠传输不仅是TCP中的问题，在网络的各个层次都需要考虑</p>
+<p>$\quad$ $\quad$ OSI模型中的链路层</p>
+<p>$\quad$ $\quad$ 各类基于UDP的应用层协议（如TFTP）</p>
+<p>$\quad$ $\quad$ 5G通信</p>
+<p>$\quad$ $\quad$ 时延敏感网络</p>
+<p>$\quad$ $\quad$ 远程直接内存访问（Remote Direct Memory Access，RDMA）</p>
+<h6 id="本课关注的可靠传输"><a href="#本课关注的可靠传输" class="headerlink" title="本课关注的可靠传输"></a>本课关注的可靠传输</h6><p>$\quad$ 计算机网络中对底层不可靠信道的假设</p>
+<p>$\quad$ $\quad$ 通讯链路会丢失信息</p>
+<p>$\quad$ $\quad$ 消息会发生乱序</p>
+<p>$\quad$ $\quad$ 通讯数据在传输过程中可能发生随机的错误，但能通过校验技术进行检测</p>
+<p>$\quad$ 不考虑的场景</p>
+<p>$\quad$ $\quad$ 数据在通信中可能遭到有意的篡改，且无法通过校验检测</p>
+<p>$\quad$ $\quad$ 收到的数据可能不是来自发送方，而是某第三方编造</p>
 <h5 id="形式化描述"><a href="#形式化描述" class="headerlink" title="形式化描述"></a>形式化描述</h5><p><img src="/../CNP/CN502.png" srcset="/img/loading.gif" lazyload></p>
 <hr>
 
@@ -479,12 +479,18 @@
                   <article class="post-prev col-6">
                     
                     
+                      <a href="/2023/10/20/%E4%BC%A0%E8%BE%93%E5%B1%82%20-%20%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8EUDP/" title="传输层 - 基本概念与UDP">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">传输层 - 基本概念与UDP</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/10/20/%E4%BC%A0%E8%BE%93%E5%B1%82%20-%20%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%E4%B8%8EUDP/" title="传输层 - 基本概念与UDP">
-                        <span class="hidden-mobile">传输层 - 基本概念与UDP</span>
+                      <a href="/2023/10/19/Git%E4%B8%8ECMake/" title="Git与CMake">
+                        <span class="hidden-mobile">Git与CMake</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
