@@ -42,8 +42,10 @@
 <meta property="og:image" content="https://aki-yzh.github.io/CNP/CN317.png">
 <meta property="og:image" content="https://aki-yzh.github.io/CNP/CN318.png">
 <meta property="og:image" content="https://aki-yzh.github.io/CNP/CN319.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN320.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN321.png">
 <meta property="article:published_time" content="2023-10-15T15:55:10.000Z">
-<meta property="article:modified_time" content="2023-10-18T10:36:46.896Z">
+<meta property="article:modified_time" content="2023-10-20T10:33:22.044Z">
 <meta property="article:author" content="Aki-yzh">
 <meta property="article:tag" content="CN">
 <meta property="article:tag" content="应用层">
@@ -285,7 +287,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          13k 字
+          15k 字
         
       </span>
     
@@ -296,7 +298,7 @@
         
         
         
-          106 分钟
+          125 分钟
         
       </span>
     
@@ -339,7 +341,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年10月18日 晚上
+                    本文最后更新于：2023年10月20日 晚上
                   
                 
               </p>
@@ -586,7 +588,73 @@
 <p>$\quad$·文件请求方若在规定时间内收不到下一个文件块，也要重发确认PDU。这样就能保证文件的传输不会因某一个数据PDU的丢失而失败</p>
 <p>$\quad$·开始工作时，TFTP客户进程发送一个读请求PDU或写请求PDU给TFTP服务器进程，其UDP端口号为69</p>
 <p>$\quad$·TFTP服务器进程要选择一个新的端口和TFTP客户进程进行通信</p>
-<h3 id="SNMP"><a href="#SNMP" class="headerlink" title="SNMP"></a>SNMP</h3><hr>
+<h3 id="SNMP"><a href="#SNMP" class="headerlink" title="SNMP"></a>SNMP</h3><h4 id="网络管理"><a href="#网络管理" class="headerlink" title="网络管理"></a>网络管理</h4><p>$\quad$·目的</p>
+<p>$\quad$$\quad$·有效利用网络资源</p>
+<p>$\quad$$\quad$·及时报告和处理网络故障</p>
+<p>$\quad$$\quad$·保障网络正常、高效运行</p>
+<p>$\quad$·网络管理的功能</p>
+<p>$\quad$$\quad$·配置管理（Configuration Management）</p>
+<p>$\quad$$\quad$·故障管理（Fault Management）</p>
+<p>$\quad$$\quad$·性能管理（Performance Management）</p>
+<p>$\quad$$\quad$·计费管理（Accounting Management）</p>
+<p>$\quad$$\quad$·安全管理（Security Management）</p>
+<h5 id="网络管理系统"><a href="#网络管理系统" class="headerlink" title="网络管理系统"></a>网络管理系统</h5><p>$\quad$·管理器（Manager）：网络管理进程，提供网络管理用户界面，完成管理任务</p>
+<p>$\quad$·管理对象（Managed Object）：网络中的软硬件系统</p>
+<p>$\quad$·代理（Agent）：管理对象中的进程，负责与管理器交互</p>
+<p>$\quad$·管理信息库（MIB，Management Information Base）：存储网络信息</p>
+<p>$\quad$·本地MIB：每个代理管理自己的本地MIB，仅包含本地设备相关信息</p>
+<p>$\quad$·网络MIB：代理与管理器交换网络状态信息，共同构成整个网络的MIB</p>
+<p>$\quad$·网络管理协议（Network Management Protocol）</p>
+<p>$\quad$·TCP&#x2F;IP的简单网络管理协议SNMP（Simple Network Management Protocol）</p>
+<p>$\quad$·OSI的公共管理信息协议CMIP（Common Management Information Protocol）</p>
+<h4 id="概述"><a href="#概述" class="headerlink" title="概述"></a>概述</h4><p>$\quad$·指导思想</p>
+<p>$\quad$$\quad$·尽可能简单：用简单的系统结构和协议来解决复杂的网络管理问题</p>
+<p>$\quad$$\quad$$\quad$·协议交互过程简单，仅有4类操作对网络进行管理</p>
+<p>$\quad$$\quad$$\quad$·使用UDP协议，以简化设计和降低通信开销</p>
+<p>$\quad$$\quad$·影响尽量小：网络中任何软硬件的增减对原有管理对象的影响尽量小</p>
+<p>$\quad$·版本变迁</p>
+<p>$\quad$$\quad$·SNMPv1：RFC 1067(1988)、RFC 1098(1989)、RFC 1155~1157(1990)</p>
+<p>$\quad$$\quad$·SNMPsec：RFC 1351~1353(1992)</p>
+<p>$\quad$$\quad$·SNMPv2：RFC 1441~1445(1993)</p>
+<p>$\quad$$\quad$·SNMPv3：RFC 3410~3418(2002)，安全性和可管理性大为提高</p>
+<h4 id="工作方式"><a href="#工作方式" class="headerlink" title="工作方式"></a>工作方式</h4><h5 id="SNMP协议规则——轮询方式"><a href="#SNMP协议规则——轮询方式" class="headerlink" title="SNMP协议规则——轮询方式"></a>SNMP协议规则——轮询方式</h5><p>$\quad$·管理器采用轮询方式，周期性“读”“写”来实现网络管理功能</p>
+<p>$\quad$$\quad$·“读”操作：管理器向代理发送get报文来检测管理对象状态</p>
+<p>$\quad$$\quad$·“写”操作：管理器向代理发送set报文来修改管理对象状态</p>
+<p>$\quad$·轮询方式的优点</p>
+<p>$\quad$$\quad$·协议实现相对简单</p>
+<p>$\quad$$\quad$·能限制所产生管理信息的通信量</p>
+<p>$\quad$·轮询方式的缺点</p>
+<p>$\quad$$\quad$·不够灵活，而且所能管理的设备数目不能太多</p>
+<p>$\quad$$\quad$·开销比较大</p>
+<h5 id="SNMP协议规则——陷阱方式"><a href="#SNMP协议规则——陷阱方式" class="headerlink" title="SNMP协议规则——陷阱方式"></a>SNMP协议规则——陷阱方式</h5><p>$\quad$·SNMP允许代理不经过管理器询问就能发送某些信息，这种信息称为陷阱（trap）报文，通常代表代理检测到的重要事件</p>
+<p>$\quad$·当管理对象的代理检测到有事件发生时，就检查其门限值。代理只向管理器报告达到特定门限值的事件，这个过程称为过滤</p>
+<p>$\quad$·陷阱方式的优点</p>
+<p>$\quad$$\quad$·仅在严重事件发生时才发送陷阱报文</p>
+<p>$\quad$$\quad$·陷阱信息很简单且所需字节数很少</p>
+<h4 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h4><p>$\quad$·SNMP协议实现</p>
+<p>$\quad$$\quad$·SNMP使用无连接的UDP协议实现，众所周知UDP协议不保证可靠交付</p>
+<p>$\quad$$\quad$·SNMP使用C&#x2F;S方式实现</p>
+<p>$\quad$$\quad$$\quad$·代理运行服务器端进程在UPD端口161接收get或set报文以及发送response报文，与161端口通信的客户端进程则使用临时端口</p>
+<p>$\quad$$\quad$$\quad$·管理器运行客户端进程在UPD端口162接收来自代理的trap报文</p>
+<p>$\quad$·SNMP的通常使用</p>
+<p>$\quad$$\quad$·使用周期性轮询方式实现对网络资源的实时监控与管理</p>
+<p>$\quad$$\quad$·使用陷阱方式报告重要事件的发生</p>
+<h4 id="报文格式"><a href="#报文格式" class="headerlink" title="报文格式"></a>报文格式</h4><p><img src="/../CNP/CN320.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../CNP/CN321.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="提供信息"><a href="#提供信息" class="headerlink" title="提供信息"></a>提供信息</h4><p>$\quad$·基本流量统计：报文数、字节数</p>
+<p>$\quad$·设备CPU利用率</p>
+<p>$\quad$·设备内存占用</p>
+<p>$\quad$·缺乏细粒度信息</p>
+<p>$\quad$$\quad$·无法识别TCP连接，更不可能记录每个连接传输多少数据</p>
+<h4 id="局限性"><a href="#局限性" class="headerlink" title="局限性"></a>局限性</h4><p>$\quad$·SNMP难以应对当前网络管理需求</p>
+<p>$\quad$$\quad$·读操作：SNMP提供的数据不足以支撑复杂网络管理</p>
+<p>$\quad$$\quad$·写操作：SNMP能修改的设备状态有限</p>
+<p>$\quad$$\quad$$\quad$·修改参数</p>
+<p>$\quad$$\quad$$\quad$·打开&#x2F;关闭某个端口</p>
+<p>$\quad$·替代方案</p>
+<p>$\quad$$\quad$·状态读取：新型网络测量算法</p>
+<p>$\quad$$\quad$·设备控制：软件定义网络、网络功能虚拟化、可编程网络</p>
+<hr>
 
                 
               </div>
@@ -660,7 +728,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年10月18日</div>
+          <div>2023年10月20日</div>
         </div>
       
       
