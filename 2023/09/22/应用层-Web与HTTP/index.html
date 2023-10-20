@@ -1,0 +1,845 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#50d0d0">
+  <meta name="author" content="Aki-yzh">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="对应 北京大学计算机网络课程第二讲第一部分 参考教材计算机网络-自顶向下方法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="应用层-Web与HTTP">
+<meta property="og:url" content="https://aki-yzh.github.io/2023/09/22/%E5%BA%94%E7%94%A8%E5%B1%82-Web%E4%B8%8EHTTP/index.html">
+<meta property="og:site_name" content="Aki-yzh">
+<meta property="og:description" content="对应 北京大学计算机网络课程第二讲第一部分 参考教材计算机网络-自顶向下方法">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN101.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN102.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN103.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN104.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN105.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN106.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN107.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN108.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN109.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN110.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN111.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN113.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN112.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN114.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN115.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN116.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/(1)CN111.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/(1)CN112.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/(1)CN113.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/(1)CN114.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/(1)CN115.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/(1)CN116.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN117.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN118.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN119.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN120.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN121.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN122.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN123.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN124.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN125.png">
+<meta property="article:published_time" content="2023-09-22T15:55:10.000Z">
+<meta property="article:modified_time" content="2023-10-20T11:06:26.896Z">
+<meta property="article:author" content="Aki-yzh">
+<meta property="article:tag" content="CN">
+<meta property="article:tag" content="应用层">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aki-yzh.github.io/CNP/CN101.png">
+  
+  
+  
+  <title>应用层-Web与HTTP - Aki-yzh</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/icon_gundam/iconfont.css">
+<link rel="stylesheet" href="/css/touming.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"aki-yzh.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+ 
+
+
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Aki-yzh</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://aki-yzh.github.io/2023/03/12/GUNPLA/">
+                <i class="iconfont icon-gaoda"></i>
+                <span>高达</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://aki-yzh.github.io/2023/03/12/anime/">
+                <i class="iconfont icon-bilibili-fill"></i>
+                <span>番剧</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="应用层-Web与HTTP"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-09-22 23:55" pubdate>
+          2023年9月22日 晚上
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.4k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          70 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">应用层-Web与HTTP</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年10月20日 晚上
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p> 对应 北京大学计算机网络课程第二讲第一部分<br> 参考教材计算机网络-自顶向下方法</p>
+<span id="more"></span>
+<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><h2 id="应用层-Web与HTTP"><a href="#应用层-Web与HTTP" class="headerlink" title="应用层-Web与HTTP"></a>应用层-Web与HTTP</h2><p>$\quad$·不同主机上的程序之间通过网络应用层完成交互<br>$\quad$·典型的应用层服务：语音通话，在线会议，社交网络，搜索引擎，信息推送Web访问，文件传输，电子邮件，即时通讯，远程登陆，P2P文件共享，在线游戏，流媒体。。。。。。。</p>
+<h5 id="应用层与下层网络（传输层）接口"><a href="#应用层与下层网络（传输层）接口" class="headerlink" title="应用层与下层网络（传输层）接口"></a>应用层与下层网络（传输层）接口</h5><p>$\quad$·应用程序在端系统上以进程的形式呈现<br>$\quad$·进程利用socket（套接字）发送&#x2F;接收消息（通过传输层）<br>$\quad$·socket类似一扇门：从门中向外发送消息，从其他进程收到的消息堆积在门口等待接收<br>$\quad$·希望传输层提供的服务：可靠传输，高吞吐，低时延，安全</p>
+<h6 id="实际传输层提供的服务"><a href="#实际传输层提供的服务" class="headerlink" title="实际传输层提供的服务"></a>实际传输层提供的服务</h6><p>$\quad$·TCP服务<br>$\quad$$\quad$·面向连接：传输前建立连接<br>$\quad$$\quad$·可靠传输：丢包重传<br>$\quad$$\quad$·有序传输<br>$\quad$$\quad$·流量控制：防止接收端过载<br>$\quad$$\quad$· 拥塞控制：防止网络核心过载<br>$\quad$$\quad$·无法保证：延迟，吞吐，安全<br>$\quad$·UDP服务<br>$\quad$$\quad$·无连接<br>$\quad$$\quad$· 不可靠传输：可能丢包，丢包也无法回复<br>$\quad$$\quad$· 无法保证：可靠性，顺序，流量控制，拥塞控制，延迟，吞吐量，安全<br>$\quad$$\quad$· 问：为什么还有UDP：简单，性能好</p>
+<h4 id="网络应用层的好处："><a href="#网络应用层的好处：" class="headerlink" title="网络应用层的好处："></a>网络应用层的好处：</h4><p>$\quad$·屏蔽底层细节<br>$\quad$$\quad$·设计应用层程序时，需要考虑到TCP与UDP的性质<br>$\quad$$\quad$·应用程序无需为下层网络设备编写代码<br>$\quad$·抽象：许多网络应用有相同的通信模式，网络应用层封装这些共同模式<br>$\quad$·提供额外的功能：如安全性<br>·总之网络应用层极大简化了网络应用开发，使得互联网可以快速发展</p>
+<h4 id="应用层的通信实体"><a href="#应用层的通信实体" class="headerlink" title="应用层的通信实体"></a>应用层的通信实体</h4><p>$\quad$·应用层的实体就是应用程序<br>$\quad$·我们可以给网络中的每台主机命名<br>$\quad$$\quad$·网卡MAC地址<br>$\quad$$\quad$·IP地址<br>$\quad$$\quad$·主机名<br>$\quad$·每个主机的命名仍然不够<br>$\quad$·对于接收到的消息，需要区分是发给哪个应用程序<br>$\quad$$\quad$·单个主机上可能运行多个应用程序<br>$\quad$$\quad$·单个应用程序也可能创建多个连接（socket）<br>$\quad$·解决方案：为每个应用以IP地址+端口号命名<br>$\quad$$\quad$·HTTP服务器：80<br>$\quad$$\quad$·邮件服务器：25</p>
+<h4 id="应用层的组织架构"><a href="#应用层的组织架构" class="headerlink" title="应用层的组织架构"></a>应用层的组织架构</h4><p>$\quad$·应用程序以两种方法组织:</p>
+<h5 id="客户-x2F-服务器方式（C-x2F-S）"><a href="#客户-x2F-服务器方式（C-x2F-S）" class="headerlink" title="客户&#x2F;服务器方式（C&#x2F;S）"></a>客户&#x2F;服务器方式（C&#x2F;S）</h5><p>$\quad$·应用层的许多协议是基于C&#x2F;S方式<br>$\quad$·客户端与服务器是指通信中所涉及的两个应用进程<br>$\quad$·客户、服务器方式描述的是应用进程之间服务与被服务之间的关系<br>$\quad$·客户是服务请求方，服务器是服务提供方<br><img src="/../CNP/CN101.png" srcset="/img/loading.gif" lazyload><br>$\quad$·分层视角：<br><img src="/CNP/CN102.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="分类"><a href="#分类" class="headerlink" title="分类"></a>分类</h6><p>$\quad$·根据是否建立连接：<br>$\quad$$\quad$·可以是面向连接的，也可以是无连接的<br>$\quad$$\quad$·面向连接时，C&#x2F;S通信关系一旦建立，通信就是双向的，都可发送和接收数据<br>$\quad$·根据服务器进程的实现方式<br>$\quad$$\quad$·服务器采用<strong>循环方式(iterative mode)</strong><br>$\quad$$\quad$$\quad$·一次只运行一个服务进程<br>$\quad$$\quad$$\quad$·一个服务进程在同一时间只能向一个客户端提供服务<br>$\quad$$\quad$$\quad$·服务进程收到客户进程的请求后，对其他客户进程发来的请求则暂时不予理睬，这些请求都在服务端的队列中排队等候服务进程的处理当服务进程处理完毕一个请求时，就从队列中读取来自下一个客户进程的请求，然后继续处理<br>$\quad$$\quad$$\quad$·当有多个客户进程请求服务时，服务进程就按请求的先后顺序依次做出响应 (阻塞方式)<br>$\quad$$\quad$$\quad$·面向连接的TCP与无连接的UDP都可以用<br><img src="/../CNP/CN103.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../CNP/CN104.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$$\quad$·服务器采用<strong>并发方式(concurrent mode)</strong><br>$\quad$$\quad$$\quad$·可以同时运行多个服务进程<br>$\quad$$\quad$$\quad$·每一个服务进程都对某个特定的客户进程做出响应 (非阻塞方式)<br>$\quad$$\quad$$\quad$·通常只有面向连接的TCP使用<br>$\quad$$\quad$$\quad$·面向连接的TCP服务进程通常都工作在并发服务方式（尽管也可以使用循环方式）<br>$\quad$$\quad$$\quad$·服务进程在同一时间可同时向多个客户进程提供服务(并发服务)<br>$\quad$$\quad$$\quad$·在TCP服务进程与多个客户进程之间建立多条TCP连接，每条TCP连接在其数据传送完毕后释放<br>$\quad$$\quad$$\quad$·具体流程<br>$\quad$$\quad$$\quad$$\quad$·服务器监听一个（熟知）服务端口，如HTTP的80端口<br>$\quad$$\quad$$\quad$$\quad$·主服务进程在熟知端口等待客户进程发出的请求<br>$\quad$$\quad$$\quad$$\quad$·一旦收到客户的请求，就创建一个从属服务进程，并指明从属服务进程使用临时套接字（又称连接套接字）与该客户建立TCP连接<br>$\quad$$\quad$$\quad$$\quad$·然后主服务进程继续在原来的熟知端口等待向其他客户提供服务<br><img src="/../CNP/CN105.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$·为什么无连接的UDP只能采用循环方式，无法采用并发方式<br>$\quad$·原因：无连接UDP只有一个套接字，无法被多个从属进程同时访问</p>
+<p>$\quad$·对比：<br><img src="/../CNP/CN106.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="特例：浏览器-x2F-服务模式："><a href="#特例：浏览器-x2F-服务模式：" class="headerlink" title="特例：浏览器&#x2F;服务模式："></a>特例：浏览器&#x2F;服务模式：</h6><p>$\quad$·浏览器&#x2F;服务器(B&#x2F;S，Browser&#x2F;Server) 方式可以看做C&#x2F;S方式的特例，即客户软件改为浏览器了<br>$\quad$·B&#x2F;S方式采取浏览器请求、服务器响应的工作模式<br>$\quad$·在B&#x2F;S方式下，用户界面完全通过Web浏览器实现，一部分事务逻辑在服务器前端实现，但主要的事务逻辑在服务器后端实现<br><img src="/../CNP/CN107.png" srcset="/img/loading.gif" lazyload><br>$\quad$·B&#x2F;S方式通常采取3层架构实现<br>$\quad$$\quad$·数据层：由数据库服务器承担数据处理逻辑，其任务是接受Web服务器对数据库服务器提出的数据操作请求，然后由数据库服务器进行数据处理并把处理结果返回给web服务器<br>$\quad$$\quad$·处理层：由Web服务器承担业务处理逻辑和页面存储管理，接受客户浏览器的任务请求，执行相应的事务处理<br>$\quad$$\quad$·表现层：浏览器仅承担网页信息的浏览功能, 以超文本格式实现信息的输入和浏览<br><img src="/../CNP/CN108.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="对等方式（P2P）"><a href="#对等方式（P2P）" class="headerlink" title="对等方式（P2P）"></a>对等方式（P2P）</h5><p>$\quad$·对等方式是指两个进程在通信时并不区分服务的请求方和服务的提供方<br>$\quad$$\quad$·只要两个主机都运行P2P软件，它们就可以进行平等、对等的通信<br>$\quad$$\quad$·双方都可以下载对方存储在硬盘中的共享文档，如果权限允许的话<br>$\quad$·应用<br>$\quad$$\quad$·音频&#x2F;视频应用推动了P2P对等通信方式的发展<br>$\quad$$\quad$·音频&#x2F;视频流量已占主要比例<br>$\quad$·P2P方式从本质上看仍然是使用了C&#x2F;S方式，但强调的是通信过程中的对等，这时每一个P2P进程既是客户同时也是服务器<br><img src="/../CNP/CN109.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="P2P实体的特征"><a href="#P2P实体的特征" class="headerlink" title="P2P实体的特征"></a>P2P实体的特征</h6><p>$\quad$·不需要总是在线<br>$\quad$$\quad$·虽然每个程序也扮演服务器角色，但与“客户端-服务器”中不同，不需要始终在线<br>$\quad$·实体可以随时进入与退出<br>$\quad$$\quad$·可以动态改变IP地址<br>$\quad$$\quad$·需要额外的管理开销<br>$\quad$·任意两个实体之间可以直接通信<br>$\quad$·易于扩展<br>$\quad$$\quad$·每个结点都贡献自己的计算资源，也消耗一部分资源</p>
+<h4 id="应用层协议"><a href="#应用层协议" class="headerlink" title="应用层协议"></a>应用层协议</h4><p>$\quad$·应用层的实体就是应用协议<br>$\quad$$\quad$·通信内容：某个约定好的应用层协议<br>$\quad$·每个应用层协议都是为了解决某一应用问题，通过位于不同主机中的多个应用程序之间的通信和协同工作来完成<br><img src="/../CNP/CN110.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="Web基本协议"><a href="#Web基本协议" class="headerlink" title="Web基本协议"></a>Web基本协议</h5><p>$\quad$·WWW&#x3D;World Wide Web<br>$\quad$·构成：Web对象（网页，多媒体资源，动态对象与服务），通过URLs定位；HTTP服务器和客户端；服务器与客户端之间执行的HTTP协议<br><img src="/../CNP/CN111.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="服务器"><a href="#服务器" class="headerlink" title="服务器"></a>服务器</h6><p>$\quad$·Web页面（HTML文档）：包含到多种对象或链接<br>$\quad$·Web对象（包括静态对象和动态对象）：可以是HTML文档，图像文件，视频文件，声音文件，脚本文件等<br>$\quad$·对象用URL（统一资源定位符）编址：协议类型:&#x2F;&#x2F;主机名：端口&#x2F;&#x2F;路径和文件名<br><img src="/../CNP/CN113.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="客户端"><a href="#客户端" class="headerlink" title="客户端"></a>客户端</h6><p>$\quad$·发出请求，接收响应，解释HTML文档并显示<br>$\quad$·有些对象需要浏览器安装插件<br><img src="/../CNP/CN112.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="Web对象"><a href="#Web对象" class="headerlink" title="Web对象"></a>Web对象</h6><p>$\quad$·静态对象与静态网页<br>$\quad$$\quad$·文本，表格，图片，图像和视频等多媒体类型的信息（实现语言：标记语言，如：HTML，XML，PHP等）<br>$\quad$$\quad$·字体、颜色和布局等风格类型的信息（实现语言：层叠样式表CSS）<br>$\quad$·动态对象与动态网页<br>$\quad$$\quad$·交互信息，比如，用户注册信息、登录信息等（实现：PHP&#x2F;JSP等语言+MySQL等数据库）<br>$\quad$·链接：<br>$\quad$$\quad$·超链接（HyperLinks）：指向其他对象的URLs<br><img src="/../CNP/CN114.png" srcset="/img/loading.gif" lazyload><br>$\quad$·动态Web<br>$\quad$$\quad$·通用网关接口CGI<br>$\quad$$\quad$$\quad$·CGI (Common Gateway Interface) 是一种标准<br>$\quad$$\quad$$\quad$$\quad$·在服务器创建动态文档<br>$\quad$$\quad$$\quad$$\quad$·定义了动态文档应如何创建<br>$\quad$$\quad$$\quad$$\quad$·输入数据应如何提供给应用程序<br>$\quad$$\quad$$\quad$$\quad$·输出结果应如何使用<br><img src="/../CNP/CN115.png" srcset="/img/loading.gif" lazyload><br>$\quad$$\quad$·脚本语言+数据库技术<br>$\quad$$\quad$$\quad$·更好的服务器逻辑表示“脚本”指的是一个程序，它被另一个程序（即解释程序，如Web浏览器）解释执行，而不是由计算机的处理器来解释或执行<br>$\quad$$\quad$$\quad$·数据库：更好的数据交换方式<br>$\quad$$\quad$·动态页面的创建，可以在浏览器or &#x2F;and 服务器进行</p>
+<p><img src="/../CNP/CN116.png" srcset="/img/loading.gif" lazyload><br>$\quad$$\quad$·动态Web的执行:Web内容展示（前端）和服务逻辑（后端）相分离；脚本程序可以在服务器或客户端创建Web文档<br>$\quad$$\quad$·AJAX技术（Asynchronous JavaScript and XML）：超文本标记语言HTML+CSS：用于Web网页内容的显示<br>$\quad$$\quad$$\quad$·文档对象模型DOM:是HTML和XML文档的编程接口，本质上是页面的API，采用树形结构组织。<br>$\quad$$\quad$$\quad$·扩展标记语言XML：用于程序和服务器交换应用数据<br>$\quad$$\quad$$\quad$·异步式工作方式：用于发送和检索XML数据<br>$\quad$$\quad$$\quad$·JavaScript：用于将以上功能进行组合并协同工作<br>$\quad$$\quad$·AJAX不是新的编程语言，而是一种使用现有标准的新方法<br>$\quad$$\quad$·LAMP&#x3D;Linux+Apache+MySQL+PHP<br>$\quad$$\quad$·LAMP不是新的工具，而是一套Web服务器软件集合</p>
+<h5 id="HTTP协议："><a href="#HTTP协议：" class="headerlink" title="HTTP协议："></a>HTTP协议：</h5><p>$\quad$·超文本传输协议HTTP（HyperText Transfer Protocol）在传输层通常使用TCP协议，缺省使用TCP的80端口<br>$\quad$·HTTP为无状态协议，服务器端不保留之前请求的状态信息<br>$\quad$$\quad$·无状态协议：效率低，但简单<br>$\quad$$\quad$·有状态协议：维护状态相对复杂，需要维护历史信息，在客户端或服务器出现故障时，需要保持状态的一致性等。</p>
+<h6 id="HTTP发展现状"><a href="#HTTP发展现状" class="headerlink" title="HTTP发展现状"></a>HTTP发展现状</h6><p><img src="/../CNP/(1)CN111.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="HTTP1-0"><a href="#HTTP1-0" class="headerlink" title="HTTP1.0"></a>HTTP1.0</h6><p><img src="/../CNP/(1)CN112.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="非持久连接和持久连接"><a href="#非持久连接和持久连接" class="headerlink" title="非持久连接和持久连接"></a>非持久连接和持久连接</h6><p>$\quad$·非持久连接<br>$\quad$$\quad$·HTTP&#x2F;1.0缺省为非持久连接<br>$\quad$$\quad$$\quad$·服务器接收请求、响应、关闭TCP连接<br>$\quad$$\quad$·获取每个对象需要三个阶段<br>$\quad$$\quad$$\quad$·建立TCP连接<br>$\quad$$\quad$$\quad$·对象请求和传输<br>$\quad$$\quad$$\quad$·关闭TCP连接<br>$\quad$$\quad$·每次连接需要经历TCP慢启动阶段<br>$\quad$·持久连接<br>$\quad$$\quad$·HTTP&#x2F;1.1缺省为持久连接<br>$\quad$$\quad$$\quad$·在相同的TCP连接上，服务器接收请求、响应；再接收请求、响应；响应后保持连接<br>$\quad$$\quad$·HTTP&#x2F;1.1-pipeline 支持流水线机制<br>$\quad$$\quad$$\quad$·需要按序响应<br>$\quad$$\quad$·经历较少的慢启动过程，减少往返时间<br>$\quad$$\quad$$\quad$·降低响应时间</p>
+<h6 id="HTTP1-x"><a href="#HTTP1-x" class="headerlink" title="HTTP1.x"></a>HTTP1.x</h6><p><img src="/../CNP/(1)CN113.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="HTTP2"><a href="#HTTP2" class="headerlink" title="HTTP2"></a>HTTP2</h6><p>$\quad$·2015年5月，以RFC 7540正式发布<br>$\quad$·多路复用<br>$\quad$$\quad$·HTTP 1.1：一个请求的响应收到后，才能发送下一个请求<br>$\quad$$\quad$·HTTP 1.1-pipeline：可以同时发送多个请求，但要按顺序响应<br>$\quad$$\quad$·HTTP 2：请求&#x2F;响应允许交错，还可以自定义优先级<br>$\quad$·压缩<br>$\quad$·HTTP 2：服务器可以主动推送消息<br>$\quad$$\quad$·确认客户端存活<br>$\quad$$\quad$·预测资源请求<br>$\quad$·流量控制<br>$\quad$$\quad$·HTTP 1.1：完全依赖TCP<br>$\quad$$\quad$·HTTP 2：允许应用层进行控制</p>
+<h6 id="HTTP3"><a href="#HTTP3" class="headerlink" title="HTTP3"></a>HTTP3</h6><p>$\quad$·2022年6月以RFC 9114发布<br>$\quad$$\quad$·同时，HTTP 2更新至RFC 9113<br>$\quad$·主要是传输层变化，与应用层关系不大<br>$\quad$$\quad$·将TCP替换为UDP + QUIC<br>$\quad$$\quad$·（将在传输层章节介绍）</p>
+<h6 id="HTTP请求报文结构"><a href="#HTTP请求报文结构" class="headerlink" title="HTTP请求报文结构"></a>HTTP请求报文结构</h6><p>$\quad$·请求报文由三个部分组成，即开始行、首部行和实体主体<br>$\quad$·在请求报文中，开始行又称请求行<br>$\quad$·方法是对所请求的对象进行的操作，实际上也就是一些命令<br>$\quad$·请求报文的类型是由它所采用的方法决定的<br>$\quad$·URL是所请求资源的URL（有时URL会带一些参数，参数以“?”开始，每个参数的形式为“name&#x3D;value”，参数之间以“&amp;”隔开）<br><img src="/../CNP/(1)CN114.png" srcset="/img/loading.gif" lazyload><br><img src="/../CNP/(1)CN115.png" srcset="/img/loading.gif" lazyload><br><img src="/../CNP/(1)CN116.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="HTTP响应报文结构"><a href="#HTTP响应报文结构" class="headerlink" title="HTTP响应报文结构"></a>HTTP响应报文结构</h6><p>$\quad$·与请求报文类似，由三个部分组成，即开始行、首部行和实体主体<br>$\quad$·在响应报文中，开始行又称状态行<br>$\quad$·状态码都是三位数字<br>$\quad$$\quad$·1xx 表示通知信息的，如请求收到了或正在进行处理。<br>$\quad$$\quad$·2xx 表示成功，如接受或知道了。<br>$\quad$$\quad$·3xx 表示重定向，表示要完成请求还必须采取进一步的行动。<br>$\quad$$\quad$·4xx 表示客户的差错，如请求中有错误的语法或不能完成。<br>$\quad$$\quad$·5xx 表示服务器的差错，如服务器失效无法完成请求。<br>$\quad$$\quad$·典型的状态码<br>$\quad$$\quad$$\quad$·200 OK<br>$\quad$$\quad$$\quad$$\quad$·请求成功，被请求的对象包含在该响应的数据部分<br>$\quad$$\quad$$\quad$·301 Moved Permanently<br>$\quad$$\quad$$\quad$$\quad$·请求的对象被移走，新的位置在响应中通过Location: 给出<br>$\quad$$\quad$$\quad$·400 Bad Request<br>$\quad$$\quad$$\quad$$\quad$·服务器不能解释请求报文<br>$\quad$$\quad$$\quad$·404 Not Found<br>$\quad$$\quad$$\quad$$\quad$·服务器中找不到请求的文档<br>$\quad$$\quad$$\quad$·505 HTTP Version Not Supported<br>$\quad$$\quad$$\quad$$\quad$·服务器不支持相应的HTTP版本<br><img src="/../CNP/CN117.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="HTTP缓存"><a href="#HTTP缓存" class="headerlink" title="HTTP缓存"></a>HTTP缓存</h6><p>$\quad$·浏览器缓存<br>$\quad$$\quad$·在浏览器主机保存用户访问过的服务器Web页副本<br>$\quad$$\quad$·再次访问该页，不必从服务器再次传输，提高访问效率<br><img src="/../CNP/CN118.png" srcset="/img/loading.gif" lazyload><br>$\quad$·代理服务器缓存<br>$\quad$$\quad$·目标：代理服务器缓存已访问过的Web页副本，满足用户浏览器从代理服务器提取Web页，尽量减少原始服务器参与<br>$\quad$$\quad$·设置用户浏览器，通过代理服务器进行Web访问<br>$\quad$$\quad$·浏览器将所有的HTTP请求发送到代理服务器<br>$\quad$$\quad$$\quad$·如果缓存中有被请求的对象，则直接返回对象<br>$\quad$$\quad$$\quad$·否则，代理服务器向原始服务器请求对象，再将对象返回给客户端<br>$\quad$$\quad$·性能分析：<br><img src="/../CNP/CN119.png" srcset="/img/loading.gif" lazyload><br><img src="/../CNP/CN120.png" srcset="/img/loading.gif" lazyload><br>$\quad$$\quad$·Web缓存存在的困难，即Web缓存与原始服务器Web页一致性问题<br>$\quad$$\quad$$\quad$·启发式策略（较少使用）：服务器响应Web页的Last-Modified头和Expires头<br>$\quad$$\quad$$\quad$·询问式策略（常用）：通过特殊的关键字头询问原始服务器，Web副本是否已更新<br><img src="/../CNP/CN121.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="Cookie"><a href="#Cookie" class="headerlink" title="Cookie"></a>Cookie</h6><p><img src="/../CNP/CN122.png" srcset="/img/loading.gif" lazyload><br><img src="/../CNP/CN123.png" srcset="/img/loading.gif" lazyload><br>$\quad$·Cookies一般包含5个字段<br>$\quad$$\quad$·域指明Cookie来自何方，每个域为每个客户分配Cookie有数量限制<br>$\quad$$\quad$·路径标明服务器的文件树中哪些部分可以使用该Cookie<br>$\quad$$\quad$·内容采用“名字&#x3D;值”的形式，是Cookie存放内容的地方，可以达到4K容量，内容只是字符串，不是可执行程序<br>$\quad$$\quad$·安全指示浏览器只向使用安全传输连接的服务器返回Cookie<br><img src="/../CNP/CN124.png" srcset="/img/loading.gif" lazyload><br>$\quad$$\quad$·Cookie文件保存的只是文本串，没有可执行程序</p>
+<h6 id="访问安全"><a href="#访问安全" class="headerlink" title="访问安全"></a>访问安全</h6><p>$\quad$·Web访问安全<br>$\quad$$\quad$·并非所有Web页都会向公众开放<br>$\quad$$\quad$·Web服务器可以限定客户端访问的IP地址空间，比如限制只向公司内部员工开放<br>$\quad$$\quad$·Apache服务器将设置限制访问规则的文件.htaccess放置在被限制访问的页面所在的目录，客户端访问时进行规则匹配<br>$\quad$$\quad$·无状态：客户端需要在每个请求中携带认证信息<br>$\quad$$\quad$·认证方法：通常在HTTP请求中使用“用户名-密码”<br>$\quad$$\quad$·每个请求头中包含关键字authorization:<br>$\quad$$\quad$·如果请求头中无authorization: ，则服务器拒绝访问，并在响应头中包含WWW authenticate：<br><img src="/../CNP/CN125.png" srcset="/img/loading.gif" lazyload></p>
+<hr>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/" class="category-chain-item">CS学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/CN/" class="category-chain-item">CN</a>
+  
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CN/">#CN</a>
+      
+        <a href="/tags/%E5%BA%94%E7%94%A8%E5%B1%82/">#应用层</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>应用层-Web与HTTP</div>
+      <div>https://aki-yzh.github.io/2023/09/22/应用层-Web与HTTP/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Aki-yzh</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年9月22日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2023年10月20日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/09/24/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E9%83%A8%E5%88%86/" title="机器人学部分">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">机器人学部分</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/09/19/%E6%A0%91%E8%8E%93%E6%B4%BEPVM%E7%9A%84%E4%BD%BF%E7%94%A8/" title="树莓派PVM的使用">
+                        <span class="hidden-mobile">树莓派PVM的使用</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="music-player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=3&id=2512321469&auto=1&height=66"></iframe>
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Aki</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Yzh</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":145,"height":315},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
+</html>
+<script type="text/javascript" src="/js/ribon.js"></script>
+<script type="text/javascript" src="/js/title.js"></script>
+
+
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+
+<script type="text/javascript" src="/js/showtext.js"></script>
+
+<!-- 雪花特效2 -->
+<script type="text/javascript" src="/js/snow.js"></script>
+
