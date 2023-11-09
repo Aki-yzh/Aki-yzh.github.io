@@ -1,0 +1,981 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#50d0d0">
+  <meta name="author" content="Aki-yzh">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="对应 北京大学计算机网络课程第三讲第四部分 参考教材计算机网络-自顶向下方法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="传输层-新型拥塞控制">
+<meta property="og:url" content="https://aki-yzh.github.io/2023/11/01/%E4%BC%A0%E8%BE%93%E5%B1%82-%E6%96%B0%E5%9E%8B%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6/index.html">
+<meta property="og:site_name" content="Aki-yzh">
+<meta property="og:description" content="对应 北京大学计算机网络课程第三讲第四部分 参考教材计算机网络-自顶向下方法">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN701.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN702.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN703.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN704.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN705.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN706.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN707.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN708.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN709.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN710.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN711.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN712.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN713.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN714.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN715.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN716.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN717.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN718.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN719.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN720.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN721.png">
+<meta property="article:published_time" content="2023-11-01T08:55:10.000Z">
+<meta property="article:modified_time" content="2023-11-09T02:53:57.516Z">
+<meta property="article:author" content="Aki-yzh">
+<meta property="article:tag" content="CN">
+<meta property="article:tag" content="传输层">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aki-yzh.github.io/CNP/CN701.png">
+  
+  
+  
+  <title>传输层-新型拥塞控制 - Aki-yzh</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/icon_gundam/iconfont.css">
+<link rel="stylesheet" href="/css/touming.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"aki-yzh.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+ 
+
+
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Aki-yzh</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://aki-yzh.github.io/2023/03/12/GUNPLA/">
+                <i class="iconfont icon-gaoda"></i>
+                <span>高达</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://aki-yzh.github.io/2023/03/12/anime/">
+                <i class="iconfont icon-bilibili-fill"></i>
+                <span>番剧</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="传输层-新型拥塞控制"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2023-11-01 16:55" pubdate>
+          2023年11月1日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          6k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          51 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">传输层-新型拥塞控制</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2023年11月9日 上午
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p> 对应 北京大学计算机网络课程第三讲第四部分<br> 参考教材计算机网络-自顶向下方法</p>
+<span id="more"></span>
+<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><h2 id="新型拥塞控制"><a href="#新型拥塞控制" class="headerlink" title="新型拥塞控制"></a>新型拥塞控制</h2><p>$\quad$ 慢启动只占据TCP很小部分，大部分拥塞控制技术关注拥塞避免与快速恢复</p>
+<p>$\quad$ 要素1：端系统能观察到什么?</p>
+<p>$\quad$ $\quad$ 检测拥塞</p>
+<p>$\quad$ 要素2：端系统可以改变什么?</p>
+<p>$\quad$ $\quad$ 响应拥塞：</p>
+<p>$\quad$ $\quad$ 一旦观测到拥塞，降低发送速率</p>
+<p>$\quad$ $\quad$ 但是，如果网络条件发生改变</p>
+<p>$\quad$ $\quad$ $\quad$ 如：网络带宽变大</p>
+<p>$\quad$ $\quad$ $\quad$ … 保持低发送速率将影响</p>
+<p>$\quad$ $\quad$ 因此，一旦检测到拥塞不再存在</p>
+<p>$\quad$ $\quad$ $\quad$ 增加速率（每次一点点）</p>
+<p>$\quad$ $\quad$ $\quad$ 观察报文是否能正常传输</p>
+<h3 id="拥塞控制改进"><a href="#拥塞控制改进" class="headerlink" title="拥塞控制改进"></a>拥塞控制改进</h3><h4 id="慢启动优化"><a href="#慢启动优化" class="headerlink" title="慢启动优化"></a>慢启动优化</h4><p>$\quad$ 慢启动阶段的主要优化目标：CWND的初始化</p>
+<p>$\quad$ $\quad$ CWND &#x3D; 1 MSS (Tahoe)</p>
+<p>$\quad$ $\quad$ Linux 2.6 (RFC 3390) CWND depends on MSS</p>
+<p>$\quad$ $\quad$ Linux 3.0 (RFC 6928) CWND &#x3D; 10 MSS</p>
+<h4 id="TCP-New-Reno-SACK"><a href="#TCP-New-Reno-SACK" class="headerlink" title="TCP New Reno,SACK"></a>TCP New Reno,SACK</h4><p>$\quad$ 思想：快速恢复阶段，针对同时多个丢包优化</p>
+<p>$\quad$ $\quad$ 当sender收到了3个重复ACK，进入快速重传模式，重传重复ACK指示的那个包</p>
+<p>$\quad$ $\quad$ $\quad$ 如果只有这一个包丢了，那么重传这个包且收到新ACK时，期望新ACK会把所有重传前数据进行确认</p>
+<p>$\quad$ $\quad$ $\quad$ 否则（新ACK没对所有重传前数据确认），说明有多个包丢了,我们叫这个新ACK为Partial ACK</p>
+<p>$\quad$ $\quad$ 一旦发现Partial ACK，sender就可以推理出有多个包被丢了</p>
+<p>$\quad$ $\quad$ $\quad$ 继续重传未被确认的第一个包，直到再也收不到了Partial ACK，才结束Fast Recovery</p>
+<h5 id="工作过程"><a href="#工作过程" class="headerlink" title="工作过程"></a>工作过程</h5><p>$\quad$ 重传data[1]前，已发数据data[0]-data[12]</p>
+<p>$\quad$ 收到ack[3]，说明除了data[1]，还有其他数据丢失</p>
+<p>$\quad$ 继续处于快速恢复阶段，重传data[4]</p>
+<p><img src="/../CNP/CN701.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ TCP New Reno仍存在问题：</p>
+<p>  $\quad$ 每个RTT只能判断并重传1个丢包</p>
+<h5 id="SACK"><a href="#SACK" class="headerlink" title="SACK"></a>SACK</h5><p>$\quad$ SACK(选择重传)机制：一次性通知多个丢包</p>
+<p>$\quad$ $\quad$ SACK出现在TCP头Option字段</p>
+<p><img src="/../CNP/CN702.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../CNP/CN703.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ Left Edge表示已收到的不连续块的第一个序号，Right Edge表示已收到的不连续块的最后一个序号+1，即左闭右开区间</p>
+<p>$\quad$ 通过ACK和SACK信息，发送方就可以确定接收方具体没有收到的数据就是从ACK到最大SACK信息之间的那些空洞的序号</p>
+<p>$\quad$ TCP Option总共不超过40字节，每个序号4字节：1个ACK段最多4组SACK信息</p>
+<h4 id="TCP-BIC"><a href="#TCP-BIC" class="headerlink" title="TCP BIC"></a>TCP BIC</h4><h6 id="经典TCP拥塞控制的性能问题"><a href="#经典TCP拥塞控制的性能问题" class="headerlink" title="经典TCP拥塞控制的性能问题"></a>经典TCP拥塞控制的性能问题</h6><p>$\quad$ 核心问题：在探测满载窗口的过程中，如何增加拥塞窗口以尽可能利用网络带宽？</p>
+<p>$\quad$ TCP Reno线性增大拥塞窗口，探测当前可用网络带宽，即每经过一个RTT，拥塞窗口增加一个MSS（拥塞避免）</p>
+<p>$\quad$ 当端到端时延带宽乘积（BDP）较大时，拥塞窗口增长过慢，导致信道无法满载</p>
+<p><img src="/../CNP/CN704.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="Binary-Increase-Congestion"><a href="#Binary-Increase-Congestion" class="headerlink" title="Binary Increase Congestion"></a>Binary Increase Congestion</h5><p>$\quad$ BIC算法发现这么多的拥塞控制算法都在努力找一个合适的cwnd，本质就是一个搜索的过程，因此BIC算法的核心思想使用二分查找来搜索合适的cwnd</p>
+<p>$\quad$ Linux在采用CUBIC之前的默认算法</p>
+<h6 id="二分查找过程"><a href="#二分查找过程" class="headerlink" title="二分查找过程"></a>二分查找过程</h6><p>$\quad$ 思想</p>
+<p>$\quad$ $\quad$ 如果发生丢包的时候，窗口的大小是W1，那么要保持线路满载却不丢包，实际的窗口最大值应该在W1以下</p>
+<p>$\quad$ $\quad$ $\quad$ 初始化Wmax&#x3D;W1</p>
+<p>$\quad$ $\quad$ 如果丢包后将窗口乘性减到了W2后，成功收到重传报文的ACK，那么实际的窗口值应该在W2以上 (Wmin)</p>
+<p>$\quad$ $\quad$ $\quad$ 初始化Wmin&#x3D;W2</p>
+<p>$\quad$ ACK驱动的查找：每经过一个RTT，若无丢包发生，便将窗口设置到Wmax和Wmin的中点，一直持续到接近Wmax</p>
+<p>$\quad$ $\quad$ 更新Wmin</p>
+<h6 id="更新上下界：Smax和Smin"><a href="#更新上下界：Smax和Smin" class="headerlink" title="更新上下界：Smax和Smin"></a>更新上下界：Smax和Smin</h6><figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br></pre></td><td class="code"><pre><code class="hljs c"><br><span class="hljs-keyword">while</span> (Wmin &lt;= Wmax) &#123;<br><br>  <br><br>    inc = (Wmin+Wmax)/<span class="hljs-number">2</span> - cwnd;<br><br>  <br><br>  <span class="hljs-keyword">if</span> (inc &gt; Smax)<br><br>  <br><br>           inc = Smax;<br><br>  <br><br>  <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span> (inc &lt; Smin)<br><br>  <br><br>           inc = Smin;<br><br>  <br><br>  cwnd = cwnd + inc * MSS / cwnd;<br><br>  <br><br>  <span class="hljs-keyword">if</span> (no packet losses)<br><br>  <br><br>           Wmin = cwnd;<br><br>  <br><br>  <span class="hljs-keyword">else</span><br><br>  <br><br>           <span class="hljs-keyword">break</span>;<br><br>  <br><br>&#125;<br><br></code></pre></td></tr></table></figure>
+
+<h6 id="当cwnd超过WMAX"><a href="#当cwnd超过WMAX" class="headerlink" title="当cwnd超过WMAX"></a>当cwnd超过WMAX</h6><p>$\quad$ 既然cwnd度过了Wmax都没有丢包，说明新的Wmax还没有达到</p>
+<p>$\quad$ BIC采取了一种非常简单直接的方法：按照逼近Wmax的路径倒回去，即采用与之对称的方案</p>
+<h6 id="TCP-BIC性能"><a href="#TCP-BIC性能" class="headerlink" title="TCP-BIC性能"></a>TCP-BIC性能</h6><p><img src="/../CNP/CN705.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="BIC的不公平性"><a href="#BIC的不公平性" class="headerlink" title="BIC的不公平性"></a>BIC的不公平性</h6><p><img src="/../CNP/CN706.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="TCP-CUBIC"><a href="#TCP-CUBIC" class="headerlink" title="TCP CUBIC"></a>TCP CUBIC</h4><p>$\quad$ WHY？</p>
+<p>$\quad$ 原因1：延迟ACK以及ACK丢失的问题，BIC算法实际实现要比理论情况复杂很多</p>
+<p>$\quad$ 原因2：BIC容易导致不公平性</p>
+<p>$\quad$ 核心思想：</p>
+<p>$\quad$ $\quad$ 窗口增长函数仅仅取决于当前距离上次丢包经过的时间t</p>
+<p>$\quad$ $\quad$ 从而，窗口增长完全独立于网络的时延RTT</p>
+<p>$\quad$ CUBIC的RTT独立性质使得CUBIC能够在多条共享瓶颈链路的TCP连接之间保持良好的RTT公平性</p>
+<h6 id="该进"><a href="#该进" class="headerlink" title="该进"></a>该进</h6><p>$\quad$ CUBIC将BIC算法连续化，用三次函数拟合BIC算法曲线（CUBIC名字的由来）</p>
+<p>$\quad$ 拥塞窗口成为距上次丢包的时间t 的函数</p>
+<p>$\quad$ $\quad$ 不再根据RTT间隔来确定调整窗口的时机，避免了RTT不公平问题</p>
+<p>$\quad$ 三次函数增长分为两个阶段：</p>
+<p>$\quad$ $\quad$ Steady State Behavior阶段：以凹函数增长逼近最近一次丢包时窗口</p>
+<p>$\quad$ $\quad$ Max probing阶段：以凸函数增长探测当前满载窗口</p>
+<p>$\quad$ 绝大多数时间内，拥塞窗口都在Wmax附近，保持了较高的发送效率</p>
+<p><img src="/../CNP/CN707.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ C越大，探测到最大窗口的时间越短，决定了对称区间的高度</p>
+<p>$\quad$ 区间起始时刻为最近一次检测到丢包的时间</p>
+<p>$\quad$ 对称区间的宽度不再依赖于ACK</p>
+<h4 id="TCP-Vegas，TCP-Westwood"><a href="#TCP-Vegas，TCP-Westwood" class="headerlink" title="TCP Vegas，TCP Westwood"></a>TCP Vegas，TCP Westwood</h4><h6 id="Vegas"><a href="#Vegas" class="headerlink" title="Vegas"></a>Vegas</h6><p>$\quad$ 核心思想是用RTT的值来影响拥塞窗口，而不是通过丢包</p>
+<p>$\quad$ 没有大规模部署，但在轻量级系统中比较受关注</p>
+<p>$\quad$ 具体方案</p>
+<p>$\quad$ $\quad$ 监控RTT来计算一个RTT</p>
+<p>$\quad$ $\quad$ 通过RTT来估计当前的实际吞吐量</p>
+<p>$\quad$ $\quad$ 如果cwnd低于某个阈值，线性地增加cwnd</p>
+<p>$\quad$ $\quad$ 如果实际吞吐量比我们的期望吞吐量要小很多，线性地减少cwnd</p>
+<p>$\quad$ $\quad$ 重传改进：计算出来的RTT大于Timeout，直接重传</p>
+<p><img src="/../CNP/CN708.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="Westwood"><a href="#Westwood" class="headerlink" title="Westwood"></a>Westwood</h6><p>$\quad$ 主要运用于无线网络</p>
+<p>$\quad$ 核心思想：</p>
+<p>$\quad$ $\quad$ 通过在发送端持续不断的检测ack的到达速率来进行带宽估计</p>
+<p>$\quad$ $\quad$ 当拥塞发生时用带宽估计值来调整拥塞窗口和慢启动阈值</p>
+<h4 id="TCP-BBR"><a href="#TCP-BBR" class="headerlink" title="TCP BBR"></a>TCP BBR</h4><h6 id="拥塞与瓶颈链路带宽"><a href="#拥塞与瓶颈链路带宽" class="headerlink" title="拥塞与瓶颈链路带宽"></a>拥塞与瓶颈链路带宽</h6><p>$\quad$ 瓶颈链路带宽BtlBw，决定了端到端路径上的最大数据投递速率</p>
+<p>$\quad$ 当数据量到达瓶颈链路BDP时，在瓶颈链路处形成排队，导致RTT延长(甚至超时)</p>
+<p>$\quad$ 当数据量持续增加到BDP + BufferSize时，就开始丢包</p>
+<p><img src="/../CNP/CN709.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="Bottleneck-Bandwidth-and-Round-trip-propagation-time"><a href="#Bottleneck-Bandwidth-and-Round-trip-propagation-time" class="headerlink" title="Bottleneck Bandwidth and Round-trip propagation time"></a>Bottleneck Bandwidth and Round-trip propagation time</h5><p>$\quad$ BDP&#x3D;BtlBw × Rtprop</p>
+<p>$\quad$ $\quad$ 瓶颈链路带宽BtlBw：不会引起路由器缓存排队的最大发送速率</p>
+<p>$\quad$ $\quad$ RTprop：”发送端-接收端”整个路径往返时间</p>
+<p>$\quad$ BDP物理含义：瓶颈链路装满时，整个网络管道里的数据量</p>
+<p>$\quad$ $\quad$ 包含瓶颈链路与其他链路</p>
+<p>$\quad$ 传统TCP拥塞控制</p>
+<p>$\quad$ $\quad$ 以丢包事件为驱动，探测阶段将瓶颈链路上的缓冲区填满直至丢包，并以此为依据判断是否进行被动的乘性减小</p>
+<p>$\quad$ $\quad$ 目标：认为BDP + BtlneckBufSize是最优窗口大小</p>
+<p><img src="/../CNP/CN710.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="BBR"><a href="#BBR" class="headerlink" title="BBR"></a>BBR</h6><p>$\quad$ 目标：认为BDP是最优窗口大小</p>
+<p>$\quad$ 相比于传统TCP，BBR的目标更有优势</p>
+<p>$\quad$ $\quad$ 相同的吞吐量</p>
+<p>$\quad$ $\quad$ 更低的延迟、更小的丢包风险</p>
+<p>$\quad$ 核心思想</p>
+<p>$\quad$ $\quad$ 获知当前BDP，将cwnd往BDP调整</p>
+<p>$\quad$ BDP&#x3D;BtlBw × Rtprop</p>
+<p>$\quad$ $\quad$ 问题转化为，求当前BtlBw与Rtprop</p>
+<p><strong>Max BW和min RTT不能同时被测得</strong></p>
+<p>$\quad$ 要测量最大带宽，就要把瓶颈链路填满，此时buffer中存在排队分组，延迟较高</p>
+<p>$\quad$ 要测量最低延迟，就要保证链路队列为空，网络中分组越少越好，cwnd较小</p>
+<p><strong>解决方案：BDP点的近似检测</strong></p>
+<p>$\quad$ 用过去10秒内的最小RTT（min RTT）和最大投递率（max BW），分别近似RTprop和BtlBw，并依据这两个值估算当前BDP</p>
+<p><img src="/../CNP/CN711.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 启动阶段</p>
+<p>$\quad$ $\quad$ 当连接建立时，类似TCP的慢启动，指数增加发送速率，尽可能快地占满管道</p>
+<p>$\quad$ $\quad$ 若经过三次发现投递率不再增长，说明已达到BtlBw，瓶颈链路处分组已开始排队（事实上此时已经多发了数据）<img src="/../CNP/CN712.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 排空阶段</p>
+<p>$\quad$ $\quad$ 指数降低发送速率（相当于是startup的逆过程），将多占的数据慢慢排空<img src="/../CNP/CN713.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 瓶颈带宽探测（PROBE_BW）</p>
+<p>$\quad$ $\quad$ 进入稳定状态后, 先在一个RTT内增加发送速率，探测最大带宽</p>
+<p>$\quad$ $\quad$ 如果RTT增大（发生排队），再减小发送速率，排空前一个RTT多发出来的包</p>
+<p>$\quad$ $\quad$ 后面6个RTT使用更新后的估计带宽发送<img src="/../CNP/CN714.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 时延探测</p>
+<p>$\quad$ $\quad$ 每过10秒且RTT未更新，就进入RTprop探测阶段</p>
+<p>$\quad$ $\quad$ 在这段占200ms(全过程2%的时间内)，cwnd固定为4个包</p>
+<p>$\quad$ $\quad$ 测得的RTprop作为基准，在瓶颈带宽探测阶段判断是否发生排队</p>
+<p>$\quad$ $\quad$ 为抵消此阶段牺牲的发送速率，延迟探测后快速增加发送速率，保障瓶颈带宽观测<img src="/../CNP/CN715.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>BBR状态机</strong></p>
+<p><img src="/../CNP/CN716.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="DCTCP"><a href="#DCTCP" class="headerlink" title="DCTCP"></a>DCTCP</h4><p>$\quad$ 针对数据中心的TCP拥塞控制算法</p>
+<h6 id="数据中心的流量特点"><a href="#数据中心的流量特点" class="headerlink" title="数据中心的流量特点"></a>数据中心的流量特点</h6><p><img src="/../CNP/CN717.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="数据中心的性能问题"><a href="#数据中心的性能问题" class="headerlink" title="数据中心的性能问题"></a>数据中心的性能问题</h6><p><strong>1.Incast</strong></p>
+<p>$\quad$ 在一个很短的时间内，大量流量同时到达交换机的一个端口，导致缓冲区被占满，最终导致丢包</p>
+<p>$\quad$ 在并发流量很大的情况下，即使每条流的包很小，也会产生Incast问题</p>
+<p><img src="/../CNP/CN718.png" srcset="/img/loading.gif" lazyload></p>
+<p><strong>2. Queue Buildup</strong></p>
+<p>$\quad$ 长流和短流同时通过交换机的同一个端口时，由于长流占用较多的缓冲区空间，导致短流延迟增大，甚至丢包</p>
+<p><strong>3. Buffer Pressure</strong></p>
+<p>$\quad$ 交换机的不同端口通常共享同一块缓冲区，即使长流和短流通过不同的端口，短流通过的端口也会出现缓冲区不足的问题</p>
+<p><img src="/CNP/CN719.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="数据中心协议要求"><a href="#数据中心协议要求" class="headerlink" title="数据中心协议要求"></a>数据中心协议要求</h6><p>$\quad$ 容忍高突发流量</p>
+<p>$\quad$ $\quad$ 在Partition&#x2F;Aggregate通信模式中，所有Worker几乎会在同一时间向Aggregator返回执行结果，产生很高的突发流量</p>
+<p>$\quad$ 低时延</p>
+<p>$\quad$ $\quad$ 数据中心有大量时延敏感的短流，如网页搜索等</p>
+<p>$\quad$ 高吞吐</p>
+<p>$\quad$ $\quad$ 数据中心有大量吞吐敏感的长流，如文件传输、分布式机器学习中神经网络模型参数的传输等</p>
+<h5 id="DCTCP-1"><a href="#DCTCP-1" class="headerlink" title="DCTCP"></a>DCTCP</h5><h6 id="核心思想"><a href="#核心思想" class="headerlink" title="核心思想"></a>核心思想</h6><p>$\quad$ 根据网络拥塞程度精细地减小发送窗口：</p>
+<p>$\quad$ $\quad$ 一旦发现拥塞，发送窗口减至原窗口的（1-α&#x2F;2），α 反映了拥塞程度</p>
+<p>$\quad$ $\quad$ 传统TCP中 α总为1</p>
+<p>$\quad$ 拥塞程度的衡量：ECN标记（explicit congestion notification）</p>
+<p>$\quad$ $\quad$ 当交换机队列的瞬时长度超过某个阈值时，交换机在报文头设置ECN标记</p>
+<p>$\quad$ $\quad$ 使用显式的拥塞反馈能够更好地控制突发流量</p>
+<h6 id="实现"><a href="#实现" class="headerlink" title="实现"></a>实现</h6><p>$\quad$ 交换机</p>
+<p>$\quad$ $\quad$ 当队列长度超过K时，给随后到来的包标记ECN</p>
+<p>$\quad$ 接收端</p>
+<p>$\quad$ $\quad$ 仅当ECN报文出现或消失时才立即发送ACK，否则采取Delay ACK的策略<img src="/../CNP/CN720.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 发送端</p>
+<p>$\quad$ $\quad$ 每个RTT更新一次发送窗口</p>
+<p>$\quad$ $\quad$ α←(1-g)α+αF，这个值反应了拥塞程度</p>
+<p>$\quad$ $\quad$ 其中F&#x3D;(# of marked ACKs)&#x2F;(Total # of ACKs)</p>
+<p>$\quad$ $\quad$ Cwnd←(1-α&#x2F;2)∗Cwnd</p>
+<h6 id="和TCP比较"><a href="#和TCP比较" class="headerlink" title="和TCP比较"></a>和TCP比较</h6><p>$\quad$ 交换机中的队列长度：</p>
+<p>$\quad$ $\quad$ DCTCP能将队列长度稳定地维持在一个很低的水平</p>
+<p>$\quad$ $\quad$ 而TCP的队列长度不仅高，而且波动很大</p>
+<p>$\quad$ 因此，DCTCP更适用于现代数据中心</p>
+<p><img src="/../CNP/CN721.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="为什么DCTCP能取得良好性能"><a href="#为什么DCTCP能取得良好性能" class="headerlink" title="为什么DCTCP能取得良好性能"></a>为什么DCTCP能取得良好性能</h6><p>$\quad$ 容忍高突发流量</p>
+<p>$\quad$ $\quad$ DCTCP维持了较低的队列长度，可以留出较大的缓冲区给突发流量</p>
+<p>$\quad$ $\quad$ 采用标记策略，使得发送端在丢包之前就感知到拥塞</p>
+<p>$\quad$ 低时延</p>
+<p>$\quad$ $\quad$ 由于队列长度较短，也减少了包在队列中的排队时延</p>
+<p>$\quad$ 高吞吐</p>
+<p>$\quad$ $\quad$ DCTCP根据拥塞程度精确调节窗口，使得发送窗口的变化比较平滑，不会出现吞吐量骤降的情形</p>
+<hr>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/" class="category-chain-item">CS学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/CN/" class="category-chain-item">CN</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/CN/%E4%BC%A0%E8%BE%93%E5%B1%82/" class="category-chain-item">传输层</a>
+  
+  
+
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CN/">#CN</a>
+      
+        <a href="/tags/%E4%BC%A0%E8%BE%93%E5%B1%82/">#传输层</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>传输层-新型拥塞控制</div>
+      <div>https://aki-yzh.github.io/2023/11/01/传输层-新型拥塞控制/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Aki-yzh</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2023年11月1日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2023年11月9日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                      <a href="/2023/11/08/%E4%BC%A0%E8%BE%93%E5%B1%82-%E6%96%B0%E5%9E%8B%E4%BC%A0%E8%BE%93%E5%B1%82%E5%8D%8F%E8%AE%AE/" title="传输层-新型传输层协议">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">传输层-新型传输层协议</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/10/31/%E4%BC%A0%E8%BE%93%E5%B1%82%20-%E8%BF%9E%E6%8E%A5%E7%AE%A1%E7%90%86%EF%BC%8C%E6%B5%81%E9%87%8F%E6%8E%A7%E5%88%B6%EF%BC%8C%E6%8B%A5%E5%A1%9E%E6%8E%A7%E5%88%B6/" title="传输层 -连接管理，流量控制，拥塞控制">
+                        <span class="hidden-mobile">传输层 -连接管理，流量控制，拥塞控制</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="music-player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=3&id=2512321469&auto=1&height=66"></iframe>
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Aki</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Yzh</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":145,"height":315},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
+</html>
+<script type="text/javascript" src="/js/ribon.js"></script>
+<script type="text/javascript" src="/js/title.js"></script>
+
+
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+
+<script type="text/javascript" src="/js/showtext.js"></script>
+
+<!-- 雪花特效2 -->
+<script type="text/javascript" src="/js/snow.js"></script>
+
