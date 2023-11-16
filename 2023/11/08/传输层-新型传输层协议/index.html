@@ -26,8 +26,19 @@
 <meta property="og:image" content="https://aki-yzh.github.io/CNP/CN801.png">
 <meta property="og:image" content="https://aki-yzh.github.io/CNP/CN802.png">
 <meta property="og:image" content="https://aki-yzh.github.io/CNP/CN803.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN804.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN805.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN806.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN807.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN808.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN809.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN810.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN811.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN812.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN813.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN814.png">
 <meta property="article:published_time" content="2023-11-08T08:55:10.000Z">
-<meta property="article:modified_time" content="2023-11-09T02:55:20.429Z">
+<meta property="article:modified_time" content="2023-11-16T07:32:31.108Z">
 <meta property="article:author" content="Aki-yzh">
 <meta property="article:tag" content="CN">
 <meta property="article:tag" content="传输层">
@@ -269,7 +280,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          691 字
+          5.6k 字
         
       </span>
     
@@ -280,7 +291,7 @@
         
         
         
-          6 分钟
+          47 分钟
         
       </span>
     
@@ -323,7 +334,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年11月9日 上午
+                    本文最后更新于：2023年11月16日 下午
                   
                 
               </p>
@@ -355,7 +366,140 @@
 <p>$\quad$ $\quad$ $\quad$ B向A发送ACK报文段</p>
 <p><img src="/../CNP/CN803.png" srcset="/img/loading.gif" lazyload></p>
 <p>$\quad$ 同一方向的ACK段和Data段可以合并成DataAck报文段</p>
-<h6 id="DCP的交互流程"><a href="#DCP的交互流程" class="headerlink" title="DCP的交互流程"></a>DCP的交互流程</h6><h4 id="MPTCP"><a href="#MPTCP" class="headerlink" title="MPTCP"></a>MPTCP</h4><h4 id="QUIC"><a href="#QUIC" class="headerlink" title="QUIC"></a>QUIC</h4><hr>
+<h6 id="DCP的交互流程"><a href="#DCP的交互流程" class="headerlink" title="DCP的交互流程"></a>DCP的交互流程</h6><p><img src="/../CNP/CN804.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="DCCP可靠传输"><a href="#DCCP可靠传输" class="headerlink" title="DCCP可靠传输"></a>DCCP可靠传输</h6><p>$\quad$ SeqNum与ACK只是用来拥塞控制，不要求可靠传输</p>
+<p>$\quad$ 接收方：ACK可以不含序列号（如CCID3，只反馈丢包率）</p>
+<p>$\quad$ 发送方：发现丢包也没有义务</p>
+<h5 id="DCCP的拥塞控制机制"><a href="#DCCP的拥塞控制机制" class="headerlink" title="DCCP的拥塞控制机制"></a>DCCP的拥塞控制机制</h5><p>$\quad$ DCCP连接支持拥塞控制，应用可以根据需要选择不同的拥塞控制机制：</p>
+<p>$\quad$ $\quad$ 组成一个连接的两个半连接，可以选择不同的拥塞控制机制</p>
+<p>$\quad$ 不同的拥塞控制机制由一个1字节的CCID来标识，连接建立时两个终端协商确定</p>
+<p>$\quad$ 目前DCCP的RFC文档定义了两个CCID，分别是2和3，其余的值保留</p>
+<h6 id="TCP-like-Congestion-Control（CCID2）"><a href="#TCP-like-Congestion-Control（CCID2）" class="headerlink" title="TCP-like Congestion Control（CCID2）"></a>TCP-like Congestion Control（CCID2）</h6><p>$\quad$ 发送方维持一个发送窗口，并且不停地发包，直到没有可用的发送窗口</p>
+<p>$\quad$ 接收方对收到的包回复ACK报文，包括一段时间内收到的所有包的序号（用于支持SACK机制）</p>
+<p>$\quad$ 丢包或者ECN标记表示出现拥塞，此时发送端需要将发送窗口减半</p>
+<h6 id="TCP-Friendly-Rate-Control（CCID3）"><a href="#TCP-Friendly-Rate-Control（CCID3）" class="headerlink" title="TCP-Friendly Rate Control（CCID3）"></a>TCP-Friendly Rate Control（CCID3）</h6><p>$\quad$ 接收方计算丢包率，报告给发送方</p>
+<p>$\quad$ 发送方根据丢包率计算发送速率，并根据发送速率发包</p>
+<p>$\quad$ 相比而言，CCID3可以更平滑地调节发包速率</p>
+<h4 id="MPTCP"><a href="#MPTCP" class="headerlink" title="MPTCP"></a>MPTCP</h4><p>$\quad$ 传统TCP协议仅支持单路径传输，即只能利用终端主机上的一个网络接口传输数据</p>
+<p>$\quad$ 随着接入技术的发展，同时具备多个网络接口的网络设备已经越来越普及，多路径传输更适合当前的网络环境</p>
+<p>$\quad$ 多路径TCP协议（MPTCP）应运而生，它可将单一数据流切分为若干子流，同时利用多条路径进行传输</p>
+<h6 id="MPTCP的优势"><a href="#MPTCP的优势" class="headerlink" title="MPTCP的优势"></a>MPTCP的优势</h6><p>$\quad$ 多径带宽聚合</p>
+<p>$\quad$ $\quad$ 终端设备可以聚合不同路径上的可用带宽，以获得更高的网络带宽</p>
+<p>$\quad$ 提升传输的可靠性</p>
+<p>$\quad$ $\quad$ 使用多条路径传输数据，可以有效避免因单条路径性能恶化或中断导致的应用连接中断</p>
+<p>$\quad$ 支持链路的平滑切换</p>
+<p>$\quad$ $\quad$ 多路径传输方式允许终端在不同接入网络间快速、平滑地切换，选取当前链路质量最好的路径传输数据</p>
+<h6 id="MPTCP在网络体系结构中的位置"><a href="#MPTCP在网络体系结构中的位置" class="headerlink" title="MPTCP在网络体系结构中的位置"></a>MPTCP在网络体系结构中的位置</h6><p>$\quad$ MPTCP位于套接字和TCP之间：</p>
+<p>$\quad$ $\quad$ 应用程序通过套接字调用MPTCP，MPTCP向应用程序提供单条连接的抽象，因而对应用层透明</p>
+<p>$\quad$ $\quad$ MPTCP可在源主机和目的主机的多对网络接口间分别建立TCP连接，并将数据流分配到多条TCP连接上传输</p>
+<p>$\quad$ $\quad$ MPTCP兼容并扩展了TCP协议：TCP基本头不变，只定义了新的选项，从而对网络层也是透明</p>
+<p><img src="/../CNP/CN805.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ MPTCP连接是一个或多个子流的集合：</p>
+<p>$\quad$ $\quad$ 路径：本地主机与远程主机之间可用于建立连接的一个链路序列称为路径，使用四元组&lt;本地IP地址，本地端口，远程IP地址，远程端口&gt;表示</p>
+<p>$\quad$ $\quad$ 子流：在单个路径上运行的 TCP 流称为子流，是MPTCP连接的组成部分</p>
+<h5 id="MPTCP连接管理"><a href="#MPTCP连接管理" class="headerlink" title="MPTCP连接管理"></a>MPTCP连接管理</h5><p>$\quad$ 用于MPTCP连接管理的新字段：</p>
+<p>$\quad$ $\quad$ MP_CAPABLE：建立MPTCP连接</p>
+<p>$\quad$ $\quad$ MP_JOIN：附加新的子流到已有连接</p>
+<p>$\quad$ $\quad$ ADD_ADDR：新增可用路径</p>
+<p>$\quad$ $\quad$ REMOVE_ADDR：删除路径</p>
+<p>$\quad$ $\quad$ MP_FASTCLOSE：关闭所有子流</p>
+<p>$\quad$ 如何建立MPTCP连接：</p>
+<p>$\quad$ $\quad$ 首先初始化一条MPTCP连接（与建立常规TCP连接的过程相似）</p>
+<p>$\quad$ $\quad$ 然后将MPTCP的其它子流附加到已经存在的MPTCP连接上</p>
+<p><img src="/../CNP/CN806.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="初始化MPTCP连接"><a href="#初始化MPTCP连接" class="headerlink" title="初始化MPTCP连接"></a>初始化MPTCP连接</h6><p><img src="/../CNP/CN807.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="附加子流到MPTCP连接上"><a href="#附加子流到MPTCP连接上" class="headerlink" title="附加子流到MPTCP连接上"></a>附加子流到MPTCP连接上</h6><p><img src="/../CNP/CN808.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="MPTCP路径管理和关闭连接"><a href="#MPTCP路径管理和关闭连接" class="headerlink" title="MPTCP路径管理和关闭连接"></a>MPTCP路径管理和关闭连接</h6><p><img src="/../CNP/CN809.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="MPTCP的数据调度"><a href="#MPTCP的数据调度" class="headerlink" title="MPTCP的数据调度"></a>MPTCP的数据调度</h5><p>$\quad$ 在多路径传输中，发送端将属于同一个数据流的数据包调度到不同的路径上传输，由于不同路径的差异，这些数据包往往无法按照发送顺序到达接收端</p>
+<p>$\quad$ 乱序到达的数据包需暂存在接收缓存中，直到接收缓中的数据包能够按序交付给上层应用，这既影响了数据传输的实时性，又影响了网络的吞吐量</p>
+<p>$\quad$ MPTCP根据拥塞窗口大小及路径延迟，将数据按比例分配给各个子流，尽力保证数据包按序到达接收端，降低数据乱序到达对网络性能产生的不利影响</p>
+<h5 id="MPTCP的拥塞机制"><a href="#MPTCP的拥塞机制" class="headerlink" title="MPTCP的拥塞机制"></a>MPTCP的拥塞机制</h5><p>$\quad$ IETF MPTCP工作组提出的拥塞控制的设计目标</p>
+<p>$\quad$ $\quad$ 提升吞吐量：多路径TCP连接的各个子流获得的总吞吐量，不应低于其最优路径上单路径TCP连接的吞吐量</p>
+<p>$\quad$ $\quad$ 公平性：多路径TCP连接在同一网络瓶颈处的多个子流，不能过多地侵占其它单路径TCP连接的带宽</p>
+<p>$\quad$ $\quad$ 均衡拥塞：多路径TCP连接应能在满足前两个准则的情况下，实现各个子流之间的负载均衡，尽可能将拥塞路径上的流量迁移到较好的路径上</p>
+<p>$\quad$ 公平性是关注的重点，MPTCP采用的是网络公平性原则</p>
+<p>$\quad$ $\quad$ 举例：假设MPTCP的两个子流与一个常规TCP流共享一个网络瓶颈，则MPTCP两个子流获得的带宽应为瓶颈带宽的1&#x2F;2，而不是2&#x2F;3，这样才能保证MPTCP连接对常规TCP连接的友好性</p>
+<p>$\quad$ MPTCP实现网络公平性准则的方法：</p>
+<p>$\quad$ $\quad$ 限制各个子流窗口增长速度的总和，不超过单路径TCP连接的窗口增长速度</p>
+<p>$\quad$ $\quad$ 从而，MPTCP连接通过各子流获得的总吞吐量和单路径TCP连接获得的吞吐量相当</p>
+<h4 id="QUIC"><a href="#QUIC" class="headerlink" title="QUIC"></a>QUIC</h4><h6 id="TCP存在的问题"><a href="#TCP存在的问题" class="headerlink" title="TCP存在的问题"></a>TCP存在的问题</h6><p>$\quad$ TCP 实现在操作系统内核中</p>
+<p>$\quad$ $\quad$ 作为传输优化的最终受益者，应用无法对TCP进行修改</p>
+<p>$\quad$ $\quad$ 操作系统的更新往往跟不上应用的需求和节奏</p>
+<p>$\quad$ TCP体系握手时延大</p>
+<p>$\quad$ $\quad$ 互联网上的大趋势：低时延需求越来越强烈；加密流量占比越来越大</p>
+<p>$\quad$ $\quad$ TLS(传输层安全性协议)+TCP的体系握手时延很大，传输前需要3个RTT进行握手</p>
+<p>$\quad$ TCP多流复用存在队头阻塞问题</p>
+<p>$\quad$ $\quad$ 当前的应用普遍比较复杂，常需要同时传输多个元素：例如：网页传输中，每个单独的图片即为一个数据流，不同数据流之间相互独立。为每个数据建立一个TCP连接很低效（尤其对于小流，单独建立连接成本高昂），因此出现了多流复用</p>
+<p>$\quad$ $\quad$ TCP传输需要保持有序性：出现丢包时，后面的数据需要等丢失的包重传完成才能使用，这就导致了队头阻塞</p>
+<h6 id="QUIC在网络体系结构中的位置"><a href="#QUIC在网络体系结构中的位置" class="headerlink" title="QUIC在网络体系结构中的位置"></a>QUIC在网络体系结构中的位置</h6><p>$\quad$ 传统的传输架构</p>
+<p>$\quad$ $\quad$ TCP提供数据传输服务</p>
+<p>$\quad$ $\quad$ TLS（传输层安全性协议）对数据进行加密</p>
+<p>$\quad$ $\quad$ HTTP协议定义如何发起请求-响应请求</p>
+<p>$\quad$ $\quad$ 应用在HTTP之上实现</p>
+<p>$\quad$ 基于QUIC的传输架构</p>
+<p>$\quad$ $\quad$ QUIC替代TCP、TLS和部分HTTP的功能</p>
+<p>$\quad$ QUIC实现在用户态中</p>
+<p>$\quad$ $\quad$ 底层基于UDP实现</p>
+<p>$\quad$ $\quad$ 拥塞控制是模块化的，可以方便地使用各种TCP拥塞控制算法，如CUBIC等</p>
+<p><img src="/../CNP/CN810.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="QUIC包格式"><a href="#QUIC包格式" class="headerlink" title="QUIC包格式"></a>QUIC包格式</h6><p>$\quad$ 部分相关字段：</p>
+<p>$\quad$ $\quad$ 连接标识符(Connection ID)：</p>
+<p>用于对连接进行表示和识别</p>
+<p>$\quad$ $\quad$ 包号(Packet Number)：单调递增,</p>
+<p>即同一个连接中，每个QUIC包的包号都不一样</p>
+<p>$\quad$ QUIC底层使用UDP进传输</p>
+<p>$\quad$ $\quad$ QUIC包作为UDP的数据载荷</p>
+<p>$\quad$ $\quad$ IANA（互联网数字分配机构）建议QUIC使用UDP的443端口</p>
+<p><img src="/../CNP/CN811.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="连接时建立时延优化"><a href="#连接时建立时延优化" class="headerlink" title="连接时建立时延优化"></a>连接时建立时延优化</h6><p><img src="/../CNP/CN812.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="QUIC多数据流"><a href="#QUIC多数据流" class="headerlink" title="QUIC多数据流"></a>QUIC多数据流</h6><p>$\quad$ TCP：1个连接1对双向字节流</p>
+<p>$\quad$ QUIC：多字节流</p>
+<p>$\quad$ $\quad$ 一个QUIC连接，可以用于传输多个字节流（streams）</p>
+<p>$\quad$ $\quad$ 每个QUIC报文，甚至可以包含来自多个stream的数据</p>
+<p><img src="/../CNP/CN813.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="无队头阻塞的多流复用"><a href="#无队头阻塞的多流复用" class="headerlink" title="无队头阻塞的多流复用"></a>无队头阻塞的多流复用</h6><p>$\quad$ TCP多流复用时的队头阻塞问题</p>
+<p>$\quad$ $\quad$ TCP为保持数据的有序性，出现丢包时，会等待该数据到达后，再提交给上层应用</p>
+<p>$\quad$ $\quad$ 多流复用时，某个数据流的数据包丢失，会使得TCP连接上所有数据流都需要等待</p>
+<p>$\quad$ QUIC对队头阻塞问题的解决</p>
+<p>$\quad$ $\quad$ 在单个连接中，建立相互独立的多个QUIC流，某个流的数据包丢失不影响其它流的数据交付</p>
+<p>$\quad$ $\quad$ 分析：TCP保证了整个连接的数据交付的有序性（有序）; QUIC利用了各个流相互独立的特性，仅保持了流内部数据的有序性（部分有序），减少了不必要的等待</p>
+<p>$\quad$ $\quad$ 同时限制：单个流对接收端缓冲区的占用不能超过阈值</p>
+<h6 id="明确的包序号和更精确的RTT"><a href="#明确的包序号和更精确的RTT" class="headerlink" title="明确的包序号和更精确的RTT"></a>明确的包序号和更精确的RTT</h6><p>$\quad$ TCP中Seq的作用</p>
+<p>$\quad$ $\quad$ ACK将Seq用于ACKNum，确认接收成功</p>
+<p>$\quad$ $\quad$ 接收端交付数据时，判断重复数据与顺序</p>
+<p>$\quad$ QUIC：是否还使用同样作用的seq？</p>
+<p>$\quad$ $\quad$ 一个packet包含多个stream的frame</p>
+<p>$\quad$ $\quad$ 各个stream独立交付</p>
+<p>$\quad$ 因此，QUIC分离确认接收与向上层交付数据</p>
+<p>$\quad$ $\quad$ Packet Number：ACK中确认packet接收</p>
+<p><img src="/../CNP/CN814.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ TCP重传歧义的问题：</p>
+<p>$\quad$ $\quad$ TCP的重传包使用和原包相同的序号，因此可能某一序号被用了不止一次</p>
+<p>$\quad$ $\quad$ TCP收到这一序号的ACK时，无法判断是针对哪个包的ACK，从而影响后续操作，如测量RTT的大小</p>
+<p>$\quad$ QUIC解决重传歧义的方法：</p>
+<p>$\quad$ $\quad$ QUIC的packet number单调递增，对于重传包也会递增packet number</p>
+<p>$\quad$ $\quad$ 每个packet number只会出现一次，ACK没有歧义！</p>
+<p>$\quad$ $\quad$ QUIC接收端记录收到包与发出ACK之间的时延，并发馈给发送端，方便发送端更准确地测量RTT</p>
+<h6 id="IP地址-x2F-端口切换无需重新建立连接"><a href="#IP地址-x2F-端口切换无需重新建立连接" class="headerlink" title="IP地址&#x2F;端口切换无需重新建立连接"></a>IP地址&#x2F;端口切换无需重新建立连接</h6><p>$\quad$ IP地址&#x2F;端口发生变化时，TCP连接会断开</p>
+<p>$\quad$ $\quad$ 例如手机WIFI断开时，常常自动转而使用移动信号</p>
+<p>$\quad$ $\quad$ 此时，TCP会断连，需要应用进行处理</p>
+<p>$\quad$ QUIC支持IP&#x2F;端口切换</p>
+<p>$\quad$ $\quad$ QUIC使用Connection ID来表示每个连接</p>
+<p>$\quad$ $\quad$ IP地址或端口的变化不影响对原有连接的识别</p>
+<p>$\quad$ $\quad$ 客户IP地址或端口发生变化时，QUIC可以快速恢复</p>
+<p>$\quad$ 由传输层对连接的切换进行管理</p>
+<p>$\quad$ $\quad$ 更符合互联网体系结构</p>
+<p>$\quad$ $\quad$ 不再需要应用重复造轮子</p>
+<h6 id="QUIC易于部署和更新"><a href="#QUIC易于部署和更新" class="headerlink" title="QUIC易于部署和更新"></a>QUIC易于部署和更新</h6><p>$\quad$ 整个QUIC包被加密传输</p>
+<p>$\quad$ $\quad$ 保护用户数据隐私</p>
+<p>$\quad$ $\quad$ 避免被中间设备识别和修改</p>
+<p>$\quad$ QUIC在用户态实现</p>
+<p>$\quad$ $\quad$ 与操作系统解耦，从而能和应用一同快速迭代</p>
+<p>$\quad$ $\quad$ 如：预留接口，用户自定义拥塞控制</p>
+<p>$\quad$ 版本协商机制</p>
+<p>$\quad$ $\quad$ 由于QUIC的快速迭代特性，会同时存在众多QUIC版本</p>
+<p>$\quad$ $\quad$ 客户需要和服务器进行版本协商（不引入额外时延的协商机制</p>
+<hr>
 
                 
               </div>
@@ -436,7 +580,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年11月9日</div>
+          <div>2023年11月16日</div>
         </div>
       
       
@@ -466,6 +610,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2023/11/16/%E7%BD%91%E7%BB%9C%E5%B1%82%20-%20%E5%9F%BA%E6%9C%AC%E6%A6%82%E5%BF%B5%EF%BC%8C%E8%B7%AF%E7%94%B1%E5%99%A8/" title="网络层 - 基本概念，路由器">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">网络层 - 基本概念，路由器</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
