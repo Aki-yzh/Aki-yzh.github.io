@@ -23,12 +23,32 @@
 <meta property="og:site_name" content="Aki-yzh">
 <meta property="og:description" content="对应 北京大学计算机网络课程第四讲第三部分 参考教材计算机网络-自顶向下方法">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1101.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1102.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1103.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1104.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1105.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1106.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1107.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1108.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1109.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1110.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1111.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1112.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1113.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1114.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1115.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1116.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1117.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1118.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1119.png">
 <meta property="article:published_time" content="2023-11-21T15:55:10.000Z">
-<meta property="article:modified_time" content="2023-11-21T15:16:23.394Z">
+<meta property="article:modified_time" content="2023-11-24T15:07:23.499Z">
 <meta property="article:author" content="Aki-yzh">
 <meta property="article:tag" content="CN">
 <meta property="article:tag" content="网络层">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aki-yzh.github.io/CNP/CN1101.png">
   
   
   
@@ -265,7 +285,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          47 字
+          2.9k 字
         
       </span>
     
@@ -276,7 +296,7 @@
         
         
         
-          1 分钟
+          24 分钟
         
       </span>
     
@@ -319,7 +339,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年11月21日 晚上
+                    本文最后更新于：2023年11月24日 晚上
                   
                 
               </p>
@@ -329,7 +349,106 @@
                 
                 <p> 对应 北京大学计算机网络课程第四讲第三部分<br> 参考教材计算机网络-自顶向下方法</p>
 <span id="more"></span>
-<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><h2 id="网络层-路由"><a href="#网络层-路由" class="headerlink" title="网络层-路由"></a>网络层-路由</h2><hr>
+<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><h2 id="网络层-路由"><a href="#网络层-路由" class="headerlink" title="网络层-路由"></a>网络层-路由</h2><h3 id="网络路由"><a href="#网络路由" class="headerlink" title="网络路由"></a>网络路由</h3><h6 id="目标"><a href="#目标" class="headerlink" title="目标"></a>目标</h6><p>$\quad$ 为每对（发送主机，接收主机）找到“好的”网络传输路径</p>
+<p>$\quad$ 路径：一系列连接发送主机与接收主机的路由器，用于传输数据报文</p>
+<p>$\quad$ 好路径标准</p>
+<p>$\quad$ $\quad$ 低开销</p>
+<p>$\quad$ $\quad$ 速度快</p>
+<p>$\quad$ $\quad$ 拥塞少</p>
+<h6 id="网络的图抽象"><a href="#网络的图抽象" class="headerlink" title="网络的图抽象"></a>网络的图抽象</h6><p><img src="/../CNP/CN1101.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="基于最短路的路由算法"><a href="#基于最短路的路由算法" class="headerlink" title="基于最短路的路由算法"></a>基于最短路的路由算法</h6><p>$\quad$ 最短路径算法：计算每个结点到其他所有结点的最短路径</p>
+<p>$\quad$ 所有的源节点到一个指定目标节点的最优路径的集合构成一棵以目标节点为根的树</p>
+<p>$\quad$ $\quad$ 称为汇集树（sink tree）</p>
+<p>$\quad$ 经典的最短路径算法</p>
+<p>$\quad$ $\quad$ Dijkstra算法</p>
+<p>$\quad$ $\quad$ Bellman-Ford算法</p>
+<p>$\quad$ 应用经典算法时，还需要考虑现实情形：</p>
+<p>$\quad$ $\quad$ 简单性：每台路由器计算与存储资源有限</p>
+<p>$\quad$ $\quad$ 异步性：各个路由器独立、异步工作</p>
+<p>$\quad$ $\quad$ 鲁棒性：网络状态不断变化，甚至可能发生结点与链路故障</p>
+<p>$\quad$ $\quad$ 公平性：每条路径不会过多消耗带宽等资源</p>
+<p>$\quad$ 路由算法分类</p>
+<p>$\quad$ $\quad$ 全局:</p>
+<p>$\quad$ $\quad$ $\quad$ 每个路由器都有完整的网络拓扑与链路开销等信息</p>
+<p>$\quad$ $\quad$ $\quad$ 链路状态算法（基于Dijkstra算法）</p>
+<p>$\quad$ $\quad$ 局部:</p>
+<p>$\quad$ $\quad$ $\quad$ 每个路由器只知道邻居结点，以及到邻居结点的链路开销</p>
+<p>$\quad$ $\quad$ $\quad$ 需要结点与邻居不断交换信息，并反复迭代更新</p>
+<p>$\quad$ $\quad$ $\quad$ 距离向量算法（基于Bellman-Ford算法）</p>
+<h3 id="路由选择算法"><a href="#路由选择算法" class="headerlink" title="路由选择算法"></a>路由选择算法</h3><h4 id="距离向量算法"><a href="#距离向量算法" class="headerlink" title="距离向量算法"></a>距离向量算法</h4><p><img src="/../CNP/CN1102.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="单机Bellman-Ford算法"><a href="#单机Bellman-Ford算法" class="headerlink" title="单机Bellman-Ford算法"></a>单机Bellman-Ford算法</h6><p><img src="/../CNP/CN1103.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="距离向量算法-1"><a href="#距离向量算法-1" class="headerlink" title="距离向量算法"></a>距离向量算法</h5><p>$\quad$ 从单机Bellman-Ford到分布式更新</p>
+<p>$\quad$ 数据的分布式：将单机算法维护的信息分散到各个结点</p>
+<p>$\quad$ 计算的分布式：将算法更新操作分散到各个结点</p>
+<h6 id="数据分布式"><a href="#数据分布式" class="headerlink" title="数据分布式"></a>数据分布式</h6><p>$\quad$ 每个结点x维护信息</p>
+<p>$\quad$ $\quad$ 到达每个邻居结点v的开销：c(x,v)</p>
+<p>$\quad$ $\quad$ 距离向量（DV）：$Dx &#x3D; [Dx(y): y є N ]$，该结点x到网络中所有其他结点y的最小代价的估计值</p>
+<p><img src="/../CNP/CN1104.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 每个邻居结点v的距离向量，即对于所有邻居v，结点x保存$Dv &#x3D; [Dv(y): y є N]$</p>
+<h6 id="计算分布式"><a href="#计算分布式" class="headerlink" title="计算分布式"></a>计算分布式</h6><p>$\quad$ 每个结点不断重复:</p>
+<p>$\quad$ $\quad$ （发送）每个节点向邻居发送它自己到某些节点的距离向量</p>
+<p>$\quad$ $\quad$ （接收）当节点x接收到来自邻居y的新DV估计，更新所保存的y的DV信息</p>
+<p><img src="/../CNP/CN1105.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ $\quad$ （计算）使用B-F方程更新其自己的DV :Dx(y) ← minv{c(x,v) + Dv(y)}  for each node y ∊ N</p>
+<p>$\quad$ $\quad$ 上述过程迭代执行，Dx(y)收敛为实际最小费用 dx(y)</p>
+<h6 id="算法特点"><a href="#算法特点" class="headerlink" title="算法特点"></a>算法特点</h6><p>$\quad$ 异步：结点迭代频率不需要一致</p>
+<p>$\quad$ 迭代：每次某个结点上的迭代有2种触发</p>
+<p>$\quad$ $\quad$ 本地链路代价发生改变</p>
+<p>$\quad$ $\quad$ 收到来自邻居的DV更新</p>
+<p>$\quad$ 分布式：结点直接互相协作</p>
+<p>$\quad$ $\quad$ 每个结点当且仅当DV信息发生变化时通知其他结点</p>
+<p>$\quad$ $\quad$ 邻居结点根据需要通知自己的邻居<img src="/../CNP/CN1106.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../CNP/CN1107.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="链路状态改变：代价变小"><a href="#链路状态改变：代价变小" class="headerlink" title="链路状态改变：代价变小"></a>链路状态改变：代价变小</h6><p><img src="/../CNP/CN1108.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="链路状态改变：代价变大"><a href="#链路状态改变：代价变大" class="headerlink" title="链路状态改变：代价变大"></a>链路状态改变：代价变大</h6><p><img src="/../CNP/CN1109.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../CNP/CN1110.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../CNP/CN1111.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../CNP/CN1112.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../CNP/CN1113.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="链路状态改变：毒性逆转"><a href="#链路状态改变：毒性逆转" class="headerlink" title="链路状态改变：毒性逆转"></a>链路状态改变：毒性逆转</h6><p><img src="/../CNP/CN1114.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 毒性逆转无法解决一般性的无穷计数问题</p>
+<h5 id="链路状态算法"><a href="#链路状态算法" class="headerlink" title="链路状态算法"></a>链路状态算法</h5><p>$\quad$ 基于Dijkstra算法</p>
+<p>$\quad$ 每个结点都知道网络拓扑与链路开销</p>
+<p>$\quad$ $\quad$ 通过链路状态广播得到</p>
+<p>$\quad$ $\quad$ 所有结点都有相同的信息</p>
+<p>$\quad$ 每个结点计算以自己为源节点，到其他所有结点的最短路径</p>
+<p>$\quad$ $\quad$ 生成该结点的转发表</p>
+<p>$\quad$ 符号:</p>
+<p>$\quad$ $\quad$ c(x,y): x到y的链路开销，∞表示2个结点之间没有边</p>
+<p>$\quad$ $\quad$ D(v): 当前到达目的结点v的路径代价</p>
+<p>$\quad$ $\quad$ p(v): 到达目的结点v的上一跳结点</p>
+<p>$\quad$ $\quad$ N’ : 最短路已经确定的结点集合</p>
+<h6 id="Dijkstra算法"><a href="#Dijkstra算法" class="headerlink" title="Dijkstra算法"></a>Dijkstra算法</h6><p><img src="/../CNP/CN1115.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="链路状态算法-1"><a href="#链路状态算法-1" class="headerlink" title="链路状态算法"></a>链路状态算法</h5><p>$\quad$ 链路状态（Link State）路由可分为五个部分：</p>
+<p>$\quad$ $\quad$ 1. 发现邻居，了解他们的网络地址；</p>
+<p><img src="/../CNP/CN1116.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ $\quad$ 2. 设置到每个邻居的成本度量；</p>
+<p>$\quad$ $\quad$ $\quad$ 开销&#x2F;度量&#x2F;代价：</p>
+<p>$\quad$ $\quad$ $\quad$ $\quad$ 自动发现设置或人工配置</p>
+<p>$\quad$ $\quad$ $\quad$ $\quad$ 度量：带宽、跳数、延迟、负载、可靠性等</p>
+<p>$\quad$ $\quad$ $\quad$ 常用度量：链路带宽（反比）</p>
+<p>$\quad$ $\quad$ $\quad$ $\quad$ 例如：1-Gbps以太网的代价为1，100-Mbps以太网的代价为10</p>
+<p>$\quad$ $\quad$ $\quad$ 可选度量：延迟</p>
+<p>$\quad$ $\quad$ $\quad$ $\quad$ 发送一个echo包，另一端立即回送一个应答</p>
+<p>$\quad$ $\quad$ $\quad$ $\quad$ 通过测量往返时间RTT，可以获得一个合理的延迟估计值</p>
+<p>$\quad$ $\quad$ 3. 构造一个分组，分组中包含最新的链路信息；</p>
+<p>$\quad$ $\quad$ $\quad$ 构造链路状态分组（link state packet，LSP）</p>
+<p>$\quad$ $\quad$ $\quad$ $\quad$ 发送方标识</p>
+<p>$\quad$ $\quad$ $\quad$ $\quad$ 序列号</p>
+<p>$\quad$ $\quad$ $\quad$ $\quad$ 年龄（存活时间）</p>
+<p>$\quad$ $\quad$ $\quad$ $\quad$ 邻居列表：包含邻居与对应的链路开销</p>
+<p><img src="/../CNP/CN1117.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ $\quad$ 4. 将此分组发送给其他的路由器；</p>
+<p>$\quad$ $\quad$ $\quad$ 每个LSP分组包含一个序列号，且递增</p>
+<p>$\quad$ $\quad$ $\quad$ 路由器记录所收到的所有（源路由器、序列号）对</p>
+<p>$\quad$ $\quad$ $\quad$ 当一个新分组到达时，路由器根据记录判断：</p>
+<p>$\quad$ $\quad$ $\quad$ $\quad$ 如果是新分组，洪泛广播</p>
+<p>$\quad$ $\quad$ $\quad$ $\quad$ 如果是重复分组，丢弃</p>
+<p>$\quad$ $\quad$ $\quad$ $\quad$ 如果是过时分组，拒绝</p>
+<p>$\quad$ $\quad$ 5. 计算到其他路由器的最短路径：Dijkstra算法</p>
+<p><img src="/../CNP/CN1118.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h5><p><img src="/../CNP/CN1119.png" srcset="/img/loading.gif" lazyload></p>
+<h3 id="路由协议"><a href="#路由协议" class="headerlink" title="路由协议"></a>路由协议</h3><hr>
 
                 
               </div>
@@ -410,7 +529,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年11月21日</div>
+          <div>2023年11月24日</div>
         </div>
       
       
