@@ -42,8 +42,35 @@
 <meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1117.png">
 <meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1118.png">
 <meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1119.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1120.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1121.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1122.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1123.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1124.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1126.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1125.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1127.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1128.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1129.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1130.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1131.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1132.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1133.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1134.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1135.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1136.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1137.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1138.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1139.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1140.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1141.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1142.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1143.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1145.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1146.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1147.png">
 <meta property="article:published_time" content="2023-11-21T15:55:10.000Z">
-<meta property="article:modified_time" content="2023-11-24T15:07:23.499Z">
+<meta property="article:modified_time" content="2023-11-30T14:45:34.201Z">
 <meta property="article:author" content="Aki-yzh">
 <meta property="article:tag" content="CN">
 <meta property="article:tag" content="网络层">
@@ -285,7 +312,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.9k 字
+          11k 字
         
       </span>
     
@@ -296,7 +323,7 @@
         
         
         
-          24 分钟
+          90 分钟
         
       </span>
     
@@ -339,7 +366,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年11月24日 晚上
+                    本文最后更新于：2023年11月30日 晚上
                   
                 
               </p>
@@ -448,7 +475,270 @@
 <p>$\quad$ $\quad$ 5. 计算到其他路由器的最短路径：Dijkstra算法</p>
 <p><img src="/../CNP/CN1118.png" srcset="/img/loading.gif" lazyload></p>
 <h5 id="比较"><a href="#比较" class="headerlink" title="比较"></a>比较</h5><p><img src="/../CNP/CN1119.png" srcset="/img/loading.gif" lazyload></p>
-<h3 id="路由协议"><a href="#路由协议" class="headerlink" title="路由协议"></a>路由协议</h3><hr>
+<h3 id="路由协议"><a href="#路由协议" class="headerlink" title="路由协议"></a>路由协议</h3><h4 id="层次路由"><a href="#层次路由" class="headerlink" title="层次路由"></a>层次路由</h4><h6 id="层次路由-产生原因"><a href="#层次路由-产生原因" class="headerlink" title="层次路由-产生原因"></a>层次路由-产生原因</h6><p>$\quad$ 现实情况：</p>
+<p>$\quad$ $\quad$ 地址分配往往是不连续的，难以进行高效的地址聚合</p>
+<p>$\quad$ $\quad$ 每个网络的网络管理员有自己的管理方法和思路，并不希望每个路由器都干涉本网络内部的地址分配等问题</p>
+<p>$\quad$ 层次路由可以解决：</p>
+<p>$\quad$ $\quad$ 网络扩展性问题：当网络扩大时，控制路由表条目和路由表存储空间的增长</p>
+<p>$\quad$ $\quad$ 管理的自治问题：网络管理员可以控制和管理自己网络的路由，不需要连续地址空间</p>
+<h6 id="层次路由-基本思路"><a href="#层次路由-基本思路" class="headerlink" title="层次路由-基本思路"></a>层次路由-基本思路</h6><p>$\quad$ 互联网由大量不同的网络互连，每个管理机构控制的网络是自治的</p>
+<p>$\quad$ 自治系统（AS，Autonomous System）</p>
+<p>$\quad$ $\quad$ 一个管理机构控制之下的网络</p>
+<p>$\quad$ $\quad$ 一个AS内部通常使用相同的路由算法&#x2F;路由协议，使用统一的路由度量（跳数、带宽、时延 …）</p>
+<p>$\quad$ $\quad$ 不同的AS可以使用不同的路由算法&#x2F;路由协议</p>
+<p>$\quad$ $\quad$ 每个AS有一个全球唯一的ID号：AS ID</p>
+<p>$\quad$ 自治系统内的还可以进一步划分层次</p>
+<p>$\quad$ 自治系统内部使用内部网关路由协议，Interior Gateway Protocols (IGP)</p>
+<p>$\quad$ $\quad$ 每个自治系统域内路由算法可不同</p>
+<p>$\quad$ $\quad$ 典型IGP协议：OSPF，RIP，IS-IS，IGRP，EIGRP……</p>
+<p>$\quad$ 自治系统之间之间使用外部网关路由协议，Exterior Gateway Protocols (EGP)</p>
+<p>$\quad$ $\quad$ 各自治系统域之间的路由需统一</p>
+<p>$\quad$ $\quad$ 典型EGP协议：BGP</p>
+<h6 id="层次路由-效果"><a href="#层次路由-效果" class="headerlink" title="层次路由-效果"></a>层次路由-效果</h6><p><img src="/../CNP/CN1120.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="AS内部路由：OSPF（对应链路状态算法）、RIP（对应距离向量算法）"><a href="#AS内部路由：OSPF（对应链路状态算法）、RIP（对应距离向量算法）" class="headerlink" title="AS内部路由：OSPF（对应链路状态算法）、RIP（对应距离向量算法）"></a>AS内部路由：OSPF（对应链路状态算法）、RIP（对应距离向量算法）</h4><h5 id="OSPF"><a href="#OSPF" class="headerlink" title="OSPF"></a>OSPF</h5><p>$\quad$ OSPF（Open Shortest Path First）开放最短路径优先协议于1989 年开发</p>
+<p>$\quad$ 采用分布式的链路状态算法</p>
+<p><img src="/../CNP/CN1121.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ OSPF协议的基本思想</p>
+<p>$\quad$ $\quad$ 向本自治系统中所有路由器洪泛信息</p>
+<p>$\quad$ $\quad$ 发送的信息：与本路由器相邻的所有路由器的链路状态</p>
+<p>$\quad$ $\quad$ 只有当链路状态发生变化时路由器才用洪泛法发送此信息</p>
+<h6 id="区域"><a href="#区域" class="headerlink" title="区域"></a>区域</h6><p>$\quad$ OSPF将AS内路由器进一步划分为区域</p>
+<p>$\quad$ $\quad$ 一个区域是一组路由器及它们内部链路构成的子图(subgraph)</p>
+<p>$\quad$ 区域内部同步完整的区域内链路，区域之间只同步区域间链路</p>
+<p>$\quad$ 使用层次结构的区域划分，上层的区域叫做主干区域 (backbone area)，其他区域都必须与主干区域相连</p>
+<p>$\quad$ 非主干区域之间不允许直接发布区域间路由信息</p>
+<p>$\quad$ 区域也不能太大，在一个区域内的路由器最好不超过 200 个</p>
+<p>$\quad$ 划分区域可以缩小链路状态传输规模，减少网络流量</p>
+<p><img src="/../CNP/CN1122.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="链路状态同步"><a href="#链路状态同步" class="headerlink" title="链路状态同步"></a>链路状态同步</h6><p>$\quad$ “链路状态”就是说明本路由器都和哪些路由器相邻，以及该链路的“度量”(metric)</p>
+<p>$\quad$ $\quad$ OSPF度量值一般包括费用、距离、时延、带宽等</p>
+<p>$\quad$ 由于各路由器之间频繁地交换链路状态信息，因此所有的路由器最终都能建立一个链路状态数据库LSDB</p>
+<p>$\quad$ LSDB数据库：区域内的拓扑结构图，它在区域内是一致的</p>
+<p>$\quad$ $\quad$ 区域：AS进一步划分后的路由器子集</p>
+<p>$\quad$ $\quad$ 数据库条目：Link State Advertisement，LSA</p>
+<p>$\quad$ $\quad$ 链路状态数据库的同步：所有路由器数据库达成一致的过程</p>
+<h6 id="邻居状态机"><a href="#邻居状态机" class="headerlink" title="邻居状态机"></a>邻居状态机</h6><p>$\quad$ 两个相邻路由器的关系分为两种</p>
+<p>$\quad$ $\quad$ 邻居（neighboring)</p>
+<p>$\quad$ $\quad$ 完全邻接（adjacent）</p>
+<p>$\quad$ 邻居</p>
+<p>$\quad$ $\quad$ 互相知道存在链路相连</p>
+<p>$\quad$ $\quad$ 由hello报文发现</p>
+<p>$\quad$ 完全邻接</p>
+<p>$\quad$ $\quad$ 路由状态数据库完成同步</p>
+<p>$\quad$ $\quad$ 并非所有的邻居关系都是邻接关系</p>
+<p>$\quad$ OSPF：通过一系列报文交互，为相邻路由器最终确立完全邻接关系</p>
+<h6 id="五种报文"><a href="#五种报文" class="headerlink" title="五种报文"></a>五种报文</h6><p>$\quad$ Hello 报文</p>
+<p>$\quad$ $\quad$ 最常用的一种报文，用于发现、维护邻居关系</p>
+<p>$\quad$ 数据库描述（Database Description, DD）报文</p>
+<p>$\quad$ $\quad$ 用于描述自己的LSDB</p>
+<p>$\quad$ $\quad$ 内容包括LSDB 中每一条LSA 的Header 头部，对端路由器根据LSA Header 就可以判断出是否已有这条LSA</p>
+<p>$\quad$ 链路状态请求（LSA Request, LSR）报文</p>
+<p>$\quad$ $\quad$ 用于请求缺少的LSA，内容包括所需要的LSA 的摘要</p>
+<p>$\quad$ 链路状态更新（LSA Update, LSU）报文</p>
+<p>$\quad$ $\quad$ 用于向对端路由器发送所需要的LSA, 内容是多条LSA（全部内容）的集合</p>
+<p>$\quad$ 链路状态确认（Link State Acknowledgment, LSACK）报文</p>
+<p>$\quad$ $\quad$ 用来对接收到的LSU 报文进行确认</p>
+<h6 id="报文格式"><a href="#报文格式" class="headerlink" title="报文格式"></a>报文格式</h6><p><img src="/../CNP/CN1123.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="报文交互"><a href="#报文交互" class="headerlink" title="报文交互"></a>报文交互</h6><p>$\quad$ 目的：发现邻居（邻居状态）+ 数据库同步（完全邻接状态）</p>
+<p>$\quad$ 交互过程可以用状态机描述</p>
+<p><img src="/../CNP/CN1124.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 发现邻居</p>
+<p>$\quad$ $\quad$ 使用HELLO报文</p>
+<p>$\quad$ $\quad$ 试图建立邻居关系</p>
+<p>$\quad$ $\quad$ 最终，完成一对路由器间邻居关系的建立（Init状态）</p>
+<p><img src="/../CNP/CN1126.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ Exchange状态：交换数据库描述</p>
+<p>$\quad$ $\quad$ 交换时，选择一个服务器为Master，另一个为Slave</p>
+<p>$\quad$ $\quad$ 以Master的序列号为准</p>
+<p>$\quad$ $\quad$ DD报文包含LSA的头部信息，用来描述LSDB的摘要信息</p>
+<p>$\quad$ Loading状态：同步数据库内容，建立完全邻接关系</p>
+<p>$\quad$ $\quad$ LSR用于向对方请求所需的LSA</p>
+<p>$\quad$ $\quad$ LSU用于向对方发送其所需要的LSA</p>
+<p>$\quad$ $\quad$ LSACK用于向对方发送收到LSA的确认</p>
+<p>$\quad$ Full状态：完全邻接关系建立完毕</p>
+<p><img src="/../CNP/CN1125.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="特性"><a href="#特性" class="headerlink" title="特性"></a>特性</h6><p>$\quad$ OSPF的特点：适合大型网络</p>
+<p>$\quad$ $\quad$ 支持无类域间路由（CIDR）</p>
+<p>$\quad$ $\quad$ 无路由自环</p>
+<p>$\quad$ $\quad$ 收敛速度快</p>
+<p>$\quad$ $\quad$ 支持多条等值路由</p>
+<p>$\quad$ $\quad$ 计算、存储开销大（Dijkstra算法、LSDB数据库）</p>
+<h5 id="RIP"><a href="#RIP" class="headerlink" title="RIP"></a>RIP</h5><p>$\quad$ 路由选择协议RIP（ Routing Information Protocol）是基于距离矢量算法的协议</p>
+<p>$\quad$ 使用跳数衡量到达目的网络的距离</p>
+<p>$\quad$ $\quad$ RIP 认为一个好的路由就是它通过的路由器的数目少，即“距离短”</p>
+<p>$\quad$ $\quad$ RIP 一条路径最多只能包含 15 个路由器</p>
+<p>$\quad$ RIP协议的基本思想</p>
+<p>$\quad$ $\quad$ 仅和相邻路由器交换信息</p>
+<p>$\quad$ $\quad$ 路由器交换的内容是自己的路由表</p>
+<p>$\quad$ $\quad$ 周期性更新：30s</p>
+<h6 id="工作过程"><a href="#工作过程" class="headerlink" title="工作过程"></a>工作过程</h6><p><img src="/../CNP/CN1127.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../CNP/CN1128.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="报文格式-1"><a href="#报文格式-1" class="headerlink" title="报文格式"></a>报文格式</h6><p><img src="/../CNP/CN1129.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="特性-1"><a href="#特性-1" class="headerlink" title="特性"></a>特性</h6><p>$\quad$ RIP协议的特点</p>
+<p>$\quad$ $\quad$ 算法简单，易于实现</p>
+<p>$\quad$ $\quad$ 收敛慢</p>
+<p>$\quad$ $\quad$ 需要交换的信息量较大</p>
+<p>$\quad$ RIP协议的适用场合</p>
+<p>$\quad$ $\quad$ 中小型网络</p>
+<p>$\quad$ RIP协议的防环路机制</p>
+<p>$\quad$ $\quad$ 毒性反转</p>
+<p>$\quad$ $\quad$ 水平分割</p>
+<p>$\quad$ $\quad$ 其他</p>
+<h4 id="AS之间路由：BGP"><a href="#AS之间路由：BGP" class="headerlink" title="AS之间路由：BGP"></a>AS之间路由：BGP</h4><h6 id="AS之间路由要解决的问题"><a href="#AS之间路由要解决的问题" class="headerlink" title="AS之间路由要解决的问题"></a>AS之间路由要解决的问题</h6><p>$\quad$ 规模问题</p>
+<p>$\quad$ $\quad$ 全球AS数量：5万+</p>
+<p>$\quad$ $\quad$ AS路由器数量：百万级别</p>
+<p>$\quad$ $\quad$ 仍在增长</p>
+<p>$\quad$ 策略问题</p>
+<p>$\quad$ $\quad$ 各个AS认可的链路代价不一致</p>
+<p>$\quad$ $\quad$ 每个AS：不仅决定将流量发往何处，还需考虑哪些流量可以发到自身（然后转发）</p>
+<p>$\quad$ AS内路由不可行</p>
+<p>$\quad$ $\quad$ 链路状态算法、距离向量算法：基于最短路</p>
+<p>$\quad$ $\quad$ $\quad$ AS之间，“最短”缺乏共识定义</p>
+<p>$\quad$ $\quad$ 计算开销</p>
+<p>$\quad$ $\quad$ $\quad$ 链路状态：维护全网拓扑、计算全网最短路</p>
+<p>$\quad$ $\quad$ $\quad$ 距离向量：收敛时间长</p>
+<h5 id="BGP-网关路由协议"><a href="#BGP-网关路由协议" class="headerlink" title="BGP-网关路由协议"></a>BGP-网关路由协议</h5><p>$\quad$ 路由协议</p>
+<p>$\quad$ $\quad$ 内部网关协议 IGP： 有 RIP 和、OSPF、ISIS 等多种具体的协议</p>
+<p>$\quad$ $\quad$ 外部网关协议 EGP：目前使用的协议就是 BGP</p>
+<p>$\quad$ 边界网关协议BGP (Border Gateway Protocol)</p>
+<p>$\quad$ $\quad$ 目前互联网中唯一实际运行的自治域间的路由协议</p>
+<p>$\quad$ BGP功能</p>
+<p>$\quad$ $\quad$ eBGP：从相邻的AS获得网络可达信息</p>
+<p>$\quad$ $\quad$ iBGP： 将网络可达信息传播给AS内的路由器</p>
+<p>$\quad$ $\quad$ 基于网络可达信息和策略决定到其他网络的“最优”路由</p>
+<h6 id="eBGP-amp-iBGP连接"><a href="#eBGP-amp-iBGP连接" class="headerlink" title="eBGP&amp;iBGP连接"></a>eBGP&amp;iBGP连接</h6><p><img src="/../CNP/CN1130.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="路径通告"><a href="#路径通告" class="headerlink" title="路径通告"></a>路径通告</h6><p>$\quad$ BGP路由器之间建立TCP连接，通告路径：</p>
+<p>$\quad$ BGP会话: 两个BGP路由器通过TCP连接交换BGP报文</p>
+<p>$\quad$ $\quad$ 通告到不同网络前缀的路径，即路径向量协议</p>
+<p>$\quad$ 路径向量：由一系列AS组成的序列</p>
+<p>$\quad$ $\quad$ 例：当AS3的路由器3a向AS2的路由器2c通告路径”AS3, X”时，AS3向AS2承诺它会向X转发数据包</p>
+<p><img src="/../CNP/CN1131.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../CNP/CN1132.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../CNP/CN1133.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 一个路径通告信息经过的结点数是自治系统数的量级</p>
+<p>$\quad$ 每一个自治系统边界路由器的数目是很少的</p>
+<p>$\quad$ 一个AS在BGP刚刚运行时，向相邻AS获取整个BGP路由表</p>
+<p>$\quad$ $\quad$ 以后只需要在发生变化时更新有变化的部分</p>
+<p>$\quad$ BGP为每个AS提供：</p>
+<p>$\quad$ $\quad$ 从邻居AS获取网络可达信息 ( eBGP协议 )</p>
+<p>$\quad$ $\quad$ 传播可达信息给所有的域内路由器 ( iBGP协议 )</p>
+<p>$\quad$ $\quad$ 根据“可达信息”和“策略”决定路由</p>
+<h6 id="报文"><a href="#报文" class="headerlink" title="报文"></a>报文</h6><p>$\quad$ BGP通过TCP的179端口进行路径通告</p>
+<p>$\quad$ BGP报文包括</p>
+<p>$\quad$ $\quad$ Open报文：用于建立BGP对等体（peer）之间的会话连接，协商BGP参数（该过程需要认证）</p>
+<p>$\quad$ $\quad$ Update报文：通告&#x2F;撤销路径</p>
+<p>$\quad$ $\quad$ Keepalive报文：用于保持BGP会话连接</p>
+<p>$\quad$ $\quad$ Notification报文：用于差错报告和关闭BGP连接</p>
+<h6 id="路径属性"><a href="#路径属性" class="headerlink" title="路径属性"></a>路径属性</h6><p>$\quad$ BGP路径：路径前缀（目的网络）+属性</p>
+<p>$\quad$ 两个重要属性</p>
+<p>$\quad$ $\quad$ AS路径（AS-PATH）：想要到达某个目的网络，需要经过的所有AS号；如：AS 67, AS 17</p>
+<p>$\quad$ $\quad$ 下一跳（NEXT-HOP）：说明路由信息对应的下一跳IP地址</p>
+<p>$\quad$ 网关路由器接收到路由通告时，通过既定策略采纳或拒绝(accept&#x2F; decline)</p>
+<h6 id="转发表"><a href="#转发表" class="headerlink" title="转发表"></a>转发表</h6><p><img src="/../CNP/CN1134.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="路由策略"><a href="#路由策略" class="headerlink" title="路由策略"></a>路由策略</h6><p>$\quad$ 路由器可能从多个对等体收到针对同一目的IP的路由</p>
+<p>$\quad$ 需要选择一条最佳路由</p>
+<p>$\quad$ 选择规则：自上向下，依次排序</p>
+<p>$\quad$ $\quad$ 本地偏好值属性：政策决策</p>
+<p>$\quad$ $\quad$ 最短的AS-PATH</p>
+<p>$\quad$ $\quad$ 最近的NEXT-HOP路由器</p>
+<p>$\quad$ $\quad$ 附加标准…</p>
+<p>$\quad$ $\quad$ 最低路由器ID</p>
+<p><strong>AS间策略</strong></p>
+<p>$\quad$ 路由器使用策略决定接受或拒绝接收到的路由通告</p>
+<p>$\quad$ 路由器也会基于策略决定是否向其他相邻AS通告路径信息</p>
+<p>$\quad$ 例如：X连接到两个提供者网络（dual-homed）</p>
+<p><img src="/../CNP/CN1135.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ $\quad$ X为用户网络，X不希望从B到C的数据包经过X</p>
+<p>$\quad$ $\quad$ X则不向B通告到C的路由</p>
+<p>$\quad$ $\quad$ A向B通告路径AW</p>
+<p>$\quad$ $\quad$ B通告到目的W的路径为BAW</p>
+<p>$\quad$ $\quad$ B是否向C通告路径BAW</p>
+<p>$\quad$ $\quad$ $\quad$ 由于W和C都不是B的用户，B要迫使C通过A路由到W</p>
+<p>$\quad$ $\quad$ $\quad$ B只路由来自于或到达其用户的数据包</p>
+<p><strong>AS内策略</strong></p>
+<p>$\quad$ 各个AS决定</p>
+<p>$\quad$ 实际常用：“热土豆（Hot Potato)策略”</p>
+<p>$\quad$ $\quad$ 选择最近的BGP出口，即最小化报文在本AS停留时间</p>
+<h4 id="其他路由技术"><a href="#其他路由技术" class="headerlink" title="其他路由技术"></a>其他路由技术</h4><h5 id="广播路由"><a href="#广播路由" class="headerlink" title="广播路由"></a>广播路由</h5><p>$\quad$ 广播（Broadcasting）：源主机同时给全部目标地址发送同一个数据包</p>
+<p>$\quad$ 例：服务器希望将视频广播给3个网络中的所有30个用户，有哪些办法？</p>
+<h6 id="方法1：给每个主机单独发送一个数据包"><a href="#方法1：给每个主机单独发送一个数据包" class="headerlink" title="方法1：给每个主机单独发送一个数据包"></a>方法1：给每个主机单独发送一个数据包</h6><p>$\quad$ 效率低、浪费带宽</p>
+<p>$\quad$ Server需要知道每个目的地址</p>
+<h6 id="方法2：多目标路由（multi-destination-routing）"><a href="#方法2：多目标路由（multi-destination-routing）" class="headerlink" title="方法2：多目标路由（multi-destination routing）"></a>方法2：多目标路由（multi-destination routing）</h6><p>$\quad$ 在需要转发的路由器线路复制一次该数据报</p>
+<p>$\quad$ 网络利用率高</p>
+<p>$\quad$ Server依然需要知道所有的目的地址</p>
+<h6 id="方法3：泛洪（flooding）"><a href="#方法3：泛洪（flooding）" class="headerlink" title="方法3：泛洪（flooding）"></a>方法3：泛洪（flooding）</h6><p>$\quad$ 一种将数据包发送到所有网络节点的简单方法</p>
+<p>$\quad$ 将每个进入数据包发送到除了进入线路外的每条出去线路</p>
+<p>$\quad$ 用途</p>
+<p>$\quad$ $\quad$ 保证性：一种有效广播手段，可确保数据包被传送到网络中每个节点</p>
+<p>$\quad$$\quad$ 容错性：即使大量路由器被损坏，也能找到一条路径（如果存在）</p>
+<p>$\quad$ $\quad$ 简单性：仅需知道自己的邻居</p>
+<p>$\quad$ <strong>无控制的泛洪</strong></p>
+<p>$\quad$ $\quad$ 实现广播最显而易见的技术</p>
+<p>$\quad$ $\quad$ 环路可能导致广播风暴</p>
+<p>$\quad$ $\quad$ 路由器可能收到多个副本</p>
+<p>$\quad$ $\quad$ 节点需要跟踪已泛洪的数据包以阻止洪泛</p>
+<p>$\quad$ $\quad$ 即使利用跳数来限制，也会出现成倍爆炸</p>
+<p><img src="/../CNP/CN1136.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ <strong>受控制的泛洪（每个路由器进行有选择的泛洪）</strong></p>
+<p>$\quad$ $\quad$ <em>序号控制泛洪（sequence-number-controlled flooding）</em></p>
+<p>$\quad$ $\quad$ $\quad$ 广播数据包X从接口1到达路由器R</p>
+<p>$\quad$ $\quad$ $\quad$ R查看数据包来源S和广播序号n，比对R的序号表</p>
+<p>$\quad$ $\quad$ $\quad$ 序号表中有该数据包的记录吗？</p>
+<p>$\quad$ $\quad$ $\quad$ $\quad$ 是，丢弃（曾经已经收到并转发过）</p>
+<p>$\quad$ $\quad$ $\quad$ $\quad$ 否，在序号表中记录，并在接口2和3转发</p>
+<p><img src="/../CNP/CN1137.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ $\quad$ <em>逆向路径转发(reverse path forwarding, RPF)</em></p>
+<p>$\quad$ $\quad$ $\quad$ 假设R的路由表中表示了到达各网络的最优路径</p>
+<p>$\quad$ $\quad$ $\quad$ 广播数据包X从接口1到达路由器R</p>
+<p>$\quad$ $\quad$ $\quad$ R查看数据包来源S，比对R的路由表</p>
+<p>$\quad$ $\quad$ $\quad$ X的来源是N1吗？</p>
+<p>$\quad$ $\quad$ $\quad$ $\quad$ 是 -&gt; X是从最佳路径来的，向接口2和接口3转发</p>
+<p>$\quad$ $\quad$ $\quad$ $\quad$ 否 -&gt; X是重复包，丢弃</p>
+<p><img src="/../CNP/CN1138.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="方法4-生成树"><a href="#方法4-生成树" class="headerlink" title="方法4:生成树"></a>方法4:生成树</h6><p>$\quad$ 源节点向所有属于该生成树的特定链路发送分组</p>
+<p>$\quad$ 改进了逆向路径转发</p>
+<p>$\quad$ 没有环路</p>
+<p>$\quad$ 最佳使用带宽</p>
+<p>$\quad$ 最少副本，消除了冗余分组</p>
+<p>$\quad$ 一个路由器可以不必知道整颗树，只需要知道在一颗树中的邻居即可</p>
+<p><img src="/../CNP/CN1139.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="组播路由"><a href="#组播路由" class="headerlink" title="组播路由"></a>组播路由</h5><p>$\quad$ 组播（multicasting）：源主机给网络中的一部分目标用户发送数据包</p>
+<p>$\quad$ 组播（multicasting）路由算法的目标：</p>
+<p>$\quad$ $\quad$ 为每个组建立转发树（到达该组所有成员的路径树）</p>
+<p>$\quad$ $\quad$ 每个组成员应当只收到多播分组的一个拷贝</p>
+<p>$\quad$ $\quad$ 非本组成员不应收到多播分组</p>
+<p>$\quad$ $\quad$ 从源节点到每一个组成员节点的路径应当是最佳的（最短路径</p>
+<p><img src="/../CNP/CN1140.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="步骤1："><a href="#步骤1：" class="headerlink" title="步骤1："></a>步骤1：</h6><p>$\quad$ 确定组成员边缘路由器通过与主机交互，了解到从它的某个端口可以到达哪些组的成员——主机与路由器之间的组成员关系协议</p>
+<p>$\quad$ IGMP (Internet Group Management Protocol）</p>
+<p>$\quad$ $\quad$ 主机可以加入或者退出组播组</p>
+<p>$\quad$ $\quad$ 路由器查询该子网的组播组成员</p>
+<p><img src="/../CNP/CN1141.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../CNP/CN1142.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="步骤2：生成树"><a href="#步骤2：生成树" class="headerlink" title="步骤2：生成树"></a>步骤2：生成树</h6><p>$\quad$ 建立在我们已经学习过的广播路由方案基础之上</p>
+<p>$\quad$ 数据包沿生成树发送</p>
+<p>$\quad$ 源点树：为每个组播源计算生成树</p>
+<p>$\quad$ $\quad$ 构建源点树协议： MOSPF、 DVMRP、 PIM-DM</p>
+<p>$\quad$ $\quad$ 基于源点树（source-based trees）存在的问题：</p>
+<p>$\quad$ $\quad$ $\quad$ 大型网络中，组播源很多时，路由器需生成多颗棵树，工作量巨大</p>
+<p>$\quad$ $\quad$ $\quad$ 路由器需要大量空间来存储多颗树</p>
+<p><img src="/../CNP/CN1143.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 核心树：多个组播源共享组成共享树</p>
+<p>$\quad$ $\quad$ 选择一部分结点作为核心，所有流量先汇聚到核心，再进行分发</p>
+<p>$\quad$ $\quad$ 实线为核心树实际使用的链路，虚线为没有用到的链路</p>
+<p>$\quad$ $\quad$ 存在的问题：</p>
+<p>$\quad$ $\quad$ $\quad$ 可能无法达到最优</p>
+<p>$\quad$ $\quad$ $\quad$ 如果只有一个发送者，将发送者作为核心是最优的</p>
+<p><img src="/../CNP/CN1145.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="应用部署"><a href="#应用部署" class="headerlink" title="应用部署"></a>应用部署</h6><p><img src="/../CNP/CN1146.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="选播路由"><a href="#选播路由" class="headerlink" title="选播路由"></a>选播路由</h5><p>$\quad$ 将数据包传送给最近的一个组成员</p>
+<p>$\quad$ 在有多个服务器的情况下，用户希望快速获得正确信息，而不在乎从哪个服务器获得</p>
+<p>$\quad$ 与单播、广播、组播的区别</p>
+<p><img src="/../CNP/CN1147.png" srcset="/img/loading.gif" lazyload>Ø$\quad$ 选播的典型应用：DNS</p>
+<p>$\quad$ $\quad$ 在没有指定DNS服务器的情况下，用户将始终连接到“最接近”(从路由协议角度来看) 服务器，可以减少延迟，并提供一定程度的负载平衡</p>
+<p>$\quad$ $\quad$ 可以提供一定程度的高可用性，一旦服务器发生故障，用户请求将无缝转发到下一个最接近的DNS实例，而无需任何手动干预或重新配置</p>
+<p>$\quad$ $\quad$ 可以水平缩放，如果一台服务器负载过重，只需在一个位置部署另一台服务器，以承担一部分重载服务器的请求，且不需要客户端配置</p>
+<hr>
 
                 
               </div>
@@ -529,7 +819,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年11月24日</div>
+          <div>2023年11月30日</div>
         </div>
       
       
@@ -559,6 +849,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2023/11/30/%E7%BD%91%E7%BB%9C%E5%B1%82-%E8%BD%AF%E4%BB%B6%E5%AE%9A%E4%B9%89%E7%BD%91%E7%BB%9C/" title="网络层 - 软件定义网络">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">网络层 - 软件定义网络</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
