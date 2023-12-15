@@ -73,8 +73,12 @@
 <meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1448.png">
 <meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1449.png">
 <meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1450.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1451.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1452.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1453.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1454.png">
 <meta property="article:published_time" content="2023-12-07T05:55:10.000Z">
-<meta property="article:modified_time" content="2023-12-15T01:08:21.941Z">
+<meta property="article:modified_time" content="2023-12-15T06:30:52.138Z">
 <meta property="article:author" content="Aki-yzh">
 <meta property="article:tag" content="CN">
 <meta property="article:tag" content="链路层">
@@ -316,7 +320,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          12k 字
+          14k 字
         
       </span>
     
@@ -327,7 +331,7 @@
         
         
         
-          100 分钟
+          115 分钟
         
       </span>
     
@@ -370,7 +374,7 @@
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年12月15日 上午
+                    本文最后更新于：2023年12月15日 下午
                   
                 
               </p>
@@ -796,6 +800,75 @@
 <p>$\quad$ $\quad$ t3时刻：乙检测到冲突，发送Jam</p>
 <p>$\quad$ Jam信号告知其他站点：信道内将有数据要传</p>
 <p><img src="/../CNP/CN1450.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="冲突窗口"><a href="#冲突窗口" class="headerlink" title="冲突窗口"></a>冲突窗口</h6><p>$\quad$ 冲突窗口：从发出帧到检测发现冲突所需要的最长时间</p>
+<p>$\quad$ $\quad$ 意味着发出后需要侦听一个冲突窗口才能确保没有冲突</p>
+<p>$\quad$ 数值上：等于最远两站传播时间的两倍，即2D（D是单边延迟）</p>
+<p>$\quad$ $\quad$ 2D相当于1个来回传播延迟RTT：Round Trip Time</p>
+<h6 id="CSMA-x2F-CD的效率"><a href="#CSMA-x2F-CD的效率" class="headerlink" title="CSMA&#x2F;CD的效率"></a>CSMA&#x2F;CD的效率</h6><p><img src="/../CNP/CN1451.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="轮流协议"><a href="#轮流协议" class="headerlink" title="轮流协议"></a>轮流协议</h4><p>$\quad$ 信道划分:</p>
+<p>$\quad$ $\quad$ 高负载时：信道利用率高、保证公平</p>
+<p>$\quad$ $\quad$ 低负载时：利用率低，即使只有1个站点需要发数据，也只能用1&#x2F;N带宽$\quad$ 随机访问</p>
+<p>$\quad$ $\quad$ 低负载时：利用率高</p>
+<p>$\quad$ $\quad$ 高负载时：冲突严重</p>
+<p>$\quad$ 轮流协议：将两者优势结合</p>
+<p>$\quad$ $\quad$ 轮询协议</p>
+<p>$\quad$ $\quad$ 令牌协议</p>
+<p>$\quad$ $\quad$ 位图协议</p>
+<p>$\quad$ $\quad$ 二进制倒计数协议</p>
+<p>$\quad$ $\quad$ 有限竞争协议：自适应树</p>
+<h6 id="轮询协议"><a href="#轮询协议" class="headerlink" title="轮询协议"></a>轮询协议</h6><p>$\quad$ 在站点间选择一个主节点</p>
+<p>$\quad$ 主节点给其他站点分配信道使用权</p>
+<p>$\quad$ $\quad$ 通常轮流通知每个站点，可以传输多少帧</p>
+<p>$\quad$ $\quad$ 传输完成后，通知下一个站点</p>
+<p>$\quad$ 问题:</p>
+<p>$\quad$ $\quad$ 轮询本身占用带宽</p>
+<p>$\quad$ $\quad$ 通知引入延迟</p>
+<p>$\quad$ $\quad$ 单点故障</p>
+<h6 id="令牌传递"><a href="#令牌传递" class="headerlink" title="令牌传递"></a>令牌传递</h6><p>$\quad$ 令牌：发送权限</p>
+<p>$\quad$ $\quad$ 只有获得令牌的站点可以发送数据</p>
+<p>$\quad$ $\quad$ 令牌通过特殊的令牌消息进行传递</p>
+<p>$\quad$ 将站点组织成一定结构，使得可以安排顺序</p>
+<p>$\quad$ $\quad$ 令牌环：环形拓扑</p>
+<p>$\quad$ $\quad$ 除了环，也可以运行在其它拓扑上，如令牌总线</p>
+<p>$\quad$ 令牌的运行：</p>
+<p>$\quad$ $\quad$ 一个站点获取到令牌后，就可以发送帧，然后把令牌交给下一个站点</p>
+<p>$\quad$ $\quad$ 如果没有帧要发，直接传递令牌</p>
+<p>$\quad$ 缺点：</p>
+<p>$\quad$ $\quad$ 令牌的维护代价</p>
+<p>$\quad$ $\quad$ 令牌本身的可靠性</p>
+<h6 id="位图协议"><a href="#位图协议" class="headerlink" title="位图协议"></a>位图协议</h6><p>$\quad$ 竞争期：在自己的时槽内发送竞争比特</p>
+<p>$\quad$ $\quad$ 举手示意资源预留</p>
+<p>$\quad$ 传输期：按序发送</p>
+<p>$\quad$ $\quad$ 明确的使用权，避免了冲突</p>
+<p><img src="/../CNP/CN1452.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 假设</p>
+<p>$\quad$ $\quad$ 有N个站点，需N个时隙，每帧d比特</p>
+<p>$\quad$ 信道利用率</p>
+<p>$\quad$ $\quad$ k个站点需要实际发送数据，利用率为 kd &#x2F; (kd + N)</p>
+<p>$\quad$ $\quad$ 在低负荷条件下（k &lt;&lt; N）：d&#x2F;(d+N) ，N越大，站点越多，利用率越低</p>
+<p>$\quad$ $\quad$ 在高负荷条件下（k ≈ N）：d&#x2F;(d+1)，接近100%</p>
+<p>$\quad$ 缺点</p>
+<p>$\quad$ $\quad$ 位图协议无法考虑优先级</p>
+<h6 id="二进制倒计数协议"><a href="#二进制倒计数协议" class="headerlink" title="二进制倒计数协议"></a>二进制倒计数协议</h6><p>$\quad$ 站点：编序号，序号长度相同</p>
+<p>$\quad$ 竞争期：有数据发送的站点从高序号到低序号排队，高者得到发送权</p>
+<p>$\quad$ $\quad$ 每个站点发送序号中的某1位比特</p>
+<p>$\quad$ $\quad$ 如果发现有更高优先级的站点也要发送（自身比特0，其他站点比特1），则放弃</p>
+<p>$\quad$ $\quad$ 最后决出优胜站点，进行发送</p>
+<p>$\quad$ 特点：高序号站点优先</p>
+<p>$\quad$ $\quad$ 好事还是坏事？</p>
+<p><img src="/../CNP/CN1453.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ N个站的二进制编码所需位数是log2N位，每帧d比特</p>
+<p>$\quad$ 信道的利用率为：d&#x2F;(d+Nlog2N)</p>
+<h6 id="有限竞争协议"><a href="#有限竞争协议" class="headerlink" title="有限竞争协议"></a>有限竞争协议</h6><p>$\quad$ 有限竞争协议利用竞争协议和无冲突协议的优势</p>
+<p>$\quad$ $\quad$ 在低负荷时：使用竞争法，以减少延迟时间</p>
+<p>$\quad$ $\quad$ 在高负荷时：使用无冲突法，以获得高的信道效率。</p>
+<p>$\quad$ 自适应树搜索是一种有限竞争技术</p>
+<p>$\quad$ $\quad$ 在一次成功传输后的第一个竞争时隙，所有站点同时竞争</p>
+<p>$\quad$ $\quad$ 如果只有一个站点申请，则获得信道</p>
+<p>$\quad$ $\quad$ 否则在下一竞争时隙，有一半站点参与竞争（递归），下一时隙由另一半站点参与竞争</p>
+<p>$\quad$ $\quad$ 所有站点构成一棵完全二叉树</p>
+<p><img src="/../CNP/CN1454.png" srcset="/img/loading.gif" lazyload></p>
+<hr>
 
                 
               </div>
@@ -906,6 +979,12 @@
                 <div class="post-prevnext my-3">
                   <article class="post-prev col-6">
                     
+                    
+                      <a href="/2023/12/15/%E9%93%BE%E8%B7%AF%E5%B1%82-%E6%9C%89%E7%BA%BF%E5%B1%80%E5%9F%9F%E7%BD%91/" title="链路层-有线局域网">
+                        <i class="iconfont icon-arrowleft"></i>
+                        <span class="hidden-mobile">链路层-有线局域网</span>
+                        <span class="visible-mobile">上一篇</span>
+                      </a>
                     
                   </article>
                   <article class="post-next col-6">
