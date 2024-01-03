@@ -1,0 +1,1084 @@
+
+
+<!DOCTYPE html>
+<html lang="zh-CN" data-default-color-scheme=auto>
+
+
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
+  <link rel="icon" href="/img/fluid.png">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
+  <meta http-equiv="x-ua-compatible" content="ie=edge">
+  
+  <meta name="theme-color" content="#50d0d0">
+  <meta name="author" content="Aki-yzh">
+  <meta name="keywords" content="">
+  
+    <meta name="description" content="对应 北京大学计算机网络课程第五讲第三部分 参考教材计算机网络-自顶向下方法">
+<meta property="og:type" content="article">
+<meta property="og:title" content="链路层-无线网络">
+<meta property="og:url" content="https://aki-yzh.github.io/2024/01/03/%E9%93%BE%E8%B7%AF%E5%B1%82-%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C/index.html">
+<meta property="og:site_name" content="Aki-yzh">
+<meta property="og:description" content="对应 北京大学计算机网络课程第五讲第三部分 参考教材计算机网络-自顶向下方法">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1601.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1602.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1603.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1604.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1605.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1606.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1607.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1608.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1609.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1610.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1611.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1612.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1613.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1614.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1615.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1616.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1617.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1618.png">
+<meta property="og:image" content="https://aki-yzh.github.io/CNP/CN1619.png">
+<meta property="article:published_time" content="2024-01-03T05:55:10.000Z">
+<meta property="article:modified_time" content="2024-01-03T12:25:01.207Z">
+<meta property="article:author" content="Aki-yzh">
+<meta property="article:tag" content="CN">
+<meta property="article:tag" content="链路层">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://aki-yzh.github.io/CNP/CN1601.png">
+  
+  
+  
+  <title>链路层-无线网络 - Aki-yzh</title>
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
+
+
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+
+
+<!-- 主题依赖的图标库，不要自行修改 -->
+<!-- Do not modify the link that theme dependent icons -->
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1749284_hj8rtnfg7um.css">
+
+
+
+<link rel="stylesheet" href="//at.alicdn.com/t/font_1736178_lbnruvf0jn.css">
+
+
+<link  rel="stylesheet" href="/css/main.css" />
+
+
+  <link id="highlight-css" rel="stylesheet" href="/css/highlight.css" />
+  
+    <link id="highlight-css-dark" rel="stylesheet" href="/css/highlight-dark.css" />
+  
+
+
+
+  
+<link rel="stylesheet" href="/css/icon_gundam/iconfont.css">
+<link rel="stylesheet" href="/css/touming.css">
+
+
+
+  <script id="fluid-configs">
+    var Fluid = window.Fluid || {};
+    Fluid.ctx = Object.assign({}, Fluid.ctx)
+    var CONFIG = {"hostname":"aki-yzh.github.io","root":"/","version":"1.9.4","typing":{"enable":true,"typeSpeed":80,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+
+    if (CONFIG.web_analytics.follow_dnt) {
+      var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
+      Fluid.ctx.dnt = dntVal && (dntVal.startsWith('1') || dntVal.startsWith('yes') || dntVal.startsWith('on'));
+    }
+  </script>
+  <script  src="/js/utils.js" ></script>
+  <script  src="/js/color-schema.js" ></script>
+  
+
+
+  
+<meta name="generator" content="Hexo 6.3.0"></head>
+
+
+<body>
+ 
+
+
+  
+
+  <header>
+    
+
+<div class="header-inner" style="height: 70vh;">
+  <nav id="navbar" class="navbar fixed-top  navbar-expand-lg navbar-dark scrolling-navbar">
+  <div class="container">
+    <a class="navbar-brand" href="/">
+      <strong>Aki-yzh</strong>
+    </a>
+
+    <button id="navbar-toggler-btn" class="navbar-toggler" type="button" data-toggle="collapse"
+            data-target="#navbarSupportedContent"
+            aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+      <div class="animated-icon"><span></span><span></span><span></span></div>
+    </button>
+
+    <!-- Collapsible content -->
+    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+      <ul class="navbar-nav ml-auto text-center">
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="iconfont icon-home-fill"></i>
+                <span>首页</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/archives/">
+                <i class="iconfont icon-archive-fill"></i>
+                <span>归档</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/categories/">
+                <i class="iconfont icon-category-fill"></i>
+                <span>分类</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/tags/">
+                <i class="iconfont icon-tags-fill"></i>
+                <span>标签</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://aki-yzh.github.io/2023/03/12/GUNPLA/">
+                <i class="iconfont icon-gaoda"></i>
+                <span>高达</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="https://aki-yzh.github.io/2023/03/12/anime/">
+                <i class="iconfont icon-bilibili-fill"></i>
+                <span>番剧</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/links/">
+                <i class="iconfont icon-link-fill"></i>
+                <span>友链</span>
+              </a>
+            </li>
+          
+        
+          
+          
+          
+          
+            <li class="nav-item">
+              <a class="nav-link" href="/about/">
+                <i class="iconfont icon-user-fill"></i>
+                <span>关于</span>
+              </a>
+            </li>
+          
+        
+        
+          <li class="nav-item" id="search-btn">
+            <a class="nav-link" target="_self" href="javascript:;" data-toggle="modal" data-target="#modalSearch" aria-label="Search">
+              <i class="iconfont icon-search"></i>
+            </a>
+          </li>
+          
+        
+        
+          <li class="nav-item" id="color-toggle-btn">
+            <a class="nav-link" target="_self" href="javascript:;" aria-label="Color Toggle">
+              <i class="iconfont icon-dark" id="color-toggle-icon"></i>
+            </a>
+          </li>
+        
+      </ul>
+    </div>
+  </div>
+</nav>
+
+  
+
+<div id="banner" class="banner" parallax=true
+     style="background: url('/img/default.png') no-repeat center center; background-size: cover;">
+  <div class="full-bg-img">
+    <div class="mask flex-center" style="background-color: rgba(0, 0, 0, 0.3)">
+      <div class="banner-text text-center fade-in-up">
+        <div class="h2">
+          
+            <span id="subtitle" data-typed-text="链路层-无线网络"></span>
+          
+        </div>
+
+        
+          
+  <div class="mt-3">
+    
+    
+      <span class="post-meta">
+        <i class="iconfont icon-date-fill" aria-hidden="true"></i>
+        <time datetime="2024-01-03 13:55" pubdate>
+          2024年1月3日 下午
+        </time>
+      </span>
+    
+  </div>
+
+  <div class="mt-1">
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-chart"></i>
+        
+          8.1k 字
+        
+      </span>
+    
+
+    
+      <span class="post-meta mr-2">
+        <i class="iconfont icon-clock-fill"></i>
+        
+        
+        
+          68 分钟
+        
+      </span>
+    
+
+    
+    
+  </div>
+
+
+        
+      </div>
+
+      
+    </div>
+  </div>
+</div>
+
+</div>
+
+  </header>
+
+  <main>
+    
+      
+
+<div class="container-fluid nopadding-x">
+  <div class="row nomargin-x">
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+
+    </div>
+
+    <div class="col-lg-8 nopadding-x-md">
+      <div class="container nopadding-x-md" id="board-ctn">
+        <div id="board">
+          <article class="post-content mx-auto">
+            <!-- SEO header -->
+            <h1 style="display: none">链路层-无线网络</h1>
+            
+              <p class="note note-info">
+                
+                  
+                    本文最后更新于：2024年1月3日 晚上
+                  
+                
+              </p>
+            
+            
+              <div class="markdown-body">
+                
+                <p> 对应 北京大学计算机网络课程第五讲第三部分<br> 参考教材计算机网络-自顶向下方法</p>
+<span id="more"></span>
+<h1 id="计算机网络"><a href="#计算机网络" class="headerlink" title="计算机网络"></a>计算机网络</h1><h2 id="链路层-无线网络"><a href="#链路层-无线网络" class="headerlink" title="链路层-无线网络"></a>链路层-无线网络</h2><h3 id="无线网络简介"><a href="#无线网络简介" class="headerlink" title="无线网络简介"></a>无线网络简介</h3><h6 id="组成无线网络的元素"><a href="#组成无线网络的元素" class="headerlink" title="组成无线网络的元素"></a>组成无线网络的元素</h6><p>$\quad$ 无线主机</p>
+<p>$\quad$ $\quad$ 例：笔记本电脑，智能手机</p>
+<p>$\quad$ $\quad$ 运行应用程序</p>
+<p>$\quad$ $\quad$ 静止的或者移动的</p>
+<p>$\quad$ $\quad$ $\quad$ 无线并不意味着移动</p>
+<p>$\quad$ 基站</p>
+<p>$\quad$ $\quad$ 通常与有线网络连接</p>
+<p>$\quad$ $\quad$ 主要功能：中继（relay）</p>
+<p>$\quad$ $\quad$ $\quad$ 在有线网络与无线主机之间互相传输报文</p>
+<p>$\quad$ $\quad$ $\quad$ 有覆盖范围限制</p>
+<p>$\quad$ $\quad$ $\quad$ 例：无线信号塔，WiFi接入点</p>
+<p>$\quad$ 无线链路</p>
+<p>$\quad$ $\quad$ 主要用于连接基站与无线主机</p>
+<p>$\quad$ $\quad$ $\quad$ 有些场景下也用于连接其他网络设备（如交换机与路由器）</p>
+<p>$\quad$ $\quad$ 需要多路访问控制，以协调各个主机对链路的访问</p>
+<p>$\quad$ $\quad$ 各类链路传输速率，支持距离差异很大</p>
+<h6 id="无线网络的分类"><a href="#无线网络的分类" class="headerlink" title="无线网络的分类"></a>无线网络的分类</h6><p>$\quad$ 类型1：基于基础设施的无线网络</p>
+<p>$\quad$ $\quad$ 特点：使用基站连向更大的网络</p>
+<p>$\quad$ $\quad$ 切换（handoff）问题: 设备移动，导致所连接的基站发生变化</p>
+<p>$\quad$ 类型2：自组织网络</p>
+<p>$\quad$ $\quad$ 没有基站</p>
+<p>$\quad$ $\quad$ 节点自我组织成一个网络</p>
+<p>$\quad$ $\quad$ $\quad$ 节点只能在无线链路的覆盖范围内互相连接</p>
+<p>$\quad$ $\quad$ $\quad$ 相互路由、交换</p>
+<p>$\quad$ 还可以根据数据报文是否经过多个无线链路分类</p>
+<p><img src="/../CNP/CN1601.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="无线网络的核心问题"><a href="#无线网络的核心问题" class="headerlink" title="无线网络的核心问题"></a>无线网络的核心问题</h6><p>$\quad$ 无线（wireless)：如何通过无线链路进行数据传输</p>
+<p>$\quad$ $\quad$ 数据链路层技术</p>
+<p>$\quad$ $\quad$ 需要根据无线链路物理特性，考虑差错控制、多路访问控制等功能</p>
+<p>$\quad$ 移动（mobility）：处理主机所连基站发生的变动</p>
+<p>$\quad$ $\quad$ 定位主机</p>
+<p>$\quad$ $\quad$ IP地址</p>
+<p>$\quad$ $\quad$ 保持TCP连接</p>
+<h3 id="无线链路特征与多路访问"><a href="#无线链路特征与多路访问" class="headerlink" title="无线链路特征与多路访问"></a>无线链路特征与多路访问</h3><h6 id="无线链路特征"><a href="#无线链路特征" class="headerlink" title="无线链路特征"></a>无线链路特征</h6><p>$\quad$ 递减的信号强度</p>
+<p>$\quad$ $\quad$ 信号穿过物体时，强度将减弱</p>
+<p>$\quad$ $\quad$ 即使自由空间中，随着距离增加也会衰减（称为路径损耗 path loss）</p>
+<p>$\quad$ 其他信号源的干扰</p>
+<p>$\quad$ $\quad$ 如：2.4GHz 无线LAN与2.4GHz 无线电话</p>
+<p>$\quad$ $\quad$ 微波、电动机等等</p>
+<p>$\quad$ 多路径传播：电磁波反射后，通过不同路径到达接收端</p>
+<p>$\quad$ 在无线链路上进行数据传输更为困难</p>
+<p>$\quad$ 信噪比（signal-to-noise ratio，SNR）：收到信息强度与噪声强度的相对值</p>
+<p>$\quad$ $\quad$ 单位：分贝</p>
+<p>$\quad$ $\quad$ 信噪比越高，越容易提取信息</p>
+<p>$\quad$ 比特差错率（BER）：接收方收到的错误比特的比例</p>
+<p>$\quad$ 物理层：不同传输速率、不同BER vs SNR</p>
+<p>$\quad$ $\quad$ 给定物理层：增加传输功率 -&gt; 增加SNR -&gt; 降低BER</p>
+<p>$\quad$ $\quad$ 给定信噪比：增加传输速率 -&gt; 增加BER</p>
+<p>$\quad$ 实际：SNR随着主机移动或者环境变化改变</p>
+<p>$\quad$ $\quad$ 自适应物理层技术：在BER不超过特定值下，选择最高传输速率</p>
+<h6 id="多路访问问题"><a href="#多路访问问题" class="headerlink" title="多路访问问题"></a>多路访问问题</h6><p>相比于有线链路，无线链路有更复杂问题</p>
+<p>$\quad$ 问题1：隐藏终端</p>
+<p>$\quad$ $\quad$ B与A可以互相听到</p>
+<p>$\quad$ $\quad$ B与C可以互相听到</p>
+<p>$\quad$ $\quad$ A与C之间存在障碍，无法听到对方存在</p>
+<p>$\quad$ $\quad$ $\quad$ 更无法知道双方在B处互相干扰</p>
+<p>$\quad$ 问题2：信号衰减</p>
+<p>$\quad$ $\quad$ B与A可以互相听到</p>
+<p>$\quad$ $\quad$ B与C可以互相听到</p>
+<p>$\quad$ $\quad$ A与C之间收到的对方信号极为微弱</p>
+<p>$\quad$ $\quad$ $\quad$ 更无法知道双方在B处互相干扰</p>
+<h5 id="多路访问"><a href="#多路访问" class="headerlink" title="多路访问"></a>多路访问</h5><p>$\quad$ 信道划分:</p>
+<p>$\quad$ $\quad$ TDMA、FDMA、基于编码（CDMA）</p>
+<p>$\quad$ 随机访问</p>
+<p>$\quad$ $\quad$ ALOHA类：纯ALOHA、时隙ALOHA</p>
+<p>$\quad$ $\quad$ CSMA类：非持续CSMA、1-持续CSMA、p-持续CSMA、CSMA&#x2F;CD、CSMA&#x2F;CA（WLAN中使用）</p>
+<p>$\quad$ 轮流协议：</p>
+<p>$\quad$ $\quad$ 轮询协议</p>
+<p>$\quad$ $\quad$ 令牌协议</p>
+<p>$\quad$ $\quad$ 位图协议</p>
+<p>$\quad$ $\quad$ 二进制倒计数协议</p>
+<p>$\quad$ $\quad$ 有限竞争协议：自适应树</p>
+<h6 id="码分复用-Code-Division-Multiple-Access-CDMA"><a href="#码分复用-Code-Division-Multiple-Access-CDMA" class="headerlink" title="码分复用 Code Division Multiple Access (CDMA)"></a>码分复用 Code Division Multiple Access (CDMA)</h6><p>$\quad$ 本质上将所有可能编码的集合划分给用户</p>
+<p>$\quad$ $\quad$ 所有用户采用同样的信道频段</p>
+<p>$\quad$ $\quad$ 每个用户拥有各自的编码机制（称为码片 code chipping）</p>
+<p>$\quad$ 允许用户同时传输数据</p>
+<p>$\quad$ $\quad$ 通过编码机制的设计，尽量减少干扰的影响（称为编码正交性）</p>
+<p>$\quad$ 编码过程</p>
+<p><img src="/../CNP/CN1602.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 解码过程</p>
+<p><img src="/../CNP/CN1603.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 例子:</p>
+<p><img src="/../CNP/CN1604.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 两个发送者</p>
+<p><img src="/../CNP/CN1605.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ CDMA属扩频(spread spectrum)通信中的一种</p>
+<p>$\quad$ 扩频通信通常有两大类：</p>
+<p>$\quad$ $\quad$ 1.一种是直接序列扩频DSSS (Direct Sequence Spread Spectrum)，如CDMA使用码片序列就是这一类</p>
+<p>$\quad$ $\quad$ 2.另一种是跳频扩频FHSS (Frequency Hopping Spread Spectrum)，在蓝牙802.15中使用</p>
+<h3 id="802-11无线局域网（WiFi）"><a href="#802-11无线局域网（WiFi）" class="headerlink" title="802.11无线局域网（WiFi）"></a>802.11无线局域网（WiFi）</h3><p>$\quad$ 网络由基本服务集（Basic Service Set, BSS) 组成</p>
+<p>$\quad$ 基本服务集包含:</p>
+<p>$\quad$ $\quad$ 无线主机</p>
+<p>$\quad$ $\quad$ 接入点（access point, AP): 基站的角色</p>
+<p>$\quad$ $\quad$ $\quad$ 主机间通过AP进行通信</p>
+<p>$\quad$ $\quad$ $\quad$ 只在基础设施模式下存在</p>
+<p>$\quad$ $\quad$ 自组织模式: 只有无线主机</p>
+<h6 id="信道与关联"><a href="#信道与关联" class="headerlink" title="信道与关联"></a>信道与关联</h6><p>$\quad$ 每个无线主机在能够发送或接收网络层数据之前，必须与一个AP关联（association)</p>
+<p>$\quad$ AP的部署（802.11b为例）</p>
+<p>$\quad$ $\quad$ 管理员为每个AP配置一个服务集标识符（SSID）</p>
+<p>$\quad$ $\quad$ 802.11b频段范围 2.4GHz-2.485GHz spectrum，被划分为11个信道</p>
+<p>$\quad$ $\quad$ 管理员为AP选择一个信道</p>
+<p>$\quad$ $\quad$ 冲突不可避免：不同的AP可能选择相同信道、信道可能重叠</p>
+<p>$\quad$ 主机关联AP的过程</p>
+<p>$\quad$ $\quad$ AP周期性发送信标帧（beacon frame），包含AP的SSID与MAC地址</p>
+<p>$\quad$ $\quad$ 主机扫描信道，监听信标帧</p>
+<p>$\quad$ $\quad$ 收到多个AP的信标帧时，选择1个进行关联</p>
+<p>$\quad$ $\quad$ $\quad$ 没有明确的选择算法</p>
+<p>$\quad$ $\quad$ 关联时，需要身份验证（可选）、分配IP（通常用DHCP）</p>
+<p><img src="/../CNP/CN1606.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="多路访问控制"><a href="#多路访问控制" class="headerlink" title="多路访问控制"></a>多路访问控制</h6><p>$\quad$ 目标：避免冲突，即防止多于1个站点同时在信道内传输数据</p>
+<p>$\quad$ $\quad$ 难点1：隐藏终端</p>
+<p>$\quad$ $\quad$ 难点2：信号衰减</p>
+<p>$\quad$ 发送前侦听信道</p>
+<p>$\quad$ $\quad$ 避免干扰正在使用信道的其他站点</p>
+<p>$\quad$ 发送时不再进行冲突检测（有别于以太网CSMA&#x2F;CD）</p>
+<p>$\quad$ $\quad$ 由于信号强度衰减，发送时很难收到冲突信号</p>
+<p>$\quad$ $\quad$ CSMA&#x2F;CA（collision avoidance）：发送前就尽量避免冲突</p>
+<h6 id="CSMA-x2F-CA"><a href="#CSMA-x2F-CA" class="headerlink" title="CSMA&#x2F;CA"></a>CSMA&#x2F;CA</h6><p>$\quad$ 802.11 发送方</p>
+<p>$\quad$ $\quad$ 1 如果发送前信道空闲时间达到DIFS，则发送整个帧</p>
+<p>$\quad$ $\quad$ $\quad$ 发送时不进行冲突检测</p>
+<p>$\quad$ $\quad$ 2 如果发送前检测到信道忙，则选择一个随机值作为计时器</p>
+<p>$\quad$ $\quad$ $\quad$ 信道空闲时，计时器递减</p>
+<p>$\quad$ $\quad$ $\quad$ 信道忙时，计时器不变</p>
+<p>$\quad$ $\quad$ 3 计时器减为0时，发送，并等待ACK</p>
+<p>$\quad$ $\quad$ 4 收到ACK后，若马上有下一帧发送，进入步骤2</p>
+<p>$\quad$ $\quad$ $\quad$ 若未收到ACK，进入步骤2准备重传，并且使用更大的随机值</p>
+<p>$\quad$ 802.11 接收方</p>
+<p>$\quad$ $\quad$ 如果收到1个正确的帧，等到SIFS时间后，发送ACK</p>
+<p>$\quad$ $\quad$ (由于隐藏终端，ACK是必要的)</p>
+<p>$\quad$ CSMA&#x2F;CD：一旦空闲，立刻发送</p>
+<p>$\quad$ CSMA&#x2F;CA：一旦空闲，递减计时器</p>
+<p>$\quad$ 防止某个帧传输结束时，多个发送者马上发送冲突</p>
+<h6 id="802-11-预约机制"><a href="#802-11-预约机制" class="headerlink" title="802.11 预约机制"></a>802.11 预约机制</h6><p>$\quad$ 核心思想：允许发送者“预约保留”信道，而不是随机访问</p>
+<p>$\quad$ $\quad$ 避免大帧传输的冲突</p>
+<p>$\quad$ 步骤1：发送者先使用CSMA&#x2F;CA发送一个小报文RTS（request-to-send）给基站</p>
+<p>$\quad$ $\quad$ RTS报文仍然可能发生冲突</p>
+<p>$\quad$ $\quad$ 发生冲突时重试</p>
+<p>$\quad$ $\quad$ 代价可以接受：RTS很小</p>
+<p>$\quad$ 步骤2：基站广播CTS（clear-to-send）消息，作为对RTS的回复</p>
+<p>$\quad$ 步骤3：所有站点都会收到CTS</p>
+<p>$\quad$ $\quad$ 发送者开始传输</p>
+<p>$\quad$ $\quad$ 其他站点推迟传输</p>
+<p>$\quad$ 步骤4：其他站点在传输完成后也能收到ACK</p>
+<p>$\quad$ $\quad$ 开始倒计时、传输</p>
+<p><img src="/../CNP/CN1607.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="地址字段"><a href="#地址字段" class="headerlink" title="地址字段"></a>地址字段</h6><p><img src="/../CNP/CN1608.png" srcset="/img/loading.gif" lazyload></p>
+<p><img src="/../CNP/CN1609.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="其他字段"><a href="#其他字段" class="headerlink" title="其他字段"></a>其他字段</h6><p><img src="/../CNP/CN1610.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="同一子网下的移动"><a href="#同一子网下的移动" class="headerlink" title="同一子网下的移动"></a>同一子网下的移动</h6><p>$\quad$ H1从基本服务集BBS 1移动到基本服务集BBS 2</p>
+<p>$\quad$ BBS 1与BBS 2属于同一子网，其AP连到同一交换机不同端口</p>
+<p>$\quad$ 移动后，H1仍在同一子网内，IP地址不变</p>
+<p>$\quad$ 交换机：通过逆向学习，知道H1连向哪个端口</p>
+<h6 id="802-11其他功能"><a href="#802-11其他功能" class="headerlink" title="802.11其他功能"></a>802.11其他功能</h6><p>$\quad$ 自适应传输速率</p>
+<p>$\quad$ $\quad$ 根据无线主机的移动，信噪比SNR发生变化</p>
+<p>$\quad$ $\quad$ 基站与无线主机都将动态调整传输速率</p>
+<p>$\quad$ $\quad$ 通过改变物理层的调制技术</p>
+<p>$\quad$ $\quad$ $\quad$ 1. 主机远离基站 -&gt; SNR 降低 -&gt; BER 上升</p>
+<p>$\quad$ $\quad$ $\quad$ 2. 当BER超过一定阈值 -&gt; 选择有更低传输速率但BER也更低的物理层方案</p>
+<p>$\quad$ 功率管理：无线主机在睡眠&#x2F;唤醒两种状态间切换，睡眠状态下节省能耗</p>
+<p>$\quad$ $\quad$ 问题：睡眠状态下，AP无法向主机发送帧</p>
+<p>$\quad$ $\quad$ 流程：</p>
+<p>$\quad$ $\quad$ $\quad$ 主机 -&gt; AP：通知将进入睡眠状态，直到下一个信标帧到来</p>
+<p>$\quad$ $\quad$ $\quad$ $\quad$ 在802.11帧首部将功率管理比特置1</p>
+<p>$\quad$ $\quad$ $\quad$$\quad$ 信标帧每隔100ms发送一次</p>
+<p>$\quad$ $\quad$ $\quad$ AP：在下一个信标帧之前，不再给该主机发送帧，而是进行缓存</p>
+<p>$\quad$ $\quad$ $\quad$ 信标帧：列出了有帧缓存的无线主机</p>
+<p>$\quad$ $\quad$ $\quad$ $\quad$ 如果有帧缓存：主机进入唤醒状态，接收帧</p>
+<p>$\quad$ $\quad$ $\quad$ $\quad$ 如果没有帧缓存：继续睡眠</p>
+<p>$\quad$ $\quad$ $\quad$ $\quad$ 唤醒时间：250μs</p>
+<h3 id="802-15个人域无线网-蓝牙"><a href="#802-15个人域无线网-蓝牙" class="headerlink" title="802.15个人域无线网(蓝牙)"></a>802.15个人域无线网(蓝牙)</h3><p>$\quad$ 传播直径小于10米</p>
+<p>$\quad$ 取代一些有线设备</p>
+<p>$\quad$ $\quad$ 鼠标、键盘、耳机</p>
+<p>$\quad$ 自组织方式：没有基础设施</p>
+<p>$\quad$ 主从模式（master-slave）</p>
+<p>$\quad$ $\quad$ Slave节点请求发送权限</p>
+<p>$\quad$ $\quad$ Master节点授权传输</p>
+<p>$\quad$ 802.15：从蓝牙技术演化而来</p>
+<p>$\quad$ $\quad$ 工作在2.4 GHz波段</p>
+<p>$\quad$ $\quad$ 最高速度 721kbps</p>
+<p>$\quad$ $\quad$ 信道访问控制：划分为长度625μs的时间片、79个频段</p>
+<p>$\quad$ $\quad$ $\quad$ 每个时间片使用1个频段，并且以伪随机方式跳到下一个频段（跳频扩展频谱FHSS）</p>
+<h3 id="蜂窝网"><a href="#蜂窝网" class="headerlink" title="蜂窝网"></a>蜂窝网</h3><p>$\quad$ 核心思想：</p>
+<p>$\quad$ $\quad$ 通过移动电话网络，</p>
+<p>$\quad$ $\quad$ 提供移动数据传输</p>
+<p>$\quad$ 移动交换中心MSC</p>
+<p>$\quad$ $\quad$ 将小区连接到有线网络</p>
+<p>$\quad$ $\quad$ 管理呼叫建立</p>
+<p>$\quad$ $\quad$ 处理移动性</p>
+<p>$\quad$ 小区(cell)</p>
+<p>$\quad$ $\quad$ 覆盖某个地理区域</p>
+<p>$\quad$ $\quad$ 基站(base station, BS): 类似 802.11 AP</p>
+<p>$\quad$ $\quad$ 移动用户通过基站连接到网络</p>
+<h6 id="蜂窝网的第一跳"><a href="#蜂窝网的第一跳" class="headerlink" title="蜂窝网的第一跳"></a>蜂窝网的第一跳</h6><p>$\quad$ 空中接口（air interface）：将无线设备连接到基站</p>
+<p>$\quad$ 2G：组合使用FDMA与TDMA</p>
+<p>$\quad$ $\quad$ 将信道划分为频段</p>
+<p>$\quad$ $\quad$ 每个频段划分为时间片</p>
+<p>$\quad$ 3G：CDMA</p>
+<p>$\quad$ $\quad$ W-CDMA（欧洲）</p>
+<p>$\quad$ $\quad$ CDMA-2000（美国）</p>
+<p>$\quad$ $\quad$ TD-SCDMA（中国）</p>
+<p>$\quad$ 4G：正交频分复用</p>
+<p>$\quad$ 5G：非正交频分复用 + MIMO</p>
+<h3 id="移动性"><a href="#移动性" class="headerlink" title="移动性"></a>移动性</h3><p>网络角度的移动性分类</p>
+<p>:<img src="/../CNP/CN1611.png" srcset="/img/loading.gif" lazyload></p>
+<p>归属网络: 每个移动设备有个长期的归属网络，一般不更换（如：128.119.40&#x2F;24）</p>
+<p>归属代理: 归属网络中，代表移动设备执行移动性功能的实体</p>
+<p><img src="/../CNP/CN1612.png" srcset="/img/loading.gif" lazyload></p>
+<p>设备注册</p>
+<p><img src="/../CNP/CN1613.png" srcset="/img/loading.gif" lazyload></p>
+<h4 id="移动设备如何通信"><a href="#移动设备如何通信" class="headerlink" title="移动设备如何通信"></a>移动设备如何通信</h4><p>$\quad$ 通过代理解决：</p>
+<p>$\quad$ $\quad$ 间接路由：通信者 ßà  归属代理 ßà 外部代理 ßà 移动设备</p>
+<p>$\quad$ $\quad$ 直接路由：通信者 ßà 外部代理 ßà 移动设备</p>
+<p>$\quad$ $\quad$ $\quad$ 通信者一开始仍需要通过归属代理，获取移动设备的转交地址</p>
+<h6 id="间接路由"><a href="#间接路由" class="headerlink" title="间接路由"></a>间接路由</h6><p><img src="/../CNP/CN1614.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 当设备从一个访问网络移动到另一个访问网络</p>
+<p>$\quad$ $\quad$ 在新访问网络进行注册</p>
+<p>$\quad$ $\quad$ 新访问网络中的外部代理通知归属代理</p>
+<p>$\quad$ $\quad$ 归属代理更新该设备的转交地址记录</p>
+<p>$\quad$ $\quad$ 后续报文使用新转交地址发往该设备</p>
+<p>$\quad$ 对于通信者而言，设备移动、访问网络改变、转交地址改变是透明的</p>
+<p>$\quad$ $\quad$ 设备与通信者的连接仍然可以保持！</p>
+<p>$\quad$ 移动设备使用2个地址</p>
+<p>$\quad$ $\quad$ 永久地址：被通信者使用，因此对于通信者而言移动设备的位置是透明的</p>
+<p>$\quad$ $\quad$ 转交地址：被归属代理使用，用于转发到访问网络</p>
+<p>$\quad$ 三角路由问题：</p>
+<p>$\quad$ $\quad$ 效率低下，特别当通信者与移动设备在同一访问网络时</p>
+<h6 id="直接路由"><a href="#直接路由" class="headerlink" title="直接路由"></a>直接路由</h6><p><img src="/../CNP/CN1615.png" srcset="/img/loading.gif" lazyload></p>
+<p>$\quad$ 解决了三角路由问题</p>
+<p>$\quad$ 对通信者不透明：通信者必须从归属代理获取转交地址</p>
+<p>$\quad$ $\quad$ 如果设备移动到其他访问网络？</p>
+<p>$\quad$ 使用锚外部代理（anchor foreign agent）：第一个访问网络中的外部代理</p>
+<p>$\quad$ 通信者数据始终发往锚外部代理，由锚外部代理转发到当前访问网络</p>
+<p>$\quad$ 当设备到达新的访问网络时</p>
+<p>$\quad$ $\quad$ 向新的外部代理注册（步骤3）</p>
+<p>$\quad$ $\quad$ 新的外部代理向锚外部代理提供新的转交地址（步骤4）</p>
+<h4 id="移动性管理"><a href="#移动性管理" class="headerlink" title="移动性管理"></a>移动性管理</h4><p>$\quad$ 移动IP：支持移动性的Internet体系架构与协议，RFC 5944</p>
+<p>$\quad$ 多个已经学过的技术特征</p>
+<p>$\quad$ $\quad$ 归属代理、外部代理、外部代理注册、转交地址、封装</p>
+<p>$\quad$ 三部分组成</p>
+<p>$\quad$ $\quad$ 报文间接路由</p>
+<p>$\quad$ $\quad$ 代理发现</p>
+<p>$\quad$ $\quad$ 代理注册</p>
+<h6 id="移动IP下的简介路由"><a href="#移动IP下的简介路由" class="headerlink" title="移动ＩＰ下的简介路由"></a>移动ＩＰ下的简介路由</h6><p><img src="/../CNP/CN1616.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="移动IP下的代理发现"><a href="#移动IP下的代理发现" class="headerlink" title="移动IP下的代理发现"></a>移动IP下的代理发现</h6><p>$\quad$ 代理通告 – 外部代理&#x2F;归属代理通过广播ICMP报告（typefield&#x3D;9），通告代理服务的存在</p>
+<p>$\quad$ 代理请求 – 设备发送代理请求报文（ICMP typefiled&#x3D;10），然后代理广播通告</p>
+<p>$\quad$ 随后进行注册请求、注册回复</p>
+<p><img src="/../CNP/CN1617.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="移动IP下的代理注册"><a href="#移动IP下的代理注册" class="headerlink" title="移动IP下的代理注册"></a>移动IP下的代理注册</h6><p><img src="/../CNP/CN1618.png" srcset="/img/loading.gif" lazyload></p>
+<h5 id="蜂窝网的移动性管理"><a href="#蜂窝网的移动性管理" class="headerlink" title="蜂窝网的移动性管理"></a>蜂窝网的移动性管理</h5><p>$\quad$ 归属网络：设备订购服务的网络（如：中国移动、中国联通、中国电信）</p>
+<p>$\quad$ $\quad$ 归属位置注册器（HLR）：一个数据库，记录了用户当前位置、电话号码以及各类用户信息（订阅服务、账单、使用偏好）</p>
+<p>$\quad$ $\quad$ 归属MSC：即之前提到的网关MSC</p>
+<p>$\quad$ $\quad$ 归属MSC + 归属HLR &#x3D; 归属代理</p>
+<p>$\quad$ 被访网络：用户设备当前所处网络</p>
+<p>$\quad$ $\quad$ 访问者位置注册（VLR）：一个数据库，记录访问者信息</p>
+<p>$\quad$ $\quad$ VLR + 被访网络的MSC &#x3D; 外部代理</p>
+<p>$\quad$ $\quad$ 被访网络有时与归属网络是同一网络</p>
+<h6 id="间接路由-1"><a href="#间接路由-1" class="headerlink" title="间接路由"></a>间接路由</h6><p><img src="/../CNP/CN1619.png" srcset="/img/loading.gif" lazyload></p>
+<h6 id="切换"><a href="#切换" class="headerlink" title="切换"></a>切换</h6><p>同一MSC，不同基站</p>
+<p>$\quad$ 切换：将呼叫路径从一个基站转移到另一个基站</p>
+<p>$\quad$ 原因： GSM没有规定切换策略（即何时切换），只规定切换机制（即如何切换）</p>
+<p>$\quad$ $\quad$ 新基站信号更强</p>
+<p>$\quad$ $\quad$ 负载均衡：释放旧基站的信道（GSM采用组合FDM&#x2F;TDM）</p>
+<p>$\quad$ 切换由旧基站发起</p>
+<p>$\quad$ 1.旧基站通知被访MSC即将发起切换，并提供包含至少1个新基站的列表</p>
+<p>$\quad$ 2.MSC选择新基站，设置到新基站的路径，分配相应路由资源，通知新基站</p>
+<p>$\quad$ 3.新基站分配无线信道给该设备</p>
+<p>$\quad$ 4.新基站通知MSC与旧基站，并提供与设备的关联信息</p>
+<p>$\quad$ 5.旧基站告诉无线设备，即将进行切换</p>
+<p>$\quad$ 6.移动设备与新基站交换信息，激活信道</p>
+<p>$\quad$ 7.移动用户通知新基站与MSC，完成激活。MSC中后续呼叫讲路由到新基站</p>
+<p>$\quad$ 8.MSC通知旧基站释放资源</p>
+<p>MSC之间</p>
+<p>$\quad$ 锚MSC：第一个被访网络中的MSC</p>
+<p>$\quad$ $\quad$ 后续呼叫都经过锚MSC</p>
+<p>$\quad$ 设备向新MSC注册时，新MSC通知锚MSC设备位置信息</p>
+<h6 id="LTE（4G）中的移动性管理"><a href="#LTE（4G）中的移动性管理" class="headerlink" title="LTE（4G）中的移动性管理"></a>LTE（4G）中的移动性管理</h6><p>$\quad$ GSM：电话网络中，设备始终处于激活状态</p>
+<p>$\quad$ 4G：设备可能处于休眠状态</p>
+<p>$\quad$ $\quad$ 休眠状态下，从一个基站移动到另一个基站，网络无法获知位置移动</p>
+<p>$\quad$ 解决方案：寻呼（paging），基站定期广播报文，确认设备仍然存在</p>
+<p>$\quad$ 切换过程：与2G、3G类似</p>
+<p>$\quad$ $\quad$ 新基站与MSC准备</p>
+<p>$\quad$ $\quad$ 执行切换</p>
+<p>$\quad$ $\quad$ 完成切换</p>
+<hr>
+
+                
+              </div>
+            
+            <hr/>
+            <div>
+              <div class="post-metas my-3">
+  
+    <div class="post-meta mr-3 d-flex align-items-center">
+      <i class="iconfont icon-category"></i>
+      
+
+<span class="category-chains">
+  
+  
+    
+      <span class="category-chain">
+        
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/" class="category-chain-item">CS学习</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/CN/" class="category-chain-item">CN</a>
+  
+  
+    <span>></span>
+    
+  <a href="/categories/CS%E5%AD%A6%E4%B9%A0/CN/%E9%93%BE%E8%B7%AF%E5%B1%82/" class="category-chain-item">链路层</a>
+  
+  
+
+  
+
+  
+
+      </span>
+    
+  
+</span>
+
+    </div>
+  
+  
+    <div class="post-meta">
+      <i class="iconfont icon-tags"></i>
+      
+        <a href="/tags/CN/">#CN</a>
+      
+        <a href="/tags/%E9%93%BE%E8%B7%AF%E5%B1%82/">#链路层</a>
+      
+    </div>
+  
+</div>
+
+
+              
+  
+
+  <div class="license-box my-3">
+    <div class="license-title">
+      <div>链路层-无线网络</div>
+      <div>https://aki-yzh.github.io/2024/01/03/链路层-无线网络/</div>
+    </div>
+    <div class="license-meta">
+      
+        <div class="license-meta-item">
+          <div>作者</div>
+          <div>Aki-yzh</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>发布于</div>
+          <div>2024年1月3日</div>
+        </div>
+      
+      
+        <div class="license-meta-item license-meta-date">
+          <div>更新于</div>
+          <div>2024年1月3日</div>
+        </div>
+      
+      
+        <div class="license-meta-item">
+          <div>许可协议</div>
+          <div>
+            
+              
+              
+                <a target="_blank" href="https://creativecommons.org/licenses/by/4.0/">
+                  <span class="hint--top hint--rounded" aria-label="BY - 署名">
+                    <i class="iconfont icon-by"></i>
+                  </span>
+                </a>
+              
+            
+          </div>
+        </div>
+      
+    </div>
+    <div class="license-icon iconfont"></div>
+  </div>
+
+
+
+              
+                <div class="post-prevnext my-3">
+                  <article class="post-prev col-6">
+                    
+                    
+                  </article>
+                  <article class="post-next col-6">
+                    
+                    
+                      <a href="/2023/12/15/%E9%93%BE%E8%B7%AF%E5%B1%82-%E6%9C%89%E7%BA%BF%E5%B1%80%E5%9F%9F%E7%BD%91/" title="链路层-有线局域网">
+                        <span class="hidden-mobile">链路层-有线局域网</span>
+                        <span class="visible-mobile">下一篇</span>
+                        <i class="iconfont icon-arrowright"></i>
+                      </a>
+                    
+                  </article>
+                </div>
+              
+            </div>
+
+            
+          </article>
+        </div>
+      </div>
+    </div>
+
+    <div class="side-col d-none d-lg-block col-lg-2">
+      
+  <aside class="sidebar" style="margin-left: -1rem">
+    <div id="toc">
+  <p class="toc-header">
+    <i class="iconfont icon-list"></i>
+    <span>目录</span>
+  </p>
+  <div class="toc-body" id="toc-body"></div>
+</div>
+
+
+
+  </aside>
+
+
+    </div>
+  </div>
+</div>
+
+
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+
+  
+
+
+  
+  
+
+
+
+
+
+
+
+
+
+    
+
+    
+      <a id="scroll-top-button" aria-label="TOP" href="#" role="button">
+        <i class="iconfont icon-arrowup" aria-hidden="true"></i>
+      </a>
+    
+
+    
+      <div class="modal fade" id="modalSearch" tabindex="-1" role="dialog" aria-labelledby="ModalLabel"
+     aria-hidden="true">
+  <div class="modal-dialog modal-dialog-scrollable modal-lg" role="document">
+    <div class="modal-content">
+      <div class="modal-header text-center">
+        <h4 class="modal-title w-100 font-weight-bold">搜索</h4>
+        <button type="button" id="local-search-close" class="close" data-dismiss="modal" aria-label="Close">
+          <span aria-hidden="true">&times;</span>
+        </button>
+      </div>
+      <div class="modal-body mx-3">
+        <div class="md-form mb-5">
+          <input type="text" id="local-search-input" class="form-control validate">
+          <label data-error="x" data-success="v" for="local-search-input">关键词</label>
+        </div>
+        <div class="list-group" id="local-search-result"></div>
+      </div>
+    </div>
+  </div>
+</div>
+
+    
+
+    
+  </main>
+
+  <footer>
+    <div class="footer-inner">
+  
+    <div class="music-player">
+      <iframe frameborder="no" border="0" marginwidth="0" marginheight="0" width=330 height=86 src="//music.163.com/outchain/player?type=3&id=2512321469&auto=1&height=66"></iframe>
+    <div class="footer-content">
+       <a href="https://hexo.io" target="_blank" rel="nofollow noopener"><span>Aki</span></a> <i class="iconfont icon-love"></i> <a href="https://github.com/fluid-dev/hexo-theme-fluid" target="_blank" rel="nofollow noopener"><span>Yzh</span></a> 
+    </div>
+  
+  
+  
+  
+</div>
+
+  </footer>
+
+  <!-- Scripts -->
+  
+  <script  src="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.js" ></script>
+  <link  rel="stylesheet" href="https://lib.baomitu.com/nprogress/0.2.0/nprogress.min.css" />
+
+  <script>
+    NProgress.configure({"showSpinner":false,"trickleSpeed":100})
+    NProgress.start()
+    window.addEventListener('load', function() {
+      NProgress.done();
+    })
+  </script>
+
+
+<script  src="https://lib.baomitu.com/jquery/3.6.0/jquery.min.js" ></script>
+<script  src="https://lib.baomitu.com/twitter-bootstrap/4.6.1/js/bootstrap.min.js" ></script>
+<script  src="/js/events.js" ></script>
+<script  src="/js/plugins.js" ></script>
+
+
+  <script  src="https://lib.baomitu.com/typed.js/2.0.12/typed.min.js" ></script>
+  <script>
+    (function (window, document) {
+      var typing = Fluid.plugins.typing;
+      var subtitle = document.getElementById('subtitle');
+      if (!subtitle || !typing) {
+        return;
+      }
+      var text = subtitle.getAttribute('data-typed-text');
+      
+        typing(text);
+      
+    })(window, document);
+  </script>
+
+
+
+
+  
+    <script  src="/js/img-lazyload.js" ></script>
+  
+
+
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/tocbot/4.18.2/tocbot.min.js', function() {
+    var toc = jQuery('#toc');
+    if (toc.length === 0 || !window.tocbot) { return; }
+    var boardCtn = jQuery('#board-ctn');
+    var boardTop = boardCtn.offset().top;
+
+    window.tocbot.init(Object.assign({
+      tocSelector     : '#toc-body',
+      contentSelector : '.markdown-body',
+      linkClass       : 'tocbot-link',
+      activeLinkClass : 'tocbot-active-link',
+      listClass       : 'tocbot-list',
+      isCollapsedClass: 'tocbot-is-collapsed',
+      collapsibleClass: 'tocbot-is-collapsible',
+      scrollSmooth    : true,
+      includeTitleTags: true,
+      headingsOffset  : -boardTop,
+    }, CONFIG.toc));
+    if (toc.find('.toc-list-item').length > 0) {
+      toc.css('visibility', 'visible');
+    }
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('tocbot' in window) {
+        tocbot.refresh();
+        var toc = jQuery('#toc');
+        if (toc.length === 0 || !tocbot) {
+          return;
+        }
+        if (toc.find('.toc-list-item').length > 0) {
+          toc.css('visibility', 'visible');
+        }
+      }
+    });
+  });
+</script>
+
+
+  <script src=https://lib.baomitu.com/clipboard.js/2.0.11/clipboard.min.js></script>
+
+  <script>Fluid.plugins.codeWidget();</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/anchor-js/4.3.1/anchor.min.js', function() {
+    window.anchors.options = {
+      placement: CONFIG.anchorjs.placement,
+      visible  : CONFIG.anchorjs.visible
+    };
+    if (CONFIG.anchorjs.icon) {
+      window.anchors.options.icon = CONFIG.anchorjs.icon;
+    }
+    var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+    var res = [];
+    for (var item of el) {
+      res.push('.markdown-body > ' + item.trim());
+    }
+    if (CONFIG.anchorjs.placement === 'left') {
+      window.anchors.options.class = 'anchorjs-link-left';
+    }
+    window.anchors.add(res.join(', '));
+
+    Fluid.events.registerRefreshCallback(function() {
+      if ('anchors' in window) {
+        anchors.removeAll();
+        var el = (CONFIG.anchorjs.element || 'h1,h2,h3,h4,h5,h6').split(',');
+        var res = [];
+        for (var item of el) {
+          res.push('.markdown-body > ' + item.trim());
+        }
+        if (CONFIG.anchorjs.placement === 'left') {
+          anchors.options.class = 'anchorjs-link-left';
+        }
+        anchors.add(res.join(', '));
+      }
+    });
+  });
+</script>
+
+
+  
+<script>
+  Fluid.utils.createScript('https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.js', function() {
+    Fluid.plugins.fancyBox();
+  });
+</script>
+
+
+  <script>Fluid.plugins.imageCaption();</script>
+
+  
+      <script>
+        if (!window.MathJax) {
+          window.MathJax = {
+            tex    : {
+              inlineMath: { '[+]': [['$', '$']] }
+            },
+            loader : {
+              load: ['ui/lazy']
+            },
+            options: {
+              renderActions: {
+                insertedScript: [200, () => {
+                  document.querySelectorAll('mjx-container').forEach(node => {
+                    let target = node.parentNode;
+                    if (target.nodeName.toLowerCase() === 'li') {
+                      target.parentNode.classList.add('has-jax');
+                    }
+                  });
+                }, '', false]
+              }
+            }
+          };
+        } else {
+          MathJax.startup.document.state(0);
+          MathJax.texReset();
+          MathJax.typeset();
+          MathJax.typesetPromise();
+        }
+
+        Fluid.events.registerRefreshCallback(function() {
+          if ('MathJax' in window && MathJax.startup.document && typeof MathJax.startup.document.state === 'function') {
+            MathJax.startup.document.state(0);
+            MathJax.texReset();
+            MathJax.typeset();
+            MathJax.typesetPromise();
+          }
+        });
+      </script>
+    
+
+  <script  src="https://lib.baomitu.com/mathjax/3.2.2/es5/tex-mml-chtml.js" ></script>
+
+  <script  src="/js/local-search.js" ></script>
+
+
+
+
+
+<!-- 主题的启动项，将它保持在最底部 -->
+<!-- the boot of the theme, keep it at the bottom -->
+<script  src="/js/boot.js" ></script>
+
+
+  
+
+  <noscript>
+    <div class="noscript-warning">博客在允许 JavaScript 运行的环境下浏览效果更佳</div>
+  </noscript>
+<script src="/live2dw/lib/L2Dwidget.min.js?094cbace49a39548bed64abff5988b05"></script><script>L2Dwidget.init({"pluginRootPath":"live2dw/","pluginJsPath":"lib/","pluginModelPath":"assets/","tagMode":false,"debug":false,"model":{"jsonPath":"/live2dw/assets/koharu.model.json"},"display":{"position":"right","width":145,"height":315},"mobile":{"show":true,"scale":0.5},"react":{"opacityDefault":0.7,"opacityOnHover":0.8},"log":false});</script></body>
+</html>
+<script type="text/javascript" src="/js/ribon.js"></script>
+<script type="text/javascript" src="/js/title.js"></script>
+
+
+<script type="text/javascript"
+color="220,220,220" opacity='0.7' zIndex="-2" count="200" src="//cdn.bootcss.com/canvas-nest.js/1.0.0/canvas-nest.min.js">
+</script>
+
+<script type="text/javascript" src="/js/showtext.js"></script>
+
+<!-- 雪花特效2 -->
+<script type="text/javascript" src="/js/snow.js"></script>
+
