@@ -16,29 +16,23 @@
   <meta name="author" content="Aki-yzh">
   <meta name="keywords" content="">
   
-    <meta name="description" content="利用正运动学以及空间变换控制舵机">
+    <meta name="description" content="科研过程中遇到的树莓派网络相关问题与解决">
 <meta property="og:type" content="article">
-<meta property="og:title" content="机器人学部分">
-<meta property="og:url" content="https://aki-yzh.github.io/2023/09/24/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6%E9%83%A8%E5%88%86/index.html">
+<meta property="og:title" content="树莓派网络问题">
+<meta property="og:url" content="https://aki-yzh.github.io/2024/01/26/%E6%A0%91%E8%8E%93%E6%B4%BE%E7%BD%91%E7%BB%9C%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="Aki-yzh">
-<meta property="og:description" content="利用正运动学以及空间变换控制舵机">
+<meta property="og:description" content="科研过程中遇到的树莓派网络相关问题与解决">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://aki-yzh.github.io/FMCWmg/UCS1.png">
-<meta property="og:image" content="https://aki-yzh.github.io/FMCWmg/UCS2.png">
-<meta property="og:image" content="https://aki-yzh.github.io/FMCWmg/UCS3.png">
-<meta property="og:image" content="https://aki-yzh.github.io/FMCWmg/UCS4.png">
-<meta property="article:published_time" content="2023-09-24T15:55:10.000Z">
-<meta property="article:modified_time" content="2023-09-27T15:30:37.709Z">
+<meta property="article:published_time" content="2024-01-26T15:55:10.000Z">
+<meta property="article:modified_time" content="2024-01-27T08:25:36.031Z">
 <meta property="article:author" content="Aki-yzh">
 <meta property="article:tag" content="树莓派">
-<meta property="article:tag" content="机器人学">
-<meta property="article:tag" content="舵机">
+<meta property="article:tag" content="网络">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="https://aki-yzh.github.io/FMCWmg/UCS1.png">
   
   
   
-  <title>机器人学部分 - Aki-yzh</title>
+  <title>树莓派网络问题 - Aki-yzh</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -248,7 +242,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="机器人学部分"></span>
+            <span id="subtitle" data-typed-text="树莓派网络问题"></span>
           
         </div>
 
@@ -259,8 +253,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-09-24 23:55" pubdate>
-          2023年9月24日 晚上
+        <time datetime="2024-01-26 23:55" pubdate>
+          2024年1月26日 晚上
         </time>
       </span>
     
@@ -271,7 +265,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          936 字
+          1.1k 字
         
       </span>
     
@@ -282,7 +276,7 @@
         
         
         
-          8 分钟
+          10 分钟
         
       </span>
     
@@ -320,12 +314,12 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">机器人学部分</h1>
+            <h1 style="display: none">树莓派网络问题</h1>
             
               <p class="note note-info">
                 
                   
-                    本文最后更新于：2023年9月27日 晚上
+                    本文最后更新于：2024年1月27日 下午
                   
                 
               </p>
@@ -333,16 +327,19 @@
             
               <div class="markdown-body">
                 
-                <p>利用正运动学以及空间变换控制舵机</p>
+                <p>科研过程中遇到的树莓派网络相关问题与解决</p>
 <span id="more"></span>
-
-<h1 id="机器人学基础"><a href="#机器人学基础" class="headerlink" title="机器人学基础"></a>机器人学基础</h1><h2 id="空间描述和变换"><a href="#空间描述和变换" class="headerlink" title="空间描述和变换"></a>空间描述和变换</h2><p>$\quad$·存在一个世界坐标系,讨论任何问题都是基于这个坐标系<br>$\quad$·一旦建立了坐标系,我们就能用一个3x1的位置矢量给世界坐标系中的任何点定位<br>旋转矩阵：</p>
-<p><img src="/../FMCWmg/UCS1.png" srcset="/img/loading.gif" lazyload></p>
-<p>舵机的旋转即为Z-X-Y欧拉角</p>
-<p>$\quad$ 首先将坐标系{B}和一个已知参考坐标系{A}重合。先将{B}绕$Z_B$转$\alpha$角度，再<br>绕$Y_B$旋转$\beta$ 角，最后绕着$X_B$ 旋转y角<br><img src="/../FMCWmg/UCS2.png" srcset="/img/loading.gif" lazyload><br>matlab中可以通过rotx()，roty()，rotz()函数计算旋转矩阵</p>
-<h2 id="实物坐标系建立"><a href="#实物坐标系建立" class="headerlink" title="实物坐标系建立"></a>实物坐标系建立</h2><p><img src="/../FMCWmg/UCS3.png" srcset="/img/loading.gif" lazyload><br><img src="/../FMCWmg/UCS4.png" srcset="/img/loading.gif" lazyload><br>代码：</p>
-<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br></pre></td><td class="code"><pre><code class="hljs c"><br><br>%坐标系变换<br><br>%R为雷达测出的距离，angle_PSI,angle_THETA为雷达测出的角度<br><br>%angle_1，angle_2为舵机目前的角度<br><br>%L为舵机<span class="hljs-number">1</span>转轴的长度<br><br>%P_A=Rotate*（P_B+P） 先平移再旋转<br><br>%%<br><br>L = <span class="hljs-number">50</span>;<br><br>Rotate = rotz(angle_2)*roty(<span class="hljs-number">0</span>)*rotx(angle_1);%Z-Y-X欧拉角<br><br>P_MOVE1= [<span class="hljs-number">0</span>;<span class="hljs-number">0</span>;L];<br><br>P_B_x = R * <span class="hljs-built_in">cos</span>(angle_PSI) * <span class="hljs-built_in">sin</span>(angle_THETA);<br><br>P_B_y = R * <span class="hljs-built_in">cos</span>(angle_PSI) * <span class="hljs-built_in">cos</span>(angle_THETA);<br><br>P_B_z = R * <span class="hljs-built_in">sin</span>(angle_PSI);<br><br>P_B = [P_B_x;P_B_y;P_B_z];%<span class="hljs-number">3</span>号（雷达）坐标系下的坐标<br><br>%%<br><br>P_A = Rotate * (P_B - P_MOVE1);%得到<span class="hljs-number">2</span>号坐标系下的坐标<br><br>%%<br><br>P_MOVE2=[<span class="hljs-number">-45</span>;<span class="hljs-number">-75</span>;<span class="hljs-number">-100</span>];<br><br>P_0 = P_A + P_MOVE2;% <span class="hljs-number">1</span>号坐标系下的坐标<br><br>%%<br><br>% P_A = ;<br><br>angle_2_new = <span class="hljs-built_in">atan</span>(P_A(<span class="hljs-number">1</span>)/P_A(<span class="hljs-number">2</span>));%舵机<span class="hljs-number">2</span>要调整到的角度<br><br>temp = <span class="hljs-built_in">sqrt</span>(P_A(<span class="hljs-number">1</span>)*P_A(<span class="hljs-number">1</span>)+P_A(<span class="hljs-number">2</span>)+P_A(<span class="hljs-number">2</span>));<br><br>angle_1_new = <span class="hljs-built_in">atan</span>(P_A(<span class="hljs-number">3</span>)/temp);%舵机<span class="hljs-number">1</span>要调整到的角度<br><br>disp(angle_1_new);<br><br>disp(angle_2_new);<br><br></code></pre></td></tr></table></figure>
-
+<h6 id="一、网口静态ip的配置"><a href="#一、网口静态ip的配置" class="headerlink" title="一、网口静态ip的配置"></a>一、网口静态ip的配置</h6><p><strong>问题描述</strong><br>以太网口需要配置静态ip<br><strong>问题解决</strong><br>修改&#x2F;etc&#x2F;dhcpcd.conf文件，配置为</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs c">interface eth0<br><br><span class="hljs-type">static</span> ip_address=<span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.100</span>/<span class="hljs-number">24</span><br><br><span class="hljs-type">static</span> routers=<span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.1</span><br><br><span class="hljs-type">static</span> domain_name_servers=<span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.1</span><br><br>interface eth1 #外接以太网口的配置<br><br><span class="hljs-type">static</span> ip_address=<span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.100</span>/<span class="hljs-number">24</span><br><br><span class="hljs-type">static</span> routers=<span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.1</span><br><br><span class="hljs-type">static</span> domain_name_servers=<span class="hljs-number">192.168</span><span class="hljs-number">.1</span><span class="hljs-number">.1</span><br></code></pre></td></tr></table></figure>
+<h6 id="二、有线网卡与无线网卡的同时使用优先级"><a href="#二、有线网卡与无线网卡的同时使用优先级" class="headerlink" title="二、有线网卡与无线网卡的同时使用优先级"></a>二、有线网卡与无线网卡的同时使用优先级</h6><p><strong>问题描述</strong><br>以太网口eth0连接内网而无线网卡wlan0连接外网，但是连接上以太网口后无法ping通外网<br><strong>问题解决</strong><br>为使用网络的优先级问题<br>输入</p>
+<figure class="highlight cmd"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs cmd">$ sudo ip route show<br></code></pre></td></tr></table></figure>
+<p>显示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">pi@raspberrypi:~ $ ip route show<br><span class="hljs-keyword">default</span> via <span class="hljs-number">192.168</span><span class="hljs-number">.9</span><span class="hljs-number">.1</span> dev eth0 src <span class="hljs-number">192.168</span><span class="hljs-number">.9</span><span class="hljs-number">.98</span> <br><span class="hljs-keyword">default</span> via <span class="hljs-number">192.168</span><span class="hljs-number">.77</span><span class="hljs-number">.1</span> dev wlan0 src <span class="hljs-number">192.168</span><span class="hljs-number">.77</span><span class="hljs-number">.186</span> <br><span class="hljs-number">192.168</span><span class="hljs-number">.9</span><span class="hljs-number">.0</span>/<span class="hljs-number">24</span> dev eth0 proto dhcp scope link src <span class="hljs-number">192.168</span><span class="hljs-number">.9</span><span class="hljs-number">.98</span> <br><span class="hljs-number">192.168</span><span class="hljs-number">.77</span><span class="hljs-number">.0</span>/<span class="hljs-number">24</span> dev wlan0 proto dhcp scope link src <span class="hljs-number">192.168</span><span class="hljs-number">.77</span><span class="hljs-number">.186</span> <br></code></pre></td></tr></table></figure>
+<p>表示eth0的优先级高于wlan0<br>我们修改&#x2F;etc&#x2F;dhcpcd.conf文件，加入</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs c">interface wlan0<br><br>metric <span class="hljs-number">200</span><br><br>interface eth1 #外接以太网口的配置<br><br>metric <span class="hljs-number">300</span><br></code></pre></td></tr></table></figure>
+<p>此时再次输入命令行，显示</p>
+<figure class="highlight c"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs c">pi@raspberrypi:~ $ ip route show<br><span class="hljs-keyword">default</span> via <span class="hljs-number">192.168</span><span class="hljs-number">.77</span><span class="hljs-number">.1</span> dev wlan0 src <span class="hljs-number">192.168</span><span class="hljs-number">.77</span><span class="hljs-number">.186</span> metric <span class="hljs-number">200</span><br><span class="hljs-keyword">default</span> via <span class="hljs-number">192.168</span><span class="hljs-number">.9</span><span class="hljs-number">.1</span> dev eth0 src <span class="hljs-number">192.168</span><span class="hljs-number">.9</span><span class="hljs-number">.98</span> metric <span class="hljs-number">300</span><br><span class="hljs-number">192.168</span><span class="hljs-number">.9</span><span class="hljs-number">.0</span>/<span class="hljs-number">24</span> dev eth0 proto dhcp scope link src <span class="hljs-number">192.168</span><span class="hljs-number">.9</span><span class="hljs-number">.98</span> metric <span class="hljs-number">300</span><br><span class="hljs-number">192.168</span><span class="hljs-number">.77</span><span class="hljs-number">.0</span>/<span class="hljs-number">24</span> dev wlan0 proto dhcp scope link src <span class="hljs-number">192.168</span><span class="hljs-number">.77</span><span class="hljs-number">.186</span> metric <span class="hljs-number">200</span><br></code></pre></td></tr></table></figure>
+<p>配置成功，可ping通外网</p>
 <hr>
 
                 
@@ -386,9 +383,7 @@
       
         <a href="/tags/%E6%A0%91%E8%8E%93%E6%B4%BE/">#树莓派</a>
       
-        <a href="/tags/%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%AD%A6/">#机器人学</a>
-      
-        <a href="/tags/%E8%88%B5%E6%9C%BA/">#舵机</a>
+        <a href="/tags/%E7%BD%91%E7%BB%9C/">#网络</a>
       
     </div>
   
@@ -400,8 +395,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>机器人学部分</div>
-      <div>https://aki-yzh.github.io/2023/09/24/机器人学部分/</div>
+      <div>树莓派网络问题</div>
+      <div>https://aki-yzh.github.io/2024/01/26/树莓派网络问题/</div>
     </div>
     <div class="license-meta">
       
@@ -413,13 +408,13 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年9月24日</div>
+          <div>2024年1月26日</div>
         </div>
       
       
         <div class="license-meta-item license-meta-date">
           <div>更新于</div>
-          <div>2023年9月27日</div>
+          <div>2024年1月27日</div>
         </div>
       
       
@@ -450,9 +445,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/09/26/%E5%BA%94%E7%94%A8%E5%B1%82-DNS%EF%BC%8C%E7%94%B5%E5%AD%90%E9%82%AE%E4%BB%B6/" title="应用层-DNS,电子邮件">
+                      <a href="/2024/01/27/C++%20fftw%E5%BA%93%E7%9A%84%E4%BD%BF%E7%94%A8/" title="C++ fftw库的使用">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">应用层-DNS,电子邮件</span>
+                        <span class="hidden-mobile">C++ fftw库的使用</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -460,8 +455,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/09/22/%E5%BA%94%E7%94%A8%E5%B1%82-Web%E4%B8%8EHTTP/" title="应用层-Web与HTTP">
-                        <span class="hidden-mobile">应用层-Web与HTTP</span>
+                      <a href="/2024/01/03/%E9%93%BE%E8%B7%AF%E5%B1%82-%E6%97%A0%E7%BA%BF%E7%BD%91%E7%BB%9C/" title="链路层-无线网络">
+                        <span class="hidden-mobile">链路层-无线网络</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
